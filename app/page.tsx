@@ -47,7 +47,7 @@ export default async function HomePage() {
         </footer>
       </main>
 
-      {eventSchemas.map((schema, index) => (
+      {eventSchemas.map((schema: any, index: number) => (
         <script
           key={index}
           type="application/ld+json"
