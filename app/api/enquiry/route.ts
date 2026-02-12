@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     console.error('Enquiry error:', error)
 
     if (error instanceof z.ZodError) {
-      const firstError = error.issues?.[0] || error.errors?.[0]
+      const firstError = error.issues?.[0]
       return NextResponse.json(
         { error: firstError?.message || 'Invalid input' },
         { status: 400 }

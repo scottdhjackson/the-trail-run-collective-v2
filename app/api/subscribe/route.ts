@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     console.error('Subscribe error:', error)
 
     if (error instanceof z.ZodError) {
-      const firstError = error.issues?.[0] || error.errors?.[0]
+      const firstError = error.issues?.[0]
       return NextResponse.json(
         { error: firstError?.message || 'Invalid email' },
         { status: 400 }
