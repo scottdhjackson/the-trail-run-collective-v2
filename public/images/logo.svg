@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" role="img" aria-label="The Trail Run Collective">
+  <style>
+    .script {
+      font-family: "Brush Script MT", "Segoe Script", "Snell Roundhand", "Apple Chancery", cursive;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .smallcaps {
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-weight: 700;
+      letter-spacing: 7px;
+    }
+  </style>
+
+  <g fill="#FFFFFF">
+    <text class="smallcaps" x="50%" y="58" font-size="18" text-anchor="middle" opacity="0.95">
+      THE
+    </text>
+
+    <text class="script" x="50%" y="135" font-size="128" text-anchor="middle">
+      Trail Run
+    </text>
+
+    <text class="smallcaps" x="50%" y="200" font-size="34" text-anchor="middle">
+      COLLECTIVE
+    </text>
+  </g>
+</svg>
