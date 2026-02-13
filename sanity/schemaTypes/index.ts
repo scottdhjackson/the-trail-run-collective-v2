@@ -4,6 +4,7 @@ import distance from './distance'
 import entry from './entry'
 import subscriber from './subscriber'
 import enquiry from './enquiry'
+import faq from './faq'
 
 export const schemaTypes = [
   siteSettings,
@@ -12,4 +13,5 @@ export const schemaTypes = [
   entry,
   subscriber,
   enquiry,
+  faq,
 ]

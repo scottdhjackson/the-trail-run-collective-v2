@@ -14,6 +14,7 @@ export const EVENTS_QUERY = groq`*[_type == "event" && isPublished == true] | or
   title,
   slug,
   shortDescription,
+  longDescription,
   location,
   date,
   cardImage,
@@ -31,6 +32,7 @@ export const EVENT_BY_SLUG_QUERY = groq`*[_type == "event" && slug.current == $s
   title,
   slug,
   shortDescription,
+  longDescription,
   location,
   date,
   distances[] {
@@ -39,4 +41,20 @@ export const EVENT_BY_SLUG_QUERY = groq`*[_type == "event" && slug.current == $s
     isOpen,
     sortOrder
   }
+}`
+
+export const FAQS_QUERY = groq`*[_type == "faq" && isPublished == true] | order(sortOrder asc, _createdAt asc) {
+  _id,
+  question,
+  answer,
+  category,
+  sortOrder
+}`
+
+export const FAQS_BY_CATEGORY_QUERY = groq`*[_type == "faq" && isPublished == true && category == $category] | order(sortOrder asc, _createdAt asc) {
+  _id,
+  question,
+  answer,
+  category,
+  sortOrder
 }`

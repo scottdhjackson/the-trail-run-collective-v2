@@ -3,8 +3,8 @@
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 import { useState } from 'react'
-import { RegistrationForm } from './RegistrationForm'
 import Image from 'next/image'
+import Link from 'next/link'
 
 type Distance = {
   label: string
@@ -17,14 +17,15 @@ type EventCardProps = {
   title: string
   slug: string
   shortDescription: string
+  longDescription?: string
   location: string
   date: string
   cardImage?: string
   distances: Distance[]
 }
 
-export function EventCard({ title, slug, shortDescription, location, date, cardImage, distances }: EventCardProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+export function EventCard({ title, slug, shortDescription, longDescription, location, date, cardImage, distances }: EventCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false)
 
   const formattedDate = new Date(date).toLocaleDateString('en-GB', {
     day: 'numeric',
@@ -76,6 +77,29 @@ export function EventCard({ title, slug, shortDescription, location, date, cardI
             {title}
           </h3>
 
+          {/* Date and subtitle */}
+          <p className="text-gray-300 text-sm">
+            📅 {formattedDate} • {shortDescription}
+          </p>
+
+          {/* Expandable Description */}
+          {longDescription && (
+            <>
+              {isExpanded && (
+                <div className="text-gray-300 text-sm space-y-2 pt-2 border-t border-gray-700">
+                  <p>{longDescription}</p>
+                </div>
+              )}
+
+              <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="text-white text-sm underline hover:text-gray-300"
+              >
+                {isExpanded ? 'Read less' : 'Read more'}
+              </button>
+            </>
+          )}
+
           {/* Distances */}
           <div className="flex items-center gap-3 flex-wrap">
             <span className="text-gray-400 text-sm font-semibold tracking-wider">
@@ -99,11 +123,11 @@ export function EventCard({ title, slug, shortDescription, location, date, cardI
           {/* Buttons */}
           <div className="flex gap-3 pt-2">
             <Button
-              onClick={() => setIsModalOpen(true)}
+              asChild
               className="flex-1 bg-white text-black hover:bg-gray-200 font-bold"
               size="lg"
             >
-              BOOK
+              <Link href={`/register/${slug}`}>BOOK</Link>
             </Button>
             <Button
               className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-black font-bold"
@@ -114,12 +138,6 @@ export function EventCard({ title, slug, shortDescription, location, date, cardI
           </div>
         </div>
       </div>
-
-      <RegistrationForm
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        event={{ title, slug, distances }}
-      />
     </>
   )
 }

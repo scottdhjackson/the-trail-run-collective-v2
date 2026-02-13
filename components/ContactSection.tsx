@@ -52,9 +52,16 @@ export function ContactSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold tracking-tight mb-4">Get in Touch</h2>
-            <p className="text-lg text-muted-foreground">
-              Questions about our events? We're here to help.
+            <h2 className="text-4xl font-bold tracking-tight mb-4">Get in touch</h2>
+            <p className="text-2xl font-semibold mb-2">Questions?</p>
+            <p className="text-lg text-muted-foreground mb-2">
+              We'd love to hear from you.
+            </p>
+            <p className="text-lg text-muted-foreground mb-4">
+              Whether you're new to ultras or planning your next big trail run, our team is here to support you.
+            </p>
+            <p className="text-base text-muted-foreground">
+              Email us at: <a href="mailto:info@thetrailruncollective.com" className="text-primary hover:underline font-medium">info@thetrailruncollective.com</a>
             </p>
           </div>
 

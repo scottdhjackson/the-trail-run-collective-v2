@@ -29,6 +29,13 @@ export default defineType({
       validation: (Rule) => Rule.required().max(120),
     }),
     defineField({
+      name: 'longDescription',
+      title: 'Long Description',
+      type: 'text',
+      rows: 4,
+      description: 'Detailed description shown in the "Read more" section on event cards',
+    }),
+    defineField({
       name: 'location',
       title: 'Location',
       type: 'string',

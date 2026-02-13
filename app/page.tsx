@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { EventsSection } from '@/components/EventsSection'
 import { SignupSection } from '@/components/SignupSection'
+import { SupportSection } from '@/components/SupportSection'
 import { ContactSection } from '@/components/ContactSection'
 import { client } from '@/sanity/lib/client'
 import { EVENTS_QUERY } from '@/sanity/lib/queries'
@@ -16,6 +18,7 @@ export default async function HomePage() {
   const eventSchemas = events.map((event: {
     title: string
     shortDescription: string
+    longDescription?: string
     location: string
     date: string
     slug: { current: string }
@@ -36,12 +39,22 @@ export default async function HomePage() {
         <Hero />
         <EventsSection events={events} />
         <SignupSection />
+        <SupportSection />
         <ContactSection />
 
         <footer className="py-12 bg-muted/30 text-center">
           <div className="container mx-auto px-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground mb-2">
               © {new Date().getFullYear()} The Trail Run Collective. All rights reserved.
+            </p>
+            <p className="text-sm text-muted-foreground space-x-4">
+              <Link href="/faq" className="hover:text-primary underline">
+                FAQs
+              </Link>
+              <span>•</span>
+              <Link href="/privacy-policy" className="hover:text-primary underline">
+                Privacy Policy
+              </Link>
             </p>
           </div>
         </footer>

@@ -18,8 +18,11 @@ export function Hero() {
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
           The Trail Run Collective
         </h1>
-        <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto font-light">
-          UK trail & ultra events — Solstice specials at Box Hill, Surrey
+        <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">
+          Discover epic trail and ultra running events across the UK.
+        </p>
+        <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto font-light">
+          Join thrilling, well-supported races from 10 miles to 50 miles, perfect for beginners, seasoned runners, and everyone in between.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -36,7 +39,7 @@ export function Hero() {
             asChild
             className="text-lg px-8 py-6 bg-white/10 backdrop-blur hover:bg-white/20 border-white text-white"
           >
-            <a href="#join">Join the List</a>
+            <a href="#join">Join our mailing list</a>
           </Button>
         </div>
       </div>
