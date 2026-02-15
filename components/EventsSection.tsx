@@ -16,6 +16,7 @@ type Event = {
   location: string
   date: string
   cardImage?: string
+  heroImageUrl?: string
   distances: Distance[]
   comingSoon?: boolean
 }
@@ -39,7 +40,7 @@ export function EventsSection({ events }: EventsSectionProps) {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {events.map((event) => (
             <EventCard
               key={event._id}
@@ -50,6 +51,7 @@ export function EventsSection({ events }: EventsSectionProps) {
               location={event.location}
               date={event.date}
               cardImage={event.cardImage}
+              heroImageUrl={event.heroImageUrl}
               distances={event.distances.sort((a, b) => a.sortOrder - b.sortOrder)}
               comingSoon={event.comingSoon}
             />

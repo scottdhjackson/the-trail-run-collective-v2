@@ -31,6 +31,44 @@ export default defineType({
       type: 'number',
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: 'distanceKm',
+      title: 'Distance (km)',
+      type: 'number',
+      description: 'Distance in kilometers',
+    }),
+    defineField({
+      name: 'elevationGain',
+      title: 'Elevation Gain (m)',
+      type: 'number',
+      description: 'Total elevation gain in meters',
+    }),
+    defineField({
+      name: 'price',
+      title: 'Price',
+      type: 'number',
+      description: 'Price in GBP (e.g., 25 for £25)',
+    }),
+    defineField({
+      name: 'description',
+      title: 'Route Description',
+      type: 'text',
+      rows: 4,
+    }),
+    defineField({
+      name: 'gpxFile',
+      title: 'GPX File',
+      type: 'file',
+      description: 'Upload GPX file for route download',
+    }),
+    defineField({
+      name: 'routeMapImage',
+      title: 'Route Map Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
   ],
   preview: {
     select: {

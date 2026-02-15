@@ -21,11 +21,12 @@ type EventCardProps = {
   location: string
   date: string
   cardImage?: string
+  heroImageUrl?: string
   distances: Distance[]
   comingSoon?: boolean
 }
 
-export function EventCard({ title, slug, shortDescription, longDescription, location, date, cardImage, distances, comingSoon }: EventCardProps) {
+export function EventCard({ title, slug, shortDescription, longDescription, location, date, cardImage, heroImageUrl, distances, comingSoon }: EventCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const formattedDate = new Date(date).toLocaleDateString('en-GB', {
@@ -45,14 +46,17 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
     ? longDescription.split(' ').slice(0, 20).join(' ') + '...'
     : ''
 
+  // Use hero image if card image is not provided
+  const displayImage = heroImageUrl || cardImage
+
   return (
     <>
       <div className="overflow-hidden bg-gray-900 rounded-lg hover:shadow-2xl transition-shadow">
         {/* Header Image with Overlays */}
         <div className="relative h-64 w-full">
-          {cardImage ? (
+          {displayImage ? (
             <Image
-              src={cardImage}
+              src={displayImage}
               alt={title}
               fill
               className="object-cover"
@@ -148,10 +152,13 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
                 <Link href={`/register/${slug}`}>BOOK</Link>
               </Button>
               <Button
+                asChild
                 className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-black font-bold"
                 size="lg"
               >
-                INFO <ArrowRight className="ml-2 h-4 w-4" />
+                <Link href={`/events/${slug}`}>
+                  INFO <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
             </div>
           )}

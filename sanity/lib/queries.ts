@@ -36,11 +36,63 @@ export const EVENT_BY_SLUG_QUERY = groq`*[_type == "event" && slug.current == $s
   longDescription,
   location,
   date,
+  venueName,
+  town,
+  county,
+  postcode,
+  googleMapsLink,
+  what3words,
+  "locationImageUrl": locationImage.asset->url,
+  "heroImageUrl": heroImage.asset->url,
+  cardImage,
+  registrationOpens,
+  registrationCloses,
+  startTime,
+  difficultyDescription,
+  showPartnerPromo,
+  partnerName,
+  "partnerLogoUrl": partnerLogo.asset->url,
+  partnerDescription,
+  partnerLink,
+  whatYouGet,
+  showPhotoGallery,
+  "galleryImages": galleryImages[].asset->url,
+  galleryLink,
+  showReviews,
+  reviews[] {
+    name,
+    quote,
+    rating
+  },
+  showGettingThere,
+  gettingThereByCar,
+  gettingThereByTrainStation,
+  gettingThereByTrainRoute,
+  gettingThereByTrainTime,
+  gettingThereByTaxiCompany,
+  gettingThereByTaxiPhone,
+  kitList->{
+    _id,
+    title,
+    slug,
+    requiredEquipment[] {
+      _key,
+      item
+    }
+  },
+  showKitListInline,
   distances[] {
+    _key,
     label,
     stripePriceId,
     isOpen,
-    sortOrder
+    sortOrder,
+    distanceKm,
+    elevationGain,
+    price,
+    description,
+    "gpxFileUrl": gpxFile.asset->url,
+    "routeMapImageUrl": routeMapImage.asset->url
   }
 }`
 
