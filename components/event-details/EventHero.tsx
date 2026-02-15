@@ -47,7 +47,7 @@ export function EventHero({ title, date, heroImageUrl }: EventHeroProps) {
           <Button
             size="lg"
             variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-black font-bold text-lg px-8"
+            className="border-2 border-white bg-white text-black hover:bg-gray-200 font-bold text-lg px-8"
             onClick={() => document.getElementById('prices')?.scrollIntoView({ behavior: 'smooth' })}
           >
             View Prices
