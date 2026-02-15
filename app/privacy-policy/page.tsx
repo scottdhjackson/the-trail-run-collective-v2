@@ -177,6 +177,10 @@ export default function PrivacyPolicyPage() {
                 FAQs
               </Link>
               <span>•</span>
+              <Link href="/kit-list/required-equipment" className="hover:text-primary underline">
+                Kit List
+              </Link>
+              <span>•</span>
               <Link href="/privacy-policy" className="hover:text-primary underline">
                 Privacy Policy
               </Link>

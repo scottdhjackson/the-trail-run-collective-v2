@@ -30,7 +30,15 @@ export default async function FAQPage() {
             <p className="text-sm text-muted-foreground mb-2">
               © {new Date().getFullYear()} The Trail Run Collective. All rights reserved.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground space-x-4">
+              <Link href="/faq" className="hover:text-primary underline">
+                FAQs
+              </Link>
+              <span>•</span>
+              <Link href="/kit-list/required-equipment" className="hover:text-primary underline">
+                Kit List
+              </Link>
+              <span>•</span>
               <Link href="/privacy-policy" className="hover:text-primary underline">
                 Privacy Policy
               </Link>

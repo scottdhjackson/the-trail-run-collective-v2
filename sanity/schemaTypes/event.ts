@@ -74,6 +74,27 @@ export default defineType({
       type: 'boolean',
       initialValue: true,
     }),
+    defineField({
+      name: 'comingSoon',
+      title: 'Coming Soon',
+      type: 'boolean',
+      description: 'Enable this to show a "Coming Soon" badge and hide booking/info buttons',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'kitList',
+      title: 'Kit List',
+      type: 'reference',
+      to: [{ type: 'kitList' }],
+      description: 'Optional: Link to a kit list for this event',
+    }),
+    defineField({
+      name: 'showKitListInline',
+      title: 'Show Kit List Inline',
+      type: 'boolean',
+      description: 'If enabled, the kit list will be displayed on the event page. If disabled, it will show as a link.',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {

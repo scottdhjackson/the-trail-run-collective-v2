@@ -17,6 +17,7 @@ type Event = {
   date: string
   cardImage?: string
   distances: Distance[]
+  comingSoon?: boolean
 }
 
 type EventsSectionProps = {
@@ -50,6 +51,7 @@ export function EventsSection({ events }: EventsSectionProps) {
               date={event.date}
               cardImage={event.cardImage}
               distances={event.distances.sort((a, b) => a.sortOrder - b.sortOrder)}
+              comingSoon={event.comingSoon}
             />
           ))}
         </div>

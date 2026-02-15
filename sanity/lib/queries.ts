@@ -9,7 +9,7 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   seoDescription
 }`
 
-export const EVENTS_QUERY = groq`*[_type == "event" && isPublished == true] | order(_createdAt asc) {
+export const EVENTS_QUERY = groq`*[_type == "event" && isPublished == true] | order(date asc) {
   _id,
   title,
   slug,
@@ -18,6 +18,7 @@ export const EVENTS_QUERY = groq`*[_type == "event" && isPublished == true] | or
   location,
   date,
   cardImage,
+  comingSoon,
   "heroImageUrl": heroImage.asset->url,
   distances[] {
     label,
@@ -57,4 +58,19 @@ export const FAQS_BY_CATEGORY_QUERY = groq`*[_type == "faq" && isPublished == tr
   answer,
   category,
   sortOrder
+}`
+
+export const KIT_LIST_BY_SLUG_QUERY = groq`*[_type == "kitList" && slug.current == $slug && isPublished == true][0]{
+  _id,
+  title,
+  slug,
+  requiredEquipment[] {
+    _key,
+    item
+  },
+  importantNotes[] {
+    _key,
+    note
+  },
+  footerText
 }`

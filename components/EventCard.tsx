@@ -22,9 +22,10 @@ type EventCardProps = {
   date: string
   cardImage?: string
   distances: Distance[]
+  comingSoon?: boolean
 }
 
-export function EventCard({ title, slug, shortDescription, longDescription, location, date, cardImage, distances }: EventCardProps) {
+export function EventCard({ title, slug, shortDescription, longDescription, location, date, cardImage, distances, comingSoon }: EventCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const formattedDate = new Date(date).toLocaleDateString('en-GB', {
@@ -38,6 +39,11 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
 
   // Find lowest price from distances (placeholder for now)
   const lowestPrice = '£25' // You can calculate this from actual Stripe prices later
+
+  // Get text preview (first 20 words)
+  const textPreview = longDescription
+    ? longDescription.split(' ').slice(0, 20).join(' ') + '...'
+    : ''
 
   return (
     <>
@@ -63,10 +69,15 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
           </div>
 
           {/* Date - Top Right */}
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-4 right-4 flex flex-col gap-2">
             <div className="bg-black/70 px-3 py-1 text-white text-sm font-bold tracking-wider">
               {formattedDate}
             </div>
+            {comingSoon && (
+              <div className="bg-yellow-500 px-3 py-1 text-black text-sm font-bold tracking-wider">
+                COMING SOON
+              </div>
+            )}
           </div>
         </div>
 
@@ -85,6 +96,12 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
           {/* Expandable Description */}
           {longDescription && (
             <>
+              {!isExpanded && (
+                <p className="text-gray-300 text-sm">
+                  {textPreview}
+                </p>
+              )}
+
               {isExpanded && (
                 <div className="text-gray-300 text-sm space-y-2 pt-2 border-t border-gray-700">
                   <p>{longDescription}</p>
@@ -121,21 +138,23 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-3 pt-2">
-            <Button
-              asChild
-              className="flex-1 bg-white text-black hover:bg-gray-200 font-bold"
-              size="lg"
-            >
-              <Link href={`/register/${slug}`}>BOOK</Link>
-            </Button>
-            <Button
-              className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-black font-bold"
-              size="lg"
-            >
-              INFO <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+          {!comingSoon && (
+            <div className="flex gap-3 pt-2">
+              <Button
+                asChild
+                className="flex-1 bg-white text-black hover:bg-gray-200 font-bold"
+                size="lg"
+              >
+                <Link href={`/register/${slug}`}>BOOK</Link>
+              </Button>
+              <Button
+                className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-black font-bold"
+                size="lg"
+              >
+                INFO <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </>
