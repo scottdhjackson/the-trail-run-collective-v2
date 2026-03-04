@@ -65,7 +65,7 @@ export function ContactSection() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" suppressHydrationWarning>
             <div>
               <Label htmlFor="name">Name</Label>
               <Input
@@ -74,6 +74,7 @@ export function ContactSection() {
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
                 disabled={isLoading}
+                suppressHydrationWarning
               />
             </div>
 
@@ -86,6 +87,7 @@ export function ContactSection() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
                 disabled={isLoading}
+                suppressHydrationWarning
               />
             </div>
 
@@ -98,6 +100,7 @@ export function ContactSection() {
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 required
                 disabled={isLoading}
+                suppressHydrationWarning
               />
             </div>
 

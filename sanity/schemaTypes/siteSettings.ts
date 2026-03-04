@@ -45,5 +45,31 @@ export default defineType({
       type: 'text',
       validation: (Rule) => Rule.required().max(160),
     }),
+    defineField({
+      name: 'aboutHeading',
+      title: 'About Section — Heading',
+      type: 'string',
+      initialValue: 'About The Trail Run Collective',
+      group: undefined,
+    }),
+    defineField({
+      name: 'aboutBody',
+      title: 'About Section — Body Text',
+      type: 'text',
+      rows: 6,
+    }),
+    defineField({
+      name: 'aboutCtaLabel',
+      title: 'About Section — CTA Button Label',
+      type: 'string',
+      initialValue: 'Learn More About Us',
+    }),
+    defineField({
+      name: 'aboutBackgroundImage',
+      title: 'About Section — Background Image',
+      type: 'image',
+      description: 'Replaces the default background photo. Recommended: wide landscape image.',
+      options: { hotspot: true },
+    }),
   ],
 })

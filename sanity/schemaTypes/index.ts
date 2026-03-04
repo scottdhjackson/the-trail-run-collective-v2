@@ -6,6 +6,7 @@ import subscriber from './subscriber'
 import enquiry from './enquiry'
 import faq from './faq'
 import kitList from './kitList'
+import volunteer from './volunteer'
 
 export const schemaTypes = [
   siteSettings,
@@ -16,4 +17,5 @@ export const schemaTypes = [
   enquiry,
   faq,
   kitList,
+  volunteer,
 ]

@@ -2,17 +2,21 @@ import Link from 'next/link'
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { EventsSection } from '@/components/EventsSection'
+import { AboutSection } from '@/components/AboutSection'
 import { SignupSection } from '@/components/SignupSection'
 import { SupportSection } from '@/components/SupportSection'
 import { ContactSection } from '@/components/ContactSection'
 import { client } from '@/sanity/lib/client'
-import { EVENTS_QUERY } from '@/sanity/lib/queries'
+import { EVENTS_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
 import { generateEventSchema, siteMetadata } from '@/lib/metadata'
 
 export const revalidate = 60 // Revalidate every 60 seconds
 
 export default async function HomePage() {
-  const events = await client.fetch(EVENTS_QUERY)
+  const [events, settings] = await Promise.all([
+    client.fetch(EVENTS_QUERY),
+    client.fetch(SITE_SETTINGS_QUERY),
+  ])
 
   // Generate event schemas
   const eventSchemas = events.map((event: {
@@ -38,6 +42,12 @@ export default async function HomePage() {
       <main>
         <Hero />
         <EventsSection events={events} />
+        <AboutSection
+          heading={settings?.aboutHeading}
+          body={settings?.aboutBody}
+          ctaLabel={settings?.aboutCtaLabel}
+          backgroundImageUrl={settings?.aboutBackgroundImageUrl}
+        />
         <SignupSection />
         <SupportSection />
         <ContactSection />
@@ -54,6 +64,10 @@ export default async function HomePage() {
               <span>•</span>
               <Link href="/kit-list/required-equipment" className="hover:text-primary underline">
                 Kit List
+              </Link>
+              <span>•</span>
+              <Link href="/volunteer" className="hover:text-primary underline">
+                Volunteer
               </Link>
               <span>•</span>
               <Link href="/privacy-policy" className="hover:text-primary underline">

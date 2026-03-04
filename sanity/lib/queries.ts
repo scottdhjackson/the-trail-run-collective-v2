@@ -6,7 +6,11 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   contactEmail,
   socialLinks,
   seoTitle,
-  seoDescription
+  seoDescription,
+  aboutHeading,
+  aboutBody,
+  aboutCtaLabel,
+  "aboutBackgroundImageUrl": aboutBackgroundImage.asset->url
 }`
 
 export const EVENTS_QUERY = groq`*[_type == "event" && isPublished == true] | order(date asc) {

@@ -38,6 +38,9 @@ export function Header() {
           <Link href="/faq" className="text-sm font-medium text-white hover:text-gray-300 transition-colors">
             FAQs
           </Link>
+          <Link href="/volunteer" className="text-sm font-medium text-white hover:text-gray-300 transition-colors">
+            Volunteer
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -81,6 +84,13 @@ export function Header() {
               onClick={closeMenu}
             >
               FAQs
+            </Link>
+            <Link
+              href="/volunteer"
+              className="text-sm font-medium text-white hover:text-gray-300 transition-colors py-2"
+              onClick={closeMenu}
+            >
+              Volunteer
             </Link>
           </nav>
         </div>
