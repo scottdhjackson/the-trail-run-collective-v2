@@ -7,9 +7,7 @@ const volunteerSchema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Please enter a valid email'),
   phone: z.string().optional(),
-  availability: z.enum(['weekends', 'weekdays', 'both', 'flexible'], {
-    errorMap: () => ({ message: 'Please select your availability' }),
-  }),
+  availability: z.enum(['weekends', 'weekdays', 'both', 'flexible']),
   roles: z.array(z.string()).optional(),
   experience: z.string().optional(),
   whyVolunteer: z.string().optional(),
