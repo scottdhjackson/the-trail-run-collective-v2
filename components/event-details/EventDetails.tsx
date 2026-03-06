@@ -1,4 +1,4 @@
-import { Calendar, Clock } from 'lucide-react'
+import { Clock } from 'lucide-react'
 
 type EventDetailsProps = {
   registrationOpens?: string
@@ -21,32 +21,30 @@ export function EventDetails({
   }
 
   return (
-    <div id="event-details">
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Calendar className="h-5 w-5" />
-        Registration
+    <div id="event-details" className="flex flex-col items-center text-center">
+      <div className="w-24 h-24 rounded-full border-2 border-primary/40 flex items-center justify-center mb-4">
+        <Clock className="h-10 w-10 text-primary/60" strokeWidth={1.5} />
+      </div>
+      <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+        Details
       </h3>
-
-      <div className="space-y-3">
+      <div className="space-y-3 text-sm">
         {registrationOpens && (
           <div>
-            <p className="text-xs text-muted-foreground mb-1">Opens</p>
-            <p className="text-sm font-semibold">{formatDate(registrationOpens)}</p>
+            <p className="text-xs text-muted-foreground">Registration opens</p>
+            <p className="font-semibold">{formatDate(registrationOpens)}</p>
           </div>
         )}
         {registrationCloses && (
           <div>
-            <p className="text-xs text-muted-foreground mb-1">Closes</p>
-            <p className="text-sm font-semibold">{formatDate(registrationCloses)}</p>
+            <p className="text-xs text-muted-foreground">Registration closes</p>
+            <p className="font-semibold">{formatDate(registrationCloses)}</p>
           </div>
         )}
         {startTime && (
           <div>
-            <p className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
-              <Clock className="h-3 w-3" />
-              Start Time
-            </p>
-            <p className="text-sm font-semibold">{startTime}</p>
+            <p className="text-xs text-muted-foreground">Start time</p>
+            <p className="font-semibold">{startTime}</p>
           </div>
         )}
       </div>

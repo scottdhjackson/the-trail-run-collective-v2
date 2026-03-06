@@ -1,4 +1,4 @@
-import { Route } from 'lucide-react'
+import { Compass } from 'lucide-react'
 
 type Distance = {
   _key: string
@@ -14,19 +14,19 @@ export function EventRoutesSummary({ distances }: EventRoutesSummaryProps) {
   if (!distances || distances.length === 0) return null
 
   return (
-    <div id="routes-summary">
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <Route className="h-5 w-5" />
+    <div id="routes-summary" className="flex flex-col items-center text-center">
+      <div className="w-24 h-24 rounded-full border-2 border-primary/40 flex items-center justify-center mb-4">
+        <Compass className="h-10 w-10 text-primary/60" strokeWidth={1.5} />
+      </div>
+      <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
         Routes
       </h3>
-
-      <ul className="space-y-2">
+      <ul className="space-y-2 text-sm">
         {distances.map((distance) => (
-          <li key={distance._key} className="flex items-center gap-2 text-sm">
-            <span className="text-primary">•</span>
+          <li key={distance._key}>
             <span className="font-semibold">{distance.label}</span>
             {distance.distanceKm && (
-              <span className="text-muted-foreground text-xs">({distance.distanceKm}km)</span>
+              <span className="text-muted-foreground"> — {distance.distanceKm}km</span>
             )}
           </li>
         ))}

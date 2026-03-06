@@ -40,14 +40,14 @@ export function SignupSection() {
   }
 
   return (
-    <section id="join" className="py-24 bg-primary text-primary-foreground">
+    <section id="join" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-4xl font-bold tracking-tight mb-4">Join our mailing list</h2>
-          <p className="text-xl mb-2 opacity-90 font-semibold">
+          <p className="text-xl mb-2 font-semibold text-muted-foreground">
             Stay in the loop and get early bird access
           </p>
-          <p className="text-lg mb-8 opacity-90">
+          <p className="text-lg mb-8 text-muted-foreground">
             Subscribe to receive early event announcements, exclusive discounts, and training tips from The Trail Run Collective.
           </p>
 
@@ -59,11 +59,11 @@ export function SignupSection() {
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={isLoading}
-              className="bg-primary-foreground text-primary flex-1"
+              className="bg-background flex-1"
             />
             <Button
               type="submit"
-              variant="secondary"
+              variant="default"
               size="lg"
               disabled={isLoading}
             >
@@ -72,7 +72,7 @@ export function SignupSection() {
           </form>
 
           {message && (
-            <p className={`mt-4 text-sm ${message.type === 'error' ? 'text-destructive' : 'opacity-90'}`}>
+            <p className={`mt-4 text-sm ${message.type === 'error' ? 'text-destructive' : 'text-muted-foreground'}`}>
               {message.text}
             </p>
           )}

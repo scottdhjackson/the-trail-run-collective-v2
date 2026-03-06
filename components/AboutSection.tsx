@@ -9,7 +9,7 @@ interface AboutSectionProps {
 }
 
 const DUMMY_BODY =
-  'The Trail Run Collective was born out of a simple belief: that the mountains, forests, and trails are for everyone. We organise trail running events across the UK for runners of all abilities — from those lacing up for their first off-road adventure to seasoned ultra runners chasing their next big challenge. Every event we create is built around community, breathtaking landscapes, and the shared experience of pushing beyond the ordinary. We handle the logistics so you can focus on the run.'
+  'The Trail Run Collective was founded by two school friends united by a shared love of running — and an even deeper passion for the trails. What began as weekend adventures quickly grew into a vision: to create trail running events that feel different. Events with personality, purpose, and a little creative twist.'
 
 export function AboutSection({ heading, body, ctaLabel, backgroundImageUrl }: AboutSectionProps) {
   const imageSrc = backgroundImageUrl || '/images/miguel-a-amutio-QDv-uBc-poY-unsplash.jpg'

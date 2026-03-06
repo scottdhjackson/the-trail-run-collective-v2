@@ -17,6 +17,7 @@ import { EventStickyFooter } from '@/components/event-details/EventStickyFooter'
 import { KitList } from '@/components/KitList'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { Mountain } from 'lucide-react'
 
 export const revalidate = 60
 
@@ -59,40 +60,37 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
             {/* Horizontal Layout for Overview Items */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
               {/* 3a. Location */}
-              <div className="bg-background rounded-lg p-6 shadow-sm">
-                <EventLocation
-                  venueName={event.venueName}
-                  town={event.town}
-                  county={event.county}
-                  postcode={event.postcode}
-                  googleMapsLink={event.googleMapsLink}
-                  what3words={event.what3words}
-                  locationImageUrl={event.locationImageUrl}
-                />
-              </div>
+              <EventLocation
+                venueName={event.venueName}
+                town={event.town}
+                county={event.county}
+                postcode={event.postcode}
+                googleMapsLink={event.googleMapsLink}
+                what3words={event.what3words}
+                locationImageUrl={event.locationImageUrl}
+              />
 
               {/* 3b. Routes Summary */}
-              <div className="bg-secondary/20 rounded-lg p-6 shadow-sm">
-                <EventRoutesSummary distances={event.distances} />
-              </div>
+              <EventRoutesSummary distances={event.distances} />
 
               {/* 3c. Registration */}
-              <div className="bg-accent/20 rounded-lg p-6 shadow-sm">
-                <EventDetails
-                  registrationOpens={event.registrationOpens}
-                  registrationCloses={event.registrationCloses}
-                  startTime={event.startTime}
-                />
-              </div>
+              <EventDetails
+                registrationOpens={event.registrationOpens}
+                registrationCloses={event.registrationCloses}
+                startTime={event.startTime}
+              />
 
               {/* 3d. Difficulty */}
               {event.difficultyDescription && (
-                <div className="bg-primary/10 rounded-lg p-6 shadow-sm">
-                  <div id="difficulty">
-                    <h3 className="text-xl font-semibold mb-4">Difficulty</h3>
-                    <p className="text-muted-foreground text-sm mb-2">{event.difficultyDescription}</p>
-                    <a href="#routes" className="text-primary hover:underline text-sm">More Info →</a>
+                <div id="difficulty" className="flex flex-col items-center text-center">
+                  <div className="w-24 h-24 rounded-full border-2 border-primary/40 flex items-center justify-center mb-4">
+                    <Mountain className="h-10 w-10 text-primary/60" strokeWidth={1.5} />
                   </div>
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+                    Difficulty
+                  </h3>
+                  <p className="text-sm opacity-80 mb-2">{event.difficultyDescription}</p>
+                  <a href="#routes" className="text-primary hover:underline text-xs">More Info →</a>
                 </div>
               )}
             </div>
@@ -175,12 +173,12 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
         </section>
 
         {/* Footer */}
-        <footer className="py-12 bg-muted/30 text-center">
+        <footer className="py-12 text-center" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text)' }}>
           <div className="container mx-auto px-4">
-            <p className="text-sm text-muted-foreground mb-2">
+            <p className="text-sm opacity-80 mb-2">
               © {new Date().getFullYear()} The Trail Run Collective. All rights reserved.
             </p>
-            <p className="text-sm text-muted-foreground space-x-4">
+            <p className="text-sm opacity-80 space-x-4">
               <Link href="/faq" className="hover:text-primary underline">
                 FAQs
               </Link>

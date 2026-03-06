@@ -78,7 +78,7 @@ export function ContactSection() {
               />
             </div>
 
-            <div>
+            <div suppressHydrationWarning>
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"

@@ -9,9 +9,10 @@ export function Hero() {
           src="/images/hero.jpg"
           alt="Trail running at Box Hill"
           fill
-          className="object-cover object-center brightness-[0.7]"
+          className="object-cover object-center"
           priority
         />
+        <div className="absolute inset-0" style={{ backgroundColor: 'var(--banner-overlay)' }} />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 text-center text-white">

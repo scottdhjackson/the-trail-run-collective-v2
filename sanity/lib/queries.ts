@@ -10,7 +10,14 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   aboutHeading,
   aboutBody,
   aboutCtaLabel,
-  "aboutBackgroundImageUrl": aboutBackgroundImage.asset->url
+  "aboutBackgroundImageUrl": aboutBackgroundImage.asset->url,
+  colours {
+    navBackground,
+    navText,
+    bannerOverlay,
+    footerBackground,
+    footerText,
+  }
 }`
 
 export const EVENTS_QUERY = groq`*[_type == "event" && isPublished == true] | order(date asc) {

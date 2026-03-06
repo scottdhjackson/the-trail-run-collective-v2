@@ -71,5 +71,50 @@ export default defineType({
       description: 'Replaces the default background photo. Recommended: wide landscape image.',
       options: { hotspot: true },
     }),
+
+    // ── Colours ──────────────────────────────────────────────────────────────
+    defineField({
+      name: 'colours',
+      title: 'Colours',
+      type: 'object',
+      description: 'Override the default colours for key site sections. Use hex codes (e.g. #ffffff) or rgba values (e.g. rgba(0,0,0,0.5)).',
+      fields: [
+        {
+          name: 'navBackground',
+          title: 'Navigation — Background',
+          type: 'string',
+          description: 'Background colour of the top nav bar. Default: #000000',
+          placeholder: '#000000',
+        },
+        {
+          name: 'navText',
+          title: 'Navigation — Text',
+          type: 'string',
+          description: 'Link and icon colour in the top nav. Default: #ffffff',
+          placeholder: '#ffffff',
+        },
+        {
+          name: 'bannerOverlay',
+          title: 'Banner — Overlay Colour',
+          type: 'string',
+          description: 'Colour overlay on the hero banner image. Use rgba for transparency, e.g. rgba(0,0,0,0.45). Default: rgba(0,0,0,0.45)',
+          placeholder: 'rgba(0,0,0,0.45)',
+        },
+        {
+          name: 'footerBackground',
+          title: 'Footer — Background',
+          type: 'string',
+          description: 'Background colour of the footer. Default: transparent (inherits muted tone)',
+          placeholder: '#f5f5f5',
+        },
+        {
+          name: 'footerText',
+          title: 'Footer — Text',
+          type: 'string',
+          description: 'Text colour in the footer. Default: inherits muted foreground',
+          placeholder: '#6b7280',
+        },
+      ],
+    }),
   ],
 })

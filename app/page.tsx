@@ -4,7 +4,6 @@ import { Hero } from '@/components/Hero'
 import { EventsSection } from '@/components/EventsSection'
 import { AboutSection } from '@/components/AboutSection'
 import { SignupSection } from '@/components/SignupSection'
-import { SupportSection } from '@/components/SupportSection'
 import { ContactSection } from '@/components/ContactSection'
 import { client } from '@/sanity/lib/client'
 import { EVENTS_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
@@ -42,22 +41,21 @@ export default async function HomePage() {
       <main>
         <Hero />
         <EventsSection events={events} />
+<SignupSection />
         <AboutSection
           heading={settings?.aboutHeading}
           body={settings?.aboutBody}
           ctaLabel={settings?.aboutCtaLabel}
           backgroundImageUrl={settings?.aboutBackgroundImageUrl}
         />
-        <SignupSection />
-        <SupportSection />
         <ContactSection />
 
-        <footer className="py-12 bg-muted/30 text-center">
+        <footer className="py-12 text-center" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text)' }}>
           <div className="container mx-auto px-4">
-            <p className="text-sm text-muted-foreground mb-2">
+            <p className="text-sm opacity-80 mb-2">
               © {new Date().getFullYear()} The Trail Run Collective. All rights reserved.
             </p>
-            <p className="text-sm text-muted-foreground space-x-4">
+            <p className="text-sm opacity-80 space-x-4">
               <Link href="/faq" className="hover:text-primary underline">
                 FAQs
               </Link>
