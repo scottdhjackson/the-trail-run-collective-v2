@@ -69,6 +69,12 @@ export default defineType({
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
+      name: 'bookingLink',
+      title: 'External Booking Link',
+      type: 'url',
+      description: 'If set, the BOOK button will redirect users to this external partner URL instead of the internal registration form.',
+    }),
+    defineField({
       name: 'isPublished',
       title: 'Published',
       type: 'boolean',

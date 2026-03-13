@@ -2,14 +2,16 @@
 
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 type EventHeroProps = {
   title: string
   date: string
   heroImageUrl?: string
+  slug: string
 }
 
-export function EventHero({ title, date, heroImageUrl }: EventHeroProps) {
+export function EventHero({ title, date, heroImageUrl, slug }: EventHeroProps) {
   const formattedDate = new Date(date).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'long',
@@ -38,19 +40,19 @@ export function EventHero({ title, date, heroImageUrl }: EventHeroProps) {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
+            asChild
             size="lg"
             className="bg-white text-black hover:bg-gray-200 font-bold text-lg px-8"
-            onClick={() => document.getElementById('race-overview')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            More Info
+            <Link href={`/book/${slug}`}>Book</Link>
           </Button>
           <Button
             size="lg"
             variant="outline"
             className="border-2 border-white bg-white text-black hover:bg-gray-200 font-bold text-lg px-8"
-            onClick={() => document.getElementById('prices')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('race-overview')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            View Prices
+            More Info
           </Button>
         </div>
       </div>

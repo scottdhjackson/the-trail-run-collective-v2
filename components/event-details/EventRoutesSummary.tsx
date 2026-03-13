@@ -3,7 +3,8 @@ import { Compass } from 'lucide-react'
 type Distance = {
   _key: string
   label: string
-  distanceKm?: number
+  distanceValue?: number
+  distanceUnit?: string
 }
 
 type EventRoutesSummaryProps = {
@@ -25,8 +26,8 @@ export function EventRoutesSummary({ distances }: EventRoutesSummaryProps) {
         {distances.map((distance) => (
           <li key={distance._key}>
             <span className="font-semibold">{distance.label}</span>
-            {distance.distanceKm && (
-              <span className="text-muted-foreground"> — {distance.distanceKm}km</span>
+            {distance.distanceValue && (
+              <span className="text-muted-foreground"> — {distance.distanceValue}{distance.distanceUnit ?? 'km'}</span>
             )}
           </li>
         ))}

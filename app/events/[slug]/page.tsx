@@ -42,6 +42,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
           title={event.title}
           date={event.date}
           heroImageUrl={event.heroImageUrl}
+          slug={event.slug.current}
         />
 
         {/* 2. Intro Block */}

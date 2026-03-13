@@ -51,7 +51,7 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
 
   return (
     <>
-      <div className="overflow-hidden bg-gray-900 rounded-lg hover:shadow-2xl transition-shadow">
+      <div className="overflow-hidden bg-gray-900 rounded-lg hover:shadow-2xl transition-shadow flex flex-col h-full w-full">
         {/* Header Image with Overlays */}
         <div className="relative h-64 w-full">
           {displayImage ? (
@@ -86,7 +86,7 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
         </div>
 
         {/* Content Section */}
-        <div className="p-6 space-y-4">
+        <div className="p-6 space-y-4 flex flex-col flex-1">
           {/* Title */}
           <h3 className="text-2xl font-bold text-white">
             {title}
@@ -149,7 +149,7 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
                 className="flex-1 bg-white text-black hover:bg-gray-200 font-bold"
                 size="lg"
               >
-                <Link href={`/register/${slug}`}>BOOK</Link>
+                <Link href={`/book/${slug}`}>BOOK</Link>
               </Button>
               <Button
                 asChild

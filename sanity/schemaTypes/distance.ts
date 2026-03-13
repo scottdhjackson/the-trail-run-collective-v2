@@ -32,10 +32,23 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'distanceKm',
-      title: 'Distance (km)',
+      name: 'distanceValue',
+      title: 'Distance',
       type: 'number',
-      description: 'Distance in kilometers',
+      description: 'The numeric distance value (e.g., 10, 25, 50)',
+    }),
+    defineField({
+      name: 'distanceUnit',
+      title: 'Distance Unit',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Kilometres (km)', value: 'km' },
+          { title: 'Miles (mi)', value: 'mi' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'km',
     }),
     defineField({
       name: 'elevationGain',

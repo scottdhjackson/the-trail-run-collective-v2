@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button'
 type Distance = {
   _key: string
   label: string
-  distanceKm?: number
+  distanceValue?: number
+  distanceUnit?: string
   elevationGain?: number
   description?: string
   gpxFileUrl?: string
@@ -35,9 +36,9 @@ export function EventRoutes({ distances }: EventRoutesProps) {
                   <h3 className="text-2xl font-bold mb-4">{distance.label}</h3>
 
                   <div className="space-y-2 mb-6">
-                    {distance.distanceKm && (
+                    {distance.distanceValue && (
                       <p className="text-muted-foreground">
-                        Distance: <span className="text-foreground font-semibold">{distance.distanceKm} km</span>
+                        Distance: <span className="text-foreground font-semibold">{distance.distanceValue} {distance.distanceUnit ?? 'km'}</span>
                       </p>
                     )}
                     {distance.elevationGain && (

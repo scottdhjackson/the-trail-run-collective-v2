@@ -5,7 +5,8 @@ import Link from 'next/link'
 type Distance = {
   _key: string
   label: string
-  distanceKm?: number
+  distanceValue?: number
+  distanceUnit?: string
   elevationGain?: number
   price?: number
   isOpen: boolean
@@ -37,9 +38,9 @@ export function EventPrices({ distances, eventSlug }: EventPricesProps) {
               <h3 className="text-2xl font-bold mb-4">{distance.label}</h3>
 
               <div className="space-y-2 mb-6">
-                {distance.distanceKm && (
+                {distance.distanceValue && (
                   <p className="text-muted-foreground">
-                    Distance: <span className="text-foreground font-semibold">{distance.distanceKm} km</span>
+                    Distance: <span className="text-foreground font-semibold">{distance.distanceValue} {distance.distanceUnit ?? 'km'}</span>
                   </p>
                 )}
                 {distance.elevationGain && (
@@ -60,7 +61,7 @@ export function EventPrices({ distances, eventSlug }: EventPricesProps) {
                 disabled={!distance.isOpen}
               >
                 {distance.isOpen ? (
-                  <Link href={`/register/${eventSlug}?distance=${distance.label}`}>
+                  <Link href={`/book/${eventSlug}?distance=${distance.label}`}>
                     Enter Now
                   </Link>
                 ) : (

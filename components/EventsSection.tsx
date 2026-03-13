@@ -40,21 +40,22 @@ export function EventsSection({ events }: EventsSectionProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-8">
           {events.map((event) => (
-            <EventCard
-              key={event._id}
-              title={event.title}
-              slug={event.slug.current}
-              shortDescription={event.shortDescription}
-              longDescription={event.longDescription}
-              location={event.location}
-              date={event.date}
-              cardImage={event.cardImage}
-              heroImageUrl={event.heroImageUrl}
-              distances={event.distances.sort((a, b) => a.sortOrder - b.sortOrder)}
-              comingSoon={event.comingSoon}
-            />
+            <div key={event._id} className="w-full md:w-[420px]">
+              <EventCard
+                title={event.title}
+                slug={event.slug.current}
+                shortDescription={event.shortDescription}
+                longDescription={event.longDescription}
+                location={event.location}
+                date={event.date}
+                cardImage={event.cardImage}
+                heroImageUrl={event.heroImageUrl}
+                distances={event.distances.sort((a, b) => a.sortOrder - b.sortOrder)}
+                comingSoon={event.comingSoon}
+              />
+            </div>
           ))}
         </div>
       </div>
