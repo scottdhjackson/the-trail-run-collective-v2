@@ -2,8 +2,8 @@ import { client } from '@/sanity/lib/client'
 import { KIT_LIST_BY_SLUG_QUERY } from '@/sanity/lib/queries'
 import { KitList } from '@/components/KitList'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
 
 type KitListData = {
   _id: string
@@ -36,27 +36,8 @@ export default async function KitListPage({ params }: { params: Promise<{ slug: 
           footerText={kitList.footerText}
         />
 
-        <footer className="py-12 bg-muted/30 text-center">
-          <div className="container mx-auto px-4">
-            <p className="text-sm text-muted-foreground mb-2">
-              © {new Date().getFullYear()} The Trail Run Collective. All rights reserved.
-            </p>
-            <p className="text-sm text-muted-foreground space-x-4">
-              <Link href="/faq" className="hover:text-primary underline">
-                FAQs
-              </Link>
-              <span>•</span>
-              <Link href="/kit-list/required-equipment" className="hover:text-primary underline">
-                Kit List
-              </Link>
-              <span>•</span>
-              <Link href="/privacy-policy" className="hover:text-primary underline">
-                Privacy Policy
-              </Link>
-            </p>
-          </div>
-        </footer>
       </main>
+      <Footer />
     </>
   )
 }

@@ -1,59 +1,85 @@
-'use client'
-
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { CalendarDays, MapPin } from 'lucide-react'
 
 type EventHeroProps = {
   title: string
   date: string
+  location: string
   heroImageUrl?: string
   slug: string
+  distanceLabel?: string
+  difficultyDescription?: string
 }
 
-export function EventHero({ title, date, heroImageUrl, slug }: EventHeroProps) {
+export function EventHero({ title, date, location, heroImageUrl, distanceLabel, difficultyDescription }: EventHeroProps) {
   const formattedDate = new Date(date).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  })
+  }).toUpperCase()
+
+  // Derive a short difficulty label from the description
+  const difficultyLabel = difficultyDescription
+    ? difficultyDescription.split(' ').slice(0, 2).join(' ').toUpperCase()
+    : null
 
   return (
-    <header className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
-      {/* Background Image */}
+    <header className="relative h-[70vh] min-h-[500px] flex items-end overflow-hidden">
       {heroImageUrl ? (
         <Image
           src={heroImageUrl}
           alt={title}
           fill
-          className="object-cover brightness-50"
+          className="object-cover"
           priority
         />
       ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900" />
       )}
 
-      {/* Content */}
-      <div className="relative z-10 text-center text-white px-4 max-w-4xl">
-        <h1 className="text-5xl md:text-6xl font-bold mb-4">{title}</h1>
-        <p className="text-2xl md:text-3xl mb-8">{formattedDate}</p>
+      {/* Dark gradient overlay — stronger at bottom */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            asChild
-            size="lg"
-            className="bg-white text-black hover:bg-gray-200 font-bold text-lg px-8"
-          >
-            <Link href={`/book/${slug}`}>Book</Link>
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-2 border-white bg-white text-black hover:bg-gray-200 font-bold text-lg px-8"
-            onClick={() => document.getElementById('race-overview')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            More Info
-          </Button>
+      {/* Content — bottom-left */}
+      <div className="relative z-10 w-full container mx-auto px-6 pb-10 md:pb-14">
+        {/* Back link */}
+        <Link
+          href="/#events"
+          className="inline-flex items-center gap-2 text-white/70 text-xs font-semibold tracking-widest uppercase hover:text-white transition-colors mb-5"
+        >
+          ← Back to Calendar
+        </Link>
+
+        {/* Badges */}
+        <div className="flex items-center gap-2 mb-4">
+          {distanceLabel && (
+            <span className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-white" style={{ backgroundColor: '#2D5C26' }}>
+              {distanceLabel}
+            </span>
+          )}
+          {difficultyLabel && (
+            <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/20 text-white backdrop-blur-sm">
+              {difficultyLabel}
+            </span>
+          )}
+        </div>
+
+        {/* Title */}
+        <h1 className="font-heading font-black uppercase text-white leading-none tracking-tight mb-5 text-5xl md:text-7xl lg:text-8xl">
+          {title}
+        </h1>
+
+        {/* Date + Location */}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80 text-sm font-medium">
+          <span className="flex items-center gap-2">
+            <CalendarDays size={14} className="opacity-70" />
+            {formattedDate}
+          </span>
+          <span className="flex items-center gap-2">
+            <MapPin size={14} className="opacity-70" />
+            {location}
+          </span>
         </div>
       </div>
     </header>

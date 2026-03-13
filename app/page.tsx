@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { EventsSection } from '@/components/EventsSection'
 import { AboutSection } from '@/components/AboutSection'
@@ -50,31 +50,8 @@ export default async function HomePage() {
         />
         <ContactSection />
 
-        <footer className="py-12 text-center" style={{ backgroundColor: 'var(--footer-bg)', color: 'var(--footer-text)' }}>
-          <div className="container mx-auto px-4">
-            <p className="text-sm opacity-80 mb-2">
-              © {new Date().getFullYear()} The Trail Run Collective. All rights reserved.
-            </p>
-            <p className="text-sm opacity-80 space-x-4">
-              <Link href="/faq" className="hover:text-primary underline">
-                FAQs
-              </Link>
-              <span>•</span>
-              <Link href="/kit-list/required-equipment" className="hover:text-primary underline">
-                Kit List
-              </Link>
-              <span>•</span>
-              <Link href="/volunteer" className="hover:text-primary underline">
-                Volunteer
-              </Link>
-              <span>•</span>
-              <Link href="/privacy-policy" className="hover:text-primary underline">
-                Privacy Policy
-              </Link>
-            </p>
-          </div>
-        </footer>
       </main>
+      <Footer />
 
       {eventSchemas.map((schema: any, index: number) => (
         <script

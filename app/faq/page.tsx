@@ -1,8 +1,8 @@
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { FAQSection } from '@/components/FAQSection'
 import { client } from '@/sanity/lib/client'
 import { FAQS_QUERY } from '@/sanity/lib/queries'
-import Link from 'next/link'
 
 export const metadata = {
   title: 'FAQs - The Trail Run Collective',
@@ -25,27 +25,8 @@ export default async function FAQPage() {
           showCategories={true}
         />
 
-        <footer className="py-12 bg-muted/30 text-center">
-          <div className="container mx-auto px-4">
-            <p className="text-sm text-muted-foreground mb-2">
-              © {new Date().getFullYear()} The Trail Run Collective. All rights reserved.
-            </p>
-            <p className="text-sm text-muted-foreground space-x-4">
-              <Link href="/faq" className="hover:text-primary underline">
-                FAQs
-              </Link>
-              <span>•</span>
-              <Link href="/kit-list/required-equipment" className="hover:text-primary underline">
-                Kit List
-              </Link>
-              <span>•</span>
-              <Link href="/privacy-policy" className="hover:text-primary underline">
-                Privacy Policy
-              </Link>
-            </p>
-          </div>
-        </footer>
       </main>
+      <Footer />
     </>
   )
 }

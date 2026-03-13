@@ -13,88 +13,60 @@ export function Header() {
 
   return (
     <header
-      className="fixed top-0 w-full z-50 border-b"
-      style={{ backgroundColor: 'var(--nav-bg)', borderColor: 'var(--nav-bg)', color: 'var(--nav-text)' }}
+      className="fixed top-0 w-full z-50 border-b border-black/10"
+      style={{ backgroundColor: '#E8E3D7', color: 'var(--nav-text)' }}
     >
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center" onClick={closeMenu}>
+      <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="flex items-center shrink-0" onClick={closeMenu}>
           <Image
             src="/images/logo.svg"
             alt="The Trail Run Collective"
             width={400}
             height={80}
-            className="h-14 w-auto"
+            className="h-10 w-auto"
           />
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          <a href="/#events" className="text-sm font-medium transition-colors hover:opacity-75">
+        {/* Desktop Navigation — centred */}
+        <nav className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+          <a href="/#events" className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60">
             Events
           </a>
-          <a href="/#join" className="text-sm font-medium transition-colors hover:opacity-75">
+          <a href="/#join" className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60">
             Join
           </a>
-          <a href="/#contact" className="text-sm font-medium transition-colors hover:opacity-75">
+          <a href="/#contact" className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60">
             Contact
           </a>
-          <Link href="/faq" className="text-sm font-medium transition-colors hover:opacity-75">
+          <Link href="/faq" className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60">
             FAQs
           </Link>
-          <Link href="/volunteer" className="text-sm font-medium transition-colors hover:opacity-75">
+          <Link href="/volunteer" className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60">
             Volunteer
           </Link>
         </nav>
 
+
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
-          className="md:hidden p-2 hover:opacity-75 transition-colors"
+          className="md:hidden p-2 hover:opacity-60 transition-opacity"
           aria-label="Toggle menu"
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden border-t" style={{ backgroundColor: 'var(--nav-bg)', borderColor: 'rgba(255,255,255,0.1)' }}>
-          <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            <a
-              href="/#events"
-              className="text-sm font-medium transition-colors hover:opacity-75 py-2"
-              onClick={closeMenu}
-            >
-              Events
-            </a>
-            <a
-              href="/#join"
-              className="text-sm font-medium transition-colors hover:opacity-75 py-2"
-              onClick={closeMenu}
-            >
-              Join
-            </a>
-            <a
-              href="/#contact"
-              className="text-sm font-medium transition-colors hover:opacity-75 py-2"
-              onClick={closeMenu}
-            >
-              Contact
-            </a>
-            <Link
-              href="/faq"
-              className="text-sm font-medium transition-colors hover:opacity-75 py-2"
-              onClick={closeMenu}
-            >
-              FAQs
-            </Link>
-            <Link
-              href="/volunteer"
-              className="text-sm font-medium transition-colors hover:opacity-75 py-2"
-              onClick={closeMenu}
-            >
-              Volunteer
-            </Link>
+        <div className="md:hidden border-t border-black/10" style={{ backgroundColor: '#E8E3D7' }}>
+          <nav className="container mx-auto px-6 py-6 flex flex-col gap-5">
+            <a href="/#events" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Events</a>
+            <a href="/#join" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Join</a>
+            <a href="/#contact" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Contact</a>
+            <Link href="/faq" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>FAQs</Link>
+            <Link href="/volunteer" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Volunteer</Link>
           </nav>
         </div>
       )}

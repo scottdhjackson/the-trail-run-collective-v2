@@ -1,7 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Calendar, MapPin } from 'lucide-react'
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -27,146 +26,153 @@ type EventCardProps = {
   comingSoon?: boolean
 }
 
-export function EventCard({ title, slug, shortDescription, longDescription, location, date, cardImage, heroImageUrl, distances, comingSoon }: EventCardProps) {
+function getStatus(distances: Distance[], comingSoon?: boolean): { label: string; bg: string; text: string } {
+  if (comingSoon) return { label: 'Coming Soon', bg: '#F5C518', text: '#000000' }
+  const openCount = distances.filter((d) => d.isOpen).length
+  if (openCount === 0) return { label: 'Sold Out', bg: '#1a1a1a', text: '#ffffff' }
+  if (openCount === 1 && distances.length > 1) return { label: 'Filling Fast', bg: '#ffffff', text: '#0C0F1E' }
+  return { label: 'Open', bg: '#ffffff', text: '#0C0F1E' }
+}
+
+export function EventCard({
+  title,
+  slug,
+  shortDescription,
+  longDescription,
+  location,
+  date,
+  cardImage,
+  heroImageUrl,
+  distances,
+  comingSoon,
+}: EventCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const formattedDate = new Date(date).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  }).toUpperCase()
+  })
 
-  // Extract location region (e.g., "Box Hill, Surrey" -> "SURREY")
-  const locationRegion = location.split(',').pop()?.trim().toUpperCase() || location.toUpperCase()
-
-  const prices = distances.map(d => d.price).filter((p): p is number => p != null)
-  const lowestPrice = prices.length > 0 ? `£${Math.min(...prices)}` : null
-
-  // Get text preview (first 20 words)
-  const textPreview = longDescription
-    ? longDescription.split(' ').slice(0, 20).join(' ') + '...'
-    : ''
-
-  // Use hero image if card image is not provided
   const displayImage = heroImageUrl || cardImage
+  const prices = distances.map((d) => d.price).filter((p): p is number => p != null)
+  const lowestPrice = prices.length > 0 ? `From £${Math.min(...prices)}` : null
+  const status = getStatus(distances, comingSoon)
+  const primaryDistance = distances[0]?.label?.toUpperCase()
+
+  const textPreview = longDescription
+    ? longDescription.split(' ').slice(0, 22).join(' ') + '...'
+    : shortDescription
 
   return (
-    <>
-      <div className="overflow-hidden bg-gray-900 rounded-lg hover:shadow-2xl transition-shadow flex flex-col h-full w-full">
-        {/* Header Image with Overlays */}
-        <div className="relative h-64 w-full">
-          {displayImage ? (
-            <Image
-              src={displayImage}
-              alt={title}
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-blue-600 to-blue-800" />
-          )}
+    <div className="bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-lg transition-shadow duration-300">
+      {/* Image */}
+      <div className="relative h-56 w-full shrink-0">
+        {displayImage ? (
+          <Image src={displayImage} alt={title} fill className="object-cover" />
+        ) : (
+          <div className="w-full h-full" style={{ background: 'linear-gradient(135deg, #2D5C26 0%, #0C0F1E 100%)' }} />
+        )}
 
-          {/* Location Label - Top Left */}
-          <div className="absolute top-4 left-4">
-            <div className="bg-black/70 px-3 py-1 text-white text-sm font-bold tracking-wider">
-              {locationRegion}
-            </div>
-          </div>
-
-          {/* Date - Top Right */}
-          <div className="absolute top-4 right-4 flex flex-col gap-2">
-            <div className="bg-black/70 px-3 py-1 text-white text-sm font-bold tracking-wider">
-              {formattedDate}
-            </div>
-            {comingSoon && (
-              <div className="bg-yellow-500 px-3 py-1 text-black text-sm font-bold tracking-wider">
-                COMING SOON
-              </div>
-            )}
-          </div>
+        {/* Status badge — top right */}
+        <div className="absolute top-3 right-3">
+          <span
+            className="px-3 py-1 rounded-full text-xs font-semibold tracking-wide shadow-sm"
+            style={{ backgroundColor: status.bg, color: status.text }}
+          >
+            {status.label}
+          </span>
         </div>
 
-        {/* Content Section */}
-        <div className="p-6 space-y-4 flex flex-col flex-1">
-          {/* Title */}
-          <h3 className="text-2xl font-bold text-white">
+        {/* Distance badge — bottom left */}
+        {primaryDistance && (
+          <div className="absolute bottom-3 left-3">
+            <span
+              className="px-2.5 py-1 rounded text-xs font-bold tracking-wider"
+              style={{ backgroundColor: '#2D5C26', color: '#ffffff' }}
+            >
+              {primaryDistance}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Card body */}
+      <div className="p-5 flex flex-col flex-1 gap-3">
+        {/* Title + price */}
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="font-heading font-bold text-lg leading-snug" style={{ color: '#0C0F1E' }}>
             {title}
           </h3>
-
-          {/* Date and subtitle */}
-          <p className="text-gray-300 text-sm">
-            📅 {formattedDate} • {shortDescription}
-          </p>
-
-          {/* Expandable Description */}
-          {longDescription && (
-            <>
-              {!isExpanded && (
-                <p className="text-gray-300 text-sm">
-                  {textPreview}
-                </p>
-              )}
-
-              {isExpanded && (
-                <div className="text-gray-300 text-sm space-y-2 pt-2 border-t border-gray-700">
-                  <p>{longDescription}</p>
-                </div>
-              )}
-
-              <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="text-white text-sm underline hover:text-gray-300"
-              >
-                {isExpanded ? 'Read less' : 'Read more'}
-              </button>
-            </>
-          )}
-
-          {/* Distances */}
-          <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-gray-400 text-sm font-semibold tracking-wider">
-              DISTANCES:
+          {lowestPrice && (
+            <span className="shrink-0 text-sm font-semibold" style={{ color: '#0C0F1E' }}>
+              {lowestPrice}
             </span>
-            {distances.map((distance) => (
+          )}
+        </div>
+
+        {/* Meta */}
+        <div className="flex flex-col gap-1.5 text-sm" style={{ color: '#6B6558' }}>
+          <span className="flex items-center gap-2">
+            <Calendar size={13} className="shrink-0" />
+            {formattedDate}
+          </span>
+          <span className="flex items-center gap-2">
+            <MapPin size={13} className="shrink-0" />
+            <span style={{ color: '#2D5C26' }}>{location}</span>
+          </span>
+        </div>
+
+        {/* Distance pills */}
+        {distances.length > 1 && (
+          <div className="flex flex-wrap gap-1.5">
+            {distances.map((d) => (
               <span
-                key={distance.label}
-                className="border border-white text-white px-3 py-1 text-sm font-bold"
+                key={d.label}
+                className="px-2.5 py-1 rounded-full text-xs font-semibold border"
+                style={{ borderColor: '#0C0F1E', color: '#0C0F1E' }}
               >
-                {distance.label.toUpperCase()}
+                {d.label}
               </span>
             ))}
           </div>
+        )}
 
-          {/* Price */}
-          {lowestPrice && (
-            <div className="text-white text-lg font-bold">
-              FROM {lowestPrice}
-            </div>
-          )}
+        {/* Description */}
+        <p className="text-sm leading-relaxed flex-1" style={{ color: '#6B6558' }}>
+          {isExpanded ? longDescription || shortDescription : textPreview}
+        </p>
 
-          {/* Buttons */}
-          {!comingSoon && (
-            <div className="flex gap-3 pt-2">
-              <Button
-                asChild
-                className="flex-1 bg-white text-black hover:bg-gray-200 font-bold"
-                size="lg"
-              >
-                <Link href={`/book/${slug}`}>BOOK</Link>
-              </Button>
-              <Button
-                asChild
-                className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-black font-bold"
-                size="lg"
-              >
-                <Link href={`/events/${slug}`}>
-                  INFO <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          )}
-        </div>
+        {longDescription && (
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="text-xs font-semibold self-start underline hover:opacity-70 transition-opacity"
+            style={{ color: '#2D5C26' }}
+          >
+            {isExpanded ? 'Read less' : 'Read more'}
+          </button>
+        )}
+
+        {/* Buttons */}
+        {!comingSoon && (
+          <div className="flex gap-2 pt-1">
+            <Link
+              href={`/events/${slug}`}
+              className="flex-1 text-center py-2.5 text-xs font-bold tracking-widest uppercase border rounded-lg transition-all hover:bg-black/5"
+              style={{ borderColor: '#0C0F1E', color: '#0C0F1E' }}
+            >
+              View Details
+            </Link>
+            <Link
+              href={`/book/${slug}`}
+              className="flex-1 text-center py-2.5 text-xs font-bold tracking-widest uppercase rounded-lg transition-all hover:opacity-90 flex items-center justify-center gap-1"
+              style={{ backgroundColor: '#2D5C26', color: '#ffffff' }}
+            >
+              Book <ArrowRight size={12} />
+            </Link>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   )
 }

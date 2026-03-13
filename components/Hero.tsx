@@ -1,13 +1,13 @@
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 
 export function Hero() {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden mt-16">
-      <div className="absolute inset-0 top-0 z-0">
+    <section className="relative h-[82vh] flex items-end overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
         <Image
           src="/images/hero.jpg"
-          alt="Trail running at Box Hill"
+          alt="Trail running"
           fill
           className="object-cover object-center"
           priority
@@ -15,33 +15,38 @@ export function Hero() {
         <div className="absolute inset-0" style={{ backgroundColor: 'var(--banner-overlay)' }} />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 text-center text-white">
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
-          The Trail Run Collective
-        </h1>
-        <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto font-light">
-          Discover epic trail and ultra running events across the UK.
-        </p>
-        <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto font-light">
-          Join thrilling, well-supported races from 10 miles to 50 miles, perfect for beginners, seasoned runners, and everyone in between.
+      {/* Content — bottom-left aligned */}
+      <div className="relative z-10 container mx-auto px-6 pb-20 md:pb-28">
+        {/* Eyebrow */}
+        <p className="text-white/70 text-xs tracking-[0.25em] uppercase font-semibold mb-5">
+          Season 2026 Now Open
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            size="lg"
-            asChild
-            className="text-lg px-8 py-6"
+        {/* Heading */}
+        <h1 className="font-heading font-black uppercase leading-none mb-8">
+          <span className="block text-white text-6xl md:text-8xl lg:text-9xl tracking-tight">
+            Run the
+          </span>
+          <span className="block font-accent italic text-[var(--brand-green)] text-6xl md:text-8xl lg:text-9xl" style={{ color: '#2D5C26' }}>
+            Trails
+          </span>
+        </h1>
+
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <a
+            href="#events"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all hover:opacity-90"
+            style={{ backgroundColor: '#2D5C26', color: '#ffffff' }}
           >
-            <a href="#events">View Events</a>
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            asChild
-            className="text-lg px-8 py-6 bg-white/10 backdrop-blur hover:bg-white/20 border-white text-white"
+            Explore Events →
+          </a>
+          <a
+            href="#join"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide border-2 border-white text-white transition-all hover:bg-white/10"
           >
-            <a href="#join">Join our mailing list</a>
-          </Button>
+            Join our mailing list
+          </a>
         </div>
       </div>
     </section>

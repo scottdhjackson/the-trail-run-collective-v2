@@ -22,23 +22,24 @@ export function EventLocation({
 
   return (
     <div id="location" className="flex flex-col items-center text-center">
-      <div className="w-24 h-24 rounded-full border-2 border-primary/40 flex items-center justify-center mb-4">
-        <MapPin className="h-10 w-10 text-primary/60" strokeWidth={1.5} />
+      <div className="w-24 h-24 rounded-full border-2 flex items-center justify-center mb-4" style={{ borderColor: '#2D5C2640' }}>
+        <MapPin className="h-10 w-10" strokeWidth={1.5} style={{ color: '#2D5C26' }} />
       </div>
-      <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+      <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#6B6558' }}>
         Location
       </h3>
       <div className="space-y-1 text-sm">
-        {venueName && <p className="font-semibold">{venueName}</p>}
-        {town && <p className="text-muted-foreground">{town}</p>}
-        {county && <p className="text-muted-foreground">{county}</p>}
-        {postcode && <p className="text-muted-foreground font-mono">{postcode}</p>}
+        {venueName && <p className="font-semibold" style={{ color: '#0C0F1E' }}>{venueName}</p>}
+        {town && <p style={{ color: '#2D5C26' }}>{town}</p>}
+        {county && <p style={{ color: '#2D5C26' }}>{county}</p>}
+        {postcode && <p className="font-mono" style={{ color: '#2D5C26' }}>{postcode}</p>}
         {googleMapsLink && (
           <a
             href={googleMapsLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 mt-2 text-primary hover:underline text-xs"
+            className="inline-flex items-center gap-1 mt-2 hover:underline text-xs"
+            style={{ color: '#2D5C26' }}
           >
             View Map <ExternalLink className="h-3 w-3" />
           </a>
