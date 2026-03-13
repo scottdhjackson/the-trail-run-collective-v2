@@ -36,7 +36,8 @@ export const EVENTS_QUERY = groq`*[_type == "event" && isPublished == true] | or
     label,
     stripePriceId,
     isOpen,
-    sortOrder
+    sortOrder,
+    price
   }
 }`
 

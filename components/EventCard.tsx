@@ -11,6 +11,7 @@ type Distance = {
   stripePriceId: string
   isOpen: boolean
   sortOrder: number
+  price?: number
 }
 
 type EventCardProps = {
@@ -38,8 +39,8 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
   // Extract location region (e.g., "Box Hill, Surrey" -> "SURREY")
   const locationRegion = location.split(',').pop()?.trim().toUpperCase() || location.toUpperCase()
 
-  // Find lowest price from distances (placeholder for now)
-  const lowestPrice = '£25' // You can calculate this from actual Stripe prices later
+  const prices = distances.map(d => d.price).filter((p): p is number => p != null)
+  const lowestPrice = prices.length > 0 ? `£${Math.min(...prices)}` : null
 
   // Get text preview (first 20 words)
   const textPreview = longDescription
@@ -137,9 +138,11 @@ export function EventCard({ title, slug, shortDescription, longDescription, loca
           </div>
 
           {/* Price */}
-          <div className="text-white text-lg font-bold">
-            FROM {lowestPrice}
-          </div>
+          {lowestPrice && (
+            <div className="text-white text-lg font-bold">
+              FROM {lowestPrice}
+            </div>
+          )}
 
           {/* Buttons */}
           {!comingSoon && (
