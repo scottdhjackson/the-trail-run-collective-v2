@@ -1,4 +1,4 @@
-import { Header } from '@/components/Header'
+import { HeaderWithSettings } from '@/components/HeaderWithSettings'
 import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { EventsSection } from '@/components/EventsSection'
@@ -37,18 +37,18 @@ export default async function HomePage() {
 
   return (
     <>
-      <Header />
+      <HeaderWithSettings />
       <main>
-        <Hero />
+        <Hero bannerImageUrl={settings?.heroBannerImageUrl} />
         <EventsSection events={events} />
 <SignupSection />
         <AboutSection
           heading={settings?.aboutHeading}
           body={settings?.aboutBody}
           ctaLabel={settings?.aboutCtaLabel}
-          backgroundImageUrl={settings?.aboutBackgroundImageUrl}
+          imageUrls={settings?.aboutImageUrls}
         />
-        <ContactSection />
+        <ContactSection contactEmail={settings?.contactEmail} />
 
       </main>
       <Footer />

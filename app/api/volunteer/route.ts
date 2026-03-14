@@ -3,16 +3,16 @@ import { z } from 'zod'
 import { writeClient } from '@/sanity/lib/client'
 
 const volunteerSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Please enter a valid email'),
-  phone: z.string().optional(),
+  firstName: z.string().min(1, 'First name is required').max(100),
+  lastName: z.string().min(1, 'Last name is required').max(100),
+  email: z.string().email('Please enter a valid email').max(254),
+  phone: z.string().max(30).optional(),
   availability: z.enum(['weekends', 'weekdays', 'both', 'flexible']),
-  roles: z.array(z.string()).optional(),
-  experience: z.string().optional(),
-  whyVolunteer: z.string().optional(),
-  emergencyContactName: z.string().optional(),
-  emergencyContactPhone: z.string().optional(),
+  roles: z.array(z.string().max(100)).max(20).optional(),
+  experience: z.string().max(2000).optional(),
+  whyVolunteer: z.string().max(2000).optional(),
+  emergencyContactName: z.string().max(100).optional(),
+  emergencyContactPhone: z.string().max(30).optional(),
 })
 
 export async function POST(request: NextRequest) {

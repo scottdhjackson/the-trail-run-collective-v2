@@ -1,4 +1,4 @@
-import { Header } from '@/components/Header'
+import { HeaderWithSettings } from '@/components/HeaderWithSettings'
 import { Footer } from '@/components/Footer'
 
 export const metadata = {
@@ -9,7 +9,7 @@ export const metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <Header />
+      <HeaderWithSettings />
       <main className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-24 max-w-4xl">
           <h1 className="text-4xl font-bold tracking-tight mb-8">Privacy Policy</h1>

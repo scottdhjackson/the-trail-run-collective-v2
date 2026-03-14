@@ -1,6 +1,6 @@
 import { client } from '@/sanity/lib/client'
 import { EVENT_BY_SLUG_QUERY } from '@/sanity/lib/queries'
-import { Header } from '@/components/Header'
+import { HeaderWithSettings } from '@/components/HeaderWithSettings'
 import { EventHero } from '@/components/event-details/EventHero'
 import { EventRegistrationCard } from '@/components/event-details/EventRegistrationCard'
 import { EventLocation } from '@/components/event-details/EventLocation'
@@ -31,7 +31,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
 
   return (
     <>
-      <Header />
+      <HeaderWithSettings />
       <main className="min-h-screen" style={{ backgroundColor: '#F2EDE3' }}>
 
         {/* Hero */}

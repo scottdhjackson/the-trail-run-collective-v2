@@ -1,4 +1,4 @@
-import { Header } from '@/components/Header'
+import { HeaderWithSettings } from '@/components/HeaderWithSettings'
 import { VolunteerForm } from '@/components/VolunteerForm'
 
 export const metadata = {
@@ -10,7 +10,7 @@ export const metadata = {
 export default function VolunteerPage() {
   return (
     <>
-      <Header />
+      <HeaderWithSettings />
       <main className="min-h-screen bg-background">
         <section className="py-24">
           <div className="container mx-auto px-4 max-w-2xl">

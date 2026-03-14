@@ -1,12 +1,18 @@
 import Image from 'next/image'
 
-export function Hero() {
+interface HeroProps {
+  bannerImageUrl?: string
+}
+
+export function Hero({ bannerImageUrl }: HeroProps) {
+  const imageSrc = bannerImageUrl || '/images/hero.jpg'
+
   return (
     <section className="relative h-[82vh] flex items-end overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero.jpg"
+          src={imageSrc}
           alt="Trail running"
           fill
           className="object-cover object-center"

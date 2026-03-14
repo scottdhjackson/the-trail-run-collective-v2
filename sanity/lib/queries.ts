@@ -10,7 +10,10 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   aboutHeading,
   aboutBody,
   aboutCtaLabel,
-  "aboutBackgroundImageUrl": aboutBackgroundImage.asset->url,
+  "logoUrl": logo.asset->url,
+  logoWidth,
+  "heroBannerImageUrl": heroBannerImage.asset->url,
+  "aboutImageUrls": aboutBackgroundImage[].asset->url,
   colours {
     navBackground,
     navText,

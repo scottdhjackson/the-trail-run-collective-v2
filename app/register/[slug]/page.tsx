@@ -1,4 +1,4 @@
-import { Header } from '@/components/Header'
+import { HeaderWithSettings } from '@/components/HeaderWithSettings'
 import { SinglePageRegistrationForm } from '@/components/SinglePageRegistrationForm'
 import { client } from '@/sanity/lib/client'
 import { EVENT_BY_SLUG_QUERY } from '@/sanity/lib/queries'
@@ -21,7 +21,7 @@ export default async function RegisterPage({ params }: Props) {
 
   return (
     <>
-      <Header />
+      <HeaderWithSettings />
       <main className="min-h-screen bg-background pt-24 pb-12">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="mb-8">

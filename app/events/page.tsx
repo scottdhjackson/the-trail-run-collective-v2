@@ -1,6 +1,6 @@
 import { client } from '@/sanity/lib/client'
 import { EVENTS_QUERY } from '@/sanity/lib/queries'
-import { Header } from '@/components/Header'
+import { HeaderWithSettings } from '@/components/HeaderWithSettings'
 import { Footer } from '@/components/Footer'
 import { EventsPageClient } from '@/components/EventsPageClient'
 
@@ -16,7 +16,7 @@ export default async function EventsPage() {
 
   return (
     <>
-      <Header />
+      <HeaderWithSettings />
       <main className="min-h-screen pt-16" style={{ backgroundColor: '#F2EDE3' }}>
 
         {/* Page header */}

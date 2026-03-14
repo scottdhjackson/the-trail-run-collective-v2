@@ -1,7 +1,7 @@
 import { client } from '@/sanity/lib/client'
 import { KIT_LIST_BY_SLUG_QUERY } from '@/sanity/lib/queries'
 import { KitList } from '@/components/KitList'
-import { Header } from '@/components/Header'
+import { HeaderWithSettings } from '@/components/HeaderWithSettings'
 import { Footer } from '@/components/Footer'
 import { notFound } from 'next/navigation'
 
@@ -27,7 +27,7 @@ export default async function KitListPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <Header />
+      <HeaderWithSettings />
       <main className="min-h-screen bg-background">
         <KitList
           title={kitList.title}

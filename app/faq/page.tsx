@@ -1,4 +1,4 @@
-import { Header } from '@/components/Header'
+import { HeaderWithSettings } from '@/components/HeaderWithSettings'
 import { Footer } from '@/components/Footer'
 import { FAQSection } from '@/components/FAQSection'
 import { client } from '@/sanity/lib/client'
@@ -16,7 +16,7 @@ export default async function FAQPage() {
 
   return (
     <>
-      <Header />
+      <HeaderWithSettings />
       <main className="min-h-screen bg-background">
         <FAQSection
           faqs={faqs}

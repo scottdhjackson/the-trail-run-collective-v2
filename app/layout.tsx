@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat, Lato, Playfair_Display } from 'next/font/google'
 import './globals.css'
-import { generateMetadata, generateOrganizationSchema } from '@/lib/metadata'
+import { generateMetadata as buildMetadata, generateOrganizationSchema } from '@/lib/metadata'
 import { client } from '@/sanity/lib/client'
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
 
@@ -29,7 +29,13 @@ const playfair = Playfair_Display({
 
 export const revalidate = 60
 
-export const metadata: Metadata = generateMetadata()
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await client.fetch(SITE_SETTINGS_QUERY)
+  return buildMetadata({
+    title: settings?.seoTitle,
+    description: settings?.seoDescription,
+  })
+}
 
 export default async function RootLayout({
   children,

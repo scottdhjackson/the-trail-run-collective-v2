@@ -6,23 +6,25 @@ export const siteMetadata = {
   url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
 }
 
-export function generateMetadata(): Metadata {
+export function generateMetadata(overrides?: { title?: string; description?: string }): Metadata {
+  const title = overrides?.title || siteMetadata.title
+  const description = overrides?.description || siteMetadata.description
   return {
-    title: siteMetadata.title,
-    description: siteMetadata.description,
+    title,
+    description,
     metadataBase: new URL(siteMetadata.url),
     openGraph: {
       type: 'website',
       locale: 'en_GB',
       url: siteMetadata.url,
-      title: siteMetadata.title,
-      description: siteMetadata.description,
-      siteName: siteMetadata.title,
+      title,
+      description,
+      siteName: title,
     },
     twitter: {
       card: 'summary_large_image',
-      title: siteMetadata.title,
-      description: siteMetadata.description,
+      title,
+      description,
     },
   }
 }

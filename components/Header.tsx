@@ -5,7 +5,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 
-export function Header() {
+interface HeaderProps {
+  logoUrl?: string
+  logoWidth?: number
+}
+
+export function Header({ logoUrl, logoWidth }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
@@ -14,15 +19,15 @@ export function Header() {
   return (
     <header
       className="fixed top-0 w-full z-50 border-b border-black/10"
-      style={{ backgroundColor: '#E8E3D7', color: 'var(--nav-text)' }}
+      style={{ backgroundColor: 'var(--nav-bg)', color: 'var(--nav-text)' }}
     >
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0" onClick={closeMenu}>
           <Image
-            src="/images/logo.svg"
+            src={logoUrl || '/images/logo.svg'}
             alt="The Trail Run Collective"
-            width={400}
+            width={logoWidth || 160}
             height={80}
             className="h-10 w-auto"
           />
@@ -60,7 +65,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-black/10" style={{ backgroundColor: '#E8E3D7' }}>
+        <div className="md:hidden border-t border-black/10" style={{ backgroundColor: 'var(--nav-bg)' }}>
           <nav className="container mx-auto px-6 py-6 flex flex-col gap-5">
             <a href="/#events" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Events</a>
             <a href="/#join" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Join</a>

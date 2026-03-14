@@ -1,12 +1,21 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 
-export function ContactSection() {
+interface ContactSectionProps {
+  contactEmail?: string
+}
+
+export function ContactSection({ contactEmail }: ContactSectionProps) {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  // Build the mailto href client-side only so it never appears in server-rendered HTML
+  const [emailHref, setEmailHref] = useState<string | null>(null)
+  useEffect(() => {
+    if (contactEmail) setEmailHref(`mailto:${contactEmail}`)
+  }, [contactEmail])
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
@@ -57,10 +66,19 @@ export function ContactSection() {
               Questions?
             </h2>
             <p className="text-base" style={{ color: '#6B6558' }}>
-              Whether you're new to ultras or planning your next big trail run, our team is here to support you.{' '}
-              <a href="mailto:info@thetrailruncollective.com" className="font-medium underline" style={{ color: '#2D5C26' }}>
-                info@thetrailruncollective.com
-              </a>
+              Whether you're new to ultras or planning your next big trail run, our team is here to support you.
+              {contactEmail && (
+                <>
+                  {' '}
+                  {emailHref ? (
+                    <a href={emailHref} className="font-medium underline" style={{ color: '#2D5C26' }}>
+                      {contactEmail}
+                    </a>
+                  ) : (
+                    <span className="font-medium" style={{ color: '#2D5C26' }}>{contactEmail}</span>
+                  )}
+                </>
+              )}
             </p>
           </div>
 

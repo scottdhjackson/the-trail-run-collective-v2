@@ -1,4 +1,4 @@
-import { Header } from '@/components/Header'
+import { HeaderWithSettings } from '@/components/HeaderWithSettings'
 import { client } from '@/sanity/lib/client'
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
 import Link from 'next/link'
@@ -31,7 +31,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <Header />
+      <HeaderWithSettings />
       <main className="min-h-screen">
         <section className="py-24 bg-background">
           <div className="container mx-auto px-4 max-w-3xl">

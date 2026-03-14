@@ -1,18 +1,28 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+const FALLBACK_IMAGES = [
+  '/images/miguel-a-amutio-QDv-uBc-poY-unsplash.jpg',
+  '/images/hero.jpg',
+  '/images/miguel-a-amutio-QDv-uBc-poY-unsplash.jpg',
+]
+
 interface AboutSectionProps {
   heading?: string
   body?: string
   ctaLabel?: string
-  backgroundImageUrl?: string
+  imageUrls?: string[]
 }
 
 const DUMMY_BODY =
   'The Trail Run Collective was founded by two school friends united by a shared love of running — and an even deeper passion for the trails. What began as weekend adventures quickly grew into a vision: to create trail running events that feel different. Events with personality, purpose, and a little creative twist.'
 
-export function AboutSection({ heading, body, ctaLabel, backgroundImageUrl }: AboutSectionProps) {
-  const collageImage = backgroundImageUrl || '/images/miguel-a-amutio-QDv-uBc-poY-unsplash.jpg'
+export function AboutSection({ heading, body, ctaLabel, imageUrls }: AboutSectionProps) {
+  const images = [
+    imageUrls?.[0] || FALLBACK_IMAGES[0],
+    imageUrls?.[1] || FALLBACK_IMAGES[1],
+    imageUrls?.[2] || FALLBACK_IMAGES[2],
+  ]
 
   return (
     <section className="py-24 md:py-32" style={{ backgroundColor: '#080B18' }}>
@@ -54,13 +64,13 @@ export function AboutSection({ heading, body, ctaLabel, backgroundImageUrl }: Ab
           {/* Right: image collage */}
           <div className="grid grid-cols-2 gap-3">
             <div className="relative h-60 rounded-2xl overflow-hidden col-span-2">
-              <Image src={collageImage} alt="Trail running" fill className="object-cover" />
+              <Image src={images[0]} alt="Trail running" fill className="object-cover" />
             </div>
             <div className="relative h-44 rounded-2xl overflow-hidden bg-white/5">
-              <Image src="/images/hero.jpg" alt="Trail scenery" fill className="object-cover" />
+              <Image src={images[1]} alt="Trail scenery" fill className="object-cover" />
             </div>
             <div className="relative h-44 rounded-2xl overflow-hidden bg-white/5">
-              <Image src={collageImage} alt="Trail community" fill className="object-cover object-bottom" />
+              <Image src={images[2]} alt="Trail community" fill className="object-cover object-bottom" />
             </div>
           </div>
         </div>

@@ -65,11 +65,33 @@ export default defineType({
       initialValue: 'Learn More About Us',
     }),
     defineField({
-      name: 'aboutBackgroundImage',
-      title: 'About Section — Background Image',
+      name: 'logo',
+      title: 'Logo',
       type: 'image',
-      description: 'Replaces the default background photo. Recommended: wide landscape image.',
+      description: 'Upload a custom logo. SVG or PNG with a transparent background recommended.',
+      options: { hotspot: false },
+    }),
+    defineField({
+      name: 'logoWidth',
+      title: 'Logo Width (px)',
+      type: 'number',
+      description: 'Display width of the logo in pixels. Default: 160',
+      validation: (Rule) => Rule.min(40).max(600).integer(),
+    }),
+    defineField({
+      name: 'heroBannerImage',
+      title: 'Homepage — Banner Image',
+      type: 'image',
+      description: 'The main banner image at the top of the homepage. Recommended: wide landscape image.',
       options: { hotspot: true },
+    }),
+    defineField({
+      name: 'aboutBackgroundImage',
+      title: 'About Section — Images',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+      description: 'Up to 3 images shown in the about section collage. Add them in the order you want them to appear.',
+      validation: (Rule) => Rule.max(3),
     }),
 
     // ── Colours ──────────────────────────────────────────────────────────────

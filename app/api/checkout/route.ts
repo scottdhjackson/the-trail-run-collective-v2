@@ -5,26 +5,26 @@ import { client } from '@/sanity/lib/client'
 import { EVENT_BY_SLUG_QUERY } from '@/sanity/lib/queries'
 
 const checkoutSchema = z.object({
-  eventSlug: z.string(),
-  distanceLabel: z.string(),
+  eventSlug: z.string().max(200),
+  distanceLabel: z.string().max(100),
   registrationData: z.object({
-    firstName: z.string(),
-    lastName: z.string(),
-    email: z.string().email(),
-    phone: z.string(),
+    firstName: z.string().min(1).max(100),
+    lastName: z.string().min(1).max(100),
+    email: z.string().email().max(254),
+    phone: z.string().max(30),
     address: z.object({
-      line1: z.string(),
-      line2: z.string().optional(),
-      city: z.string(),
-      postcode: z.string(),
-      country: z.string(),
+      line1: z.string().max(200),
+      line2: z.string().max(200).optional(),
+      city: z.string().max(100),
+      postcode: z.string().max(20),
+      country: z.string().max(100),
     }),
-    age: z.number().int().min(18),
-    gender: z.string(),
+    age: z.number().int().min(18).max(120),
+    gender: z.string().max(50),
     emergencyContact: z.object({
-      name: z.string(),
-      phone: z.string(),
-      relationship: z.string(),
+      name: z.string().max(100),
+      phone: z.string().max(30),
+      relationship: z.string().max(100),
     }),
   }),
 })
