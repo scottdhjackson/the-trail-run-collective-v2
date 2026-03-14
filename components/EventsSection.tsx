@@ -36,7 +36,7 @@ export function EventsSection({ events }: EventsSectionProps) {
               Race Calendar
             </p>
             <h2 className="font-heading font-black uppercase text-5xl md:text-6xl lg:text-7xl leading-none tracking-tight" style={{ color: '#0C0F1E' }}>
-              Upcoming<br />Expeditions
+              Events<br />
             </h2>
             <p className="mt-5 text-base max-w-xl" style={{ color: '#6B6558' }}>
               Challenge yourself on beautiful trails across the UK. Our events are fully marked and supported for runners of all abilities.
