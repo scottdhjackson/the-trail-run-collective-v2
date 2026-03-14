@@ -94,6 +94,30 @@ export default defineType({
       validation: (Rule) => Rule.max(3),
     }),
 
+    // ── Typography ───────────────────────────────────────────────────────────
+    defineField({
+      name: 'typography',
+      title: 'Typography',
+      type: 'object',
+      description: 'Override the site typeface. Changes apply site-wide.',
+      fields: [
+        {
+          name: 'fontPreset',
+          title: 'Font Preset',
+          type: 'string',
+          description: 'Select the typeface used across the site.',
+          options: {
+            list: [
+              { title: 'Bell MT (current)', value: 'bell-mt' },
+              { title: 'Default (Montserrat / Lato)', value: 'default' },
+            ],
+            layout: 'radio',
+          },
+          initialValue: 'bell-mt',
+        },
+      ],
+    }),
+
     // ── Colours ──────────────────────────────────────────────────────────────
     defineField({
       name: 'colours',

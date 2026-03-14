@@ -6,13 +6,24 @@ export const siteMetadata = {
   url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
 }
 
-export function generateMetadata(overrides?: { title?: string; description?: string }): Metadata {
+export function generateMetadata(overrides?: {
+  title?: string
+  description?: string
+  logoUrl?: string
+  heroImageUrl?: string
+}): Metadata {
   const title = overrides?.title || siteMetadata.title
   const description = overrides?.description || siteMetadata.description
+  const ogImages = overrides?.heroImageUrl
+    ? [{ url: overrides.heroImageUrl, width: 1200, height: 630, alt: title }]
+    : []
   return {
     title,
     description,
     metadataBase: new URL(siteMetadata.url),
+    icons: overrides?.logoUrl
+      ? { icon: overrides.logoUrl, shortcut: overrides.logoUrl, apple: overrides.logoUrl }
+      : undefined,
     openGraph: {
       type: 'website',
       locale: 'en_GB',
@@ -20,11 +31,13 @@ export function generateMetadata(overrides?: { title?: string; description?: str
       title,
       description,
       siteName: title,
+      ...(ogImages.length > 0 && { images: ogImages }),
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      ...(overrides?.heroImageUrl && { images: [overrides.heroImageUrl] }),
     },
   }
 }

@@ -34,6 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
     title: settings?.seoTitle,
     description: settings?.seoDescription,
+    logoUrl: settings?.logoUrl,
+    heroImageUrl: settings?.heroBannerImageUrl,
   })
 }
 
@@ -46,12 +48,21 @@ export default async function RootLayout({
   const settings = await client.fetch(SITE_SETTINGS_QUERY)
 
   const colours = settings?.colours ?? {}
+  const fontPreset = settings?.typography?.fontPreset ?? 'bell-mt'
+  const bellMtStack = "'Bell MT', 'Book Antiqua', Palatino, serif"
+  const activeFontVars = fontPreset === 'default'
+    ? []
+    : [
+        `--active-font-heading: ${bellMtStack}`,
+        `--active-font-body: ${bellMtStack}`,
+      ]
   const cssVars = [
     `--nav-bg: ${colours.navBackground || '#E8E3D7'}`,
     `--nav-text: ${colours.navText || '#0C0F1E'}`,
     `--banner-overlay: ${colours.bannerOverlay || 'rgba(8,11,24,0.60)'}`,
     `--footer-bg: ${colours.footerBackground || '#080B18'}`,
     `--footer-text: ${colours.footerText || '#ffffff'}`,
+    ...activeFontVars,
   ].join('; ')
 
   return (
