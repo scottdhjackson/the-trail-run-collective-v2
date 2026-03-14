@@ -10,8 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        body: ['var(--font-body)', 'sans-serif'],
-        heading: ['var(--font-heading)', 'sans-serif'],
+        body: ['var(--active-font-body)', 'sans-serif'],
+        heading: ['var(--active-font-heading)', 'sans-serif'],
         accent: ['var(--font-accent)', 'serif'],
       },
       colors: {

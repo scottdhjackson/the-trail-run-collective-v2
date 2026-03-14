@@ -9,7 +9,6 @@ export const siteMetadata = {
 export function generateMetadata(overrides?: {
   title?: string
   description?: string
-  logoUrl?: string
   heroImageUrl?: string
 }): Metadata {
   const title = overrides?.title || siteMetadata.title
@@ -21,9 +20,6 @@ export function generateMetadata(overrides?: {
     title,
     description,
     metadataBase: new URL(siteMetadata.url),
-    icons: overrides?.logoUrl
-      ? { icon: overrides.logoUrl, shortcut: overrides.logoUrl, apple: overrides.logoUrl }
-      : undefined,
     openGraph: {
       type: 'website',
       locale: 'en_GB',

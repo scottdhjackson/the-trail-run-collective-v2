@@ -34,7 +34,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
     title: settings?.seoTitle,
     description: settings?.seoDescription,
-    logoUrl: settings?.logoUrl,
     heroImageUrl: settings?.heroBannerImageUrl,
   })
 }
@@ -50,25 +49,29 @@ export default async function RootLayout({
   const colours = settings?.colours ?? {}
   const fontPreset = settings?.typography?.fontPreset ?? 'bell-mt'
   const bellMtStack = "'Bell MT', 'Book Antiqua', Palatino, serif"
-  const activeFontVars = fontPreset === 'default'
-    ? []
-    : [
-        `--active-font-heading: ${bellMtStack}`,
-        `--active-font-body: ${bellMtStack}`,
-      ]
+  const defaultBodyStack = "'Lato', sans-serif"
+  const defaultHeadingStack = "'Montserrat', sans-serif"
+  const isDefault = fontPreset === 'default'
   const cssVars = [
     `--nav-bg: ${colours.navBackground || '#E8E3D7'}`,
     `--nav-text: ${colours.navText || '#0C0F1E'}`,
     `--banner-overlay: ${colours.bannerOverlay || 'rgba(8,11,24,0.60)'}`,
     `--footer-bg: ${colours.footerBackground || '#080B18'}`,
     `--footer-text: ${colours.footerText || '#ffffff'}`,
-    ...activeFontVars,
+    `--active-font-heading: ${isDefault ? defaultHeadingStack : bellMtStack}`,
+    `--active-font-body: ${isDefault ? defaultBodyStack : bellMtStack}`,
   ].join('; ')
 
   return (
     <html lang="en" className="scroll-smooth">
       <head>
         <style dangerouslySetInnerHTML={{ __html: `:root { ${cssVars} }` }} />
+        {settings?.logoUrl && (
+          <>
+            <link rel="icon" href={settings.logoUrl} />
+            <link rel="apple-touch-icon" href={settings.logoUrl} />
+          </>
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
