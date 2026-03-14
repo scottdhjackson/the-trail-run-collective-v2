@@ -45,7 +45,7 @@ export function Hero({ bannerImageUrl }: HeroProps) {
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide transition-all hover:opacity-90"
             style={{ backgroundColor: '#2D5C26', color: '#ffffff' }}
           >
-            Explore Events →
+            Find your race →
           </a>
           <a
             href="#join"

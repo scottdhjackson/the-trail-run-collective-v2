@@ -27,7 +27,7 @@ export default async function EventsPage() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <h1 className="font-heading font-black uppercase leading-none tracking-tight text-5xl md:text-6xl lg:text-7xl mb-6" style={{ color: '#0C0F1E' }}>
-                Upcoming<br />Expeditions
+                Events
               </h1>
               <p className="text-base max-w-xl" style={{ color: '#6B6558' }}>
                 Challenge yourself on beautiful trails across the UK. Our events are fully marked and supported for runners of all abilities.
