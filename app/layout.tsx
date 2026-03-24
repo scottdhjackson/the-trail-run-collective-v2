@@ -65,13 +65,12 @@ export default async function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* Cookiebot must be first in <head> and synchronous per Cookiebot docs */}
         <script
           id="Cookiebot"
           src="https://consent.cookiebot.com/uc.js"
           data-cbid="70384fda-badb-417d-b539-a65cbaa66e2b"
           data-blockingmode="auto"
-          type="text/javascript"
-          async
         />
         <style dangerouslySetInnerHTML={{ __html: `:root { ${cssVars} }` }} />
         {settings?.logoUrl && (
