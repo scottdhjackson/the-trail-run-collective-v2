@@ -43,11 +43,11 @@ export function EventsPageClient({ events }: { events: Event[] }) {
   return (
     <>
       {/* Filter bar */}
-      <div className="flex items-center justify-end gap-3 mb-10">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-10">
         <span className="flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase" style={{ color: '#6B6558' }}>
           <SlidersHorizontal size={13} /> Filter by type
         </span>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {FILTERS.map((f) => (
             <button
               key={f}

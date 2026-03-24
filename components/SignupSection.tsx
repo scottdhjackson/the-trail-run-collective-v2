@@ -5,13 +5,19 @@ import { Input } from '@/components/ui/input'
 
 export function SignupSection() {
   const [email, setEmail] = useState('')
+  const [consent, setConsent] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+  const [submitted, setSubmitted] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!consent) {
+      setErrorMessage('Please confirm you agree to receive marketing emails.')
+      return
+    }
     setIsLoading(true)
-    setMessage(null)
+    setErrorMessage(null)
 
     try {
       const response = await fetch('/api/subscribe', {
@@ -26,13 +32,9 @@ export function SignupSection() {
         throw new Error(data.error || 'Failed to subscribe')
       }
 
-      setMessage({ type: 'success', text: 'Thanks for joining! Check your inbox.' })
-      setEmail('')
+      setSubmitted(true)
     } catch (err) {
-      setMessage({
-        type: 'error',
-        text: err instanceof Error ? err.message : 'Something went wrong',
-      })
+      setErrorMessage(err instanceof Error ? err.message : 'Something went wrong')
     } finally {
       setIsLoading(false)
     }
@@ -52,30 +54,55 @@ export function SignupSection() {
             Subscribe for early event announcements, exclusive discounts, and training tips direct to your inbox.
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={isLoading}
-              className="flex-1 bg-white border-0 rounded-full px-5 h-12 text-sm"
-            />
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="shrink-0 px-7 h-12 rounded-full text-sm font-semibold tracking-wide text-white transition-all hover:opacity-90 disabled:opacity-60"
-              style={{ backgroundColor: '#2D5C26' }}
-            >
-              {isLoading ? 'Joining...' : 'Join Now'}
-            </button>
-          </form>
-
-          {message && (
-            <p className={`mt-4 text-sm ${message.type === 'error' ? 'text-red-600' : ''}`} style={message.type === 'success' ? { color: '#2D5C26' } : {}}>
-              {message.text}
-            </p>
+          {submitted ? (
+            <div className="max-w-md mx-auto py-6 px-8 rounded-2xl" style={{ backgroundColor: '#ffffff' }}>
+              <p className="text-2xl mb-2">🎉</p>
+              <p className="font-heading font-bold text-lg uppercase tracking-tight mb-1" style={{ color: '#0C0F1E' }}>
+                You're in!
+              </p>
+              <p className="text-sm" style={{ color: '#6B6558' }}>
+                Welcome to the collective. Keep an eye on your inbox for early event announcements and exclusive discounts.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="flex-1 bg-white border-0 rounded-full px-5 h-12 text-sm"
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="shrink-0 px-7 h-12 rounded-full text-sm font-semibold tracking-wide text-white transition-all hover:opacity-90 disabled:opacity-60"
+                  style={{ backgroundColor: '#2D5C26' }}
+                >
+                  {isLoading ? 'Joining...' : 'Join Now'}
+                </button>
+              </div>
+              <label className="flex items-start gap-3 text-left cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={consent}
+                  onChange={(e) => setConsent(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border accent-[#2D5C26] cursor-pointer"
+                />
+                <span className="text-xs leading-relaxed" style={{ color: '#6B6558' }}>
+                  I agree to receive marketing emails from The Trail Run Collective. You can unsubscribe at any time. View our{' '}
+                  <a href="/privacy-policy" className="underline hover:opacity-80" style={{ color: '#2D5C26' }}>
+                    Privacy Policy
+                  </a>.
+                </span>
+              </label>
+              {errorMessage && (
+                <p className="text-sm text-red-600">{errorMessage}</p>
+              )}
+            </form>
           )}
         </div>
       </div>
