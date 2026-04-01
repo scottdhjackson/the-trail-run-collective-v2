@@ -5,12 +5,17 @@ import { Input } from '@/components/ui/input'
 
 export function JoinRunClubSection() {
   const [email, setEmail] = useState('')
+  const [agreed, setAgreed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!agreed) {
+      setErrorMessage('Please accept the waiver and terms before signing up.')
+      return
+    }
     setIsLoading(true)
     setErrorMessage(null)
 
@@ -46,7 +51,7 @@ export function JoinRunClubSection() {
             Join the Run Club
           </h2>
           <p className="text-base mb-10" style={{ color: '#9E9789' }}>
-            Sign up to join The Trail Run Collective x The Dough Shack Run Club. Show up, run together, earn your pizza.
+            Sign up to join The Trail Run Collective x The Dough Shack Run Club. Show up, run together, enjoy your discounted pizza.
           </p>
 
           {submitted ? (
@@ -81,18 +86,26 @@ export function JoinRunClubSection() {
                   {isLoading ? 'Signing up...' : 'Sign Up'}
                 </button>
               </div>
-              <p className="text-xs leading-relaxed" style={{ color: '#9E9789' }}>
-                By signing up you accept the{' '}
-                <a
-                  href="/waiver"
-                  className="underline hover:opacity-80"
-                  style={{ color: '#E8E3D7' }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  participation waiver & terms and conditions
-                </a>.
-              </p>
+              <label className="flex items-start gap-3 text-left cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border cursor-pointer accent-[#2D5C26]"
+                />
+                <span className="text-xs leading-relaxed" style={{ color: '#9E9789' }}>
+                  I have read and agree to the{' '}
+                  <a
+                    href="/waiver"
+                    className="underline hover:opacity-80"
+                    style={{ color: '#E8E3D7' }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    participation waiver & terms and conditions
+                  </a>.
+                </span>
+              </label>
               {errorMessage && (
                 <p className="text-sm text-red-400">{errorMessage}</p>
               )}

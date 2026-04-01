@@ -33,7 +33,7 @@ export function Hero({ bannerImageUrl }: HeroProps) {
           <span className="block text-white text-6xl md:text-8xl lg:text-9xl tracking-tight">
             Run the
           </span>
-          <span className="block font-accent italic text-[var(--brand-green)] text-6xl md:text-8xl lg:text-9xl" style={{ color: '#2D5C26' }}>
+          <span className="block font-accent italic text-white text-6xl md:text-8xl lg:text-9xl">
             Trails
           </span>
         </h1>
