@@ -38,6 +38,9 @@ export function Header({ logoUrl, logoWidth }: HeaderProps) {
           <a href="/#events" className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60">
             Events
           </a>
+          <Link href="/run-club" className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60">
+            Run Club
+          </Link>
           <a href="/#join" className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60">
             Join
           </a>
@@ -68,6 +71,7 @@ export function Header({ logoUrl, logoWidth }: HeaderProps) {
         <div className="md:hidden border-t border-black/10" style={{ backgroundColor: 'var(--nav-bg)' }}>
           <nav className="container mx-auto px-6 py-6 flex flex-col gap-5">
             <a href="/#events" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Events</a>
+            <Link href="/run-club" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Run Club</Link>
             <a href="/#join" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Join</a>
             <a href="/#contact" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Contact</a>
             <Link href="/faq" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>FAQs</Link>

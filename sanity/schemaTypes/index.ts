@@ -3,6 +3,7 @@ import event from './event'
 import distance from './distance'
 import entry from './entry'
 import subscriber from './subscriber'
+import runClubSubscriber from './runClubSubscriber'
 import enquiry from './enquiry'
 import faq from './faq'
 import kitList from './kitList'
@@ -14,6 +15,7 @@ export const schemaTypes = [
   distance,
   entry,
   subscriber,
+  runClubSubscriber,
   enquiry,
   faq,
   kitList,
