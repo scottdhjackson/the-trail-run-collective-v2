@@ -6,6 +6,18 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'firstName',
+      title: 'First Name',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'lastName',
+      title: 'Last Name',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'email',
       title: 'Email',
       type: 'email',
@@ -21,13 +33,15 @@ export default defineType({
   ],
   preview: {
     select: {
+      firstName: 'firstName',
+      lastName: 'lastName',
       email: 'email',
       date: 'subscribedAt',
     },
-    prepare({ email, date }) {
+    prepare({ firstName, lastName, email, date }) {
       return {
-        title: email,
-        subtitle: new Date(date).toLocaleDateString(),
+        title: firstName && lastName ? `${firstName} ${lastName}` : email,
+        subtitle: date ? new Date(date).toLocaleDateString() : '',
       }
     },
   },

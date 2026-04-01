@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 
 export function JoinRunClubSection() {
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [agreed, setAgreed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -23,7 +25,7 @@ export function JoinRunClubSection() {
       const response = await fetch('/api/run-club-subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ firstName, lastName, email }),
       })
 
       const data = await response.json()
@@ -66,6 +68,28 @@ export function JoinRunClubSection() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Input
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="flex-1 border-0 rounded-full px-5 h-12 text-sm"
+                  style={{ backgroundColor: '#1a1f33', color: '#E8E3D7' }}
+                />
+                <Input
+                  type="text"
+                  placeholder="Last name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="flex-1 border-0 rounded-full px-5 h-12 text-sm"
+                  style={{ backgroundColor: '#1a1f33', color: '#E8E3D7' }}
+                />
+              </div>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Input
                   type="email"

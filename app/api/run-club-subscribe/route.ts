@@ -3,13 +3,15 @@ import { z } from 'zod'
 import { writeClient, client } from '@/sanity/lib/client'
 
 const subscribeSchema = z.object({
+  firstName: z.string().min(1, 'Please enter your first name'),
+  lastName: z.string().min(1, 'Please enter your last name'),
   email: z.string().email('Please enter a valid email'),
 })
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email } = subscribeSchema.parse(body)
+    const { firstName, lastName, email } = subscribeSchema.parse(body)
 
     // Check if email already exists
     const existing = await client.fetch(
@@ -26,6 +28,8 @@ export async function POST(request: NextRequest) {
 
     await writeClient.create({
       _type: 'runClubSubscriber',
+      firstName,
+      lastName,
       email,
       subscribedAt: new Date().toISOString(),
     })
