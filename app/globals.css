@@ -38,6 +38,23 @@
   }
 }
 
+@layer components {
+  .sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background-color: rgb(17 24 39); /* gray-900 */
+    color: white;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    /* Force GPU layer to prevent Chrome mobile rendering bugs */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+}
+
 @layer base {
   * {
     @apply border-border;

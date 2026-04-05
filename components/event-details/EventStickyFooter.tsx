@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -12,28 +11,6 @@ type EventStickyFooterProps = {
 }
 
 export function EventStickyFooter({ eventName, date, fromPrice, eventSlug }: EventStickyFooterProps) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el || typeof window === 'undefined' || !window.visualViewport) return
-
-    const update = () => {
-      const vv = window.visualViewport!
-      const bottom = window.innerHeight - vv.height - vv.offsetTop
-      el.style.bottom = `${Math.max(0, bottom)}px`
-    }
-
-    window.visualViewport.addEventListener('resize', update)
-    window.visualViewport.addEventListener('scroll', update)
-    update()
-
-    return () => {
-      window.visualViewport?.removeEventListener('resize', update)
-      window.visualViewport?.removeEventListener('scroll', update)
-    }
-  }, [])
-
   const formattedDate = new Date(date).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
@@ -41,13 +18,9 @@ export function EventStickyFooter({ eventName, date, fromPrice, eventSlug }: Eve
   }).toUpperCase()
 
   return (
-    <div
-      ref={ref}
-      className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white z-50 shadow-2xl"
-      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
-    >
+    <div className="sticky-footer">
       {/* Mobile layout */}
-      <div className="flex md:hidden items-center justify-between px-4 py-2 gap-3">
+      <div className="flex md:hidden items-center justify-between px-4 py-3 gap-3">
         <div className="flex flex-col leading-tight min-w-0">
           <span className="text-[10px] font-semibold tracking-widest text-gray-400 uppercase">{formattedDate}</span>
           <span className="text-[10px] tracking-widest text-gray-400 uppercase">FROM</span>
