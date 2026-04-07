@@ -57,6 +57,19 @@ export default defineType({
       description: 'Total elevation gain in meters',
     }),
     defineField({
+      name: 'elevationUnit',
+      title: 'Elevation Display Unit',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Feet (ft)', value: 'ft' },
+          { title: 'Metres (m)', value: 'm' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'ft',
+    }),
+    defineField({
       name: 'price',
       title: 'Price',
       type: 'number',

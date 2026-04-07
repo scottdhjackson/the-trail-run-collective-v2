@@ -9,6 +9,7 @@ type Distance = {
   distanceValue?: number
   distanceUnit?: string
   elevationGain?: number
+  elevationUnit?: string
   price?: number
   isOpen: boolean
 }
@@ -75,7 +76,11 @@ export function EventRegistrationCard({ distance, eventSlug, bookingLink, coming
         {distance.elevationGain && (
           <div className="flex justify-between items-center">
             <span className="text-gray-500">Elevation</span>
-            <span className="font-bold text-gray-900">{distance.elevationGain}m+</span>
+            <span className="font-bold text-gray-900">
+              {distance.elevationUnit === 'm'
+                ? `${distance.elevationGain}m+`
+                : `${Math.round(distance.elevationGain * 3.28084).toLocaleString()}ft+`}
+            </span>
           </div>
         )}
       </div>

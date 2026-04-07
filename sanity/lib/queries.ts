@@ -110,6 +110,7 @@ export const EVENT_BY_SLUG_QUERY = groq`*[_type == "event" && slug.current == $s
     distanceValue,
     distanceUnit,
     elevationGain,
+    elevationUnit,
     price,
     description,
     "gpxFileUrl": gpxFile.asset->url,

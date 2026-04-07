@@ -8,6 +8,7 @@ type Distance = {
   distanceValue?: number
   distanceUnit?: string
   elevationGain?: number
+  elevationUnit?: string
   price?: number
   isOpen: boolean
 }
@@ -46,7 +47,12 @@ export function EventPrices({ distances, eventSlug }: EventPricesProps) {
                 {distance.elevationGain && (
                   <p className="text-muted-foreground flex items-center gap-1">
                     <TrendingUp className="h-4 w-4" />
-                    Elevation: <span className="text-foreground font-semibold">{distance.elevationGain} m</span>
+                    Elevation:{' '}
+                    <span className="text-foreground font-semibold">
+                      {distance.elevationUnit === 'm'
+                        ? `${distance.elevationGain} m`
+                        : `${Math.round(distance.elevationGain * 3.28084).toLocaleString()} ft`}
+                    </span>
                   </p>
                 )}
               </div>

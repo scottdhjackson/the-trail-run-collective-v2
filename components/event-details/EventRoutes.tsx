@@ -8,6 +8,7 @@ type Distance = {
   distanceValue?: number
   distanceUnit?: string
   elevationGain?: number
+  elevationUnit?: string
   description?: string
   gpxFileUrl?: string
   routeMapImageUrl?: string
@@ -44,7 +45,12 @@ export function EventRoutes({ distances }: EventRoutesProps) {
                     {distance.elevationGain && (
                       <p className="text-muted-foreground flex items-center gap-1">
                         <TrendingUp className="h-4 w-4" />
-                        Elevation Gain: <span className="text-foreground font-semibold">{distance.elevationGain} m</span>
+                        Elevation Gain:{' '}
+                        <span className="text-foreground font-semibold">
+                          {distance.elevationUnit === 'm'
+                            ? `${distance.elevationGain} m`
+                            : `${Math.round(distance.elevationGain * 3.28084).toLocaleString()} ft`}
+                        </span>
                       </p>
                     )}
                   </div>
