@@ -52,9 +52,9 @@ export default defineType({
     }),
     defineField({
       name: 'elevationGain',
-      title: 'Elevation Gain (m)',
+      title: 'Elevation Gain',
       type: 'number',
-      description: 'Total elevation gain in meters',
+      description: 'Total elevation gain (enter the value in whichever unit you select below)',
     }),
     defineField({
       name: 'elevationUnit',

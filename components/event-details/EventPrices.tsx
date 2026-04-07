@@ -49,9 +49,7 @@ export function EventPrices({ distances, eventSlug }: EventPricesProps) {
                     <TrendingUp className="h-4 w-4" />
                     Elevation:{' '}
                     <span className="text-foreground font-semibold">
-                      {distance.elevationUnit === 'm'
-                        ? `${distance.elevationGain} m`
-                        : `${Math.round(distance.elevationGain * 3.28084).toLocaleString()} ft`}
+                      {distance.elevationGain} {distance.elevationUnit ?? 'ft'}
                     </span>
                   </p>
                 )}

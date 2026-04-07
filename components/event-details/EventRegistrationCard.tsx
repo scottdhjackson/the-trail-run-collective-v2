@@ -77,9 +77,7 @@ export function EventRegistrationCard({ distance, eventSlug, bookingLink, coming
           <div className="flex justify-between items-center">
             <span className="text-gray-500">Elevation</span>
             <span className="font-bold text-gray-900">
-              {distance.elevationUnit === 'm'
-                ? `${distance.elevationGain}m+`
-                : `${Math.round(distance.elevationGain * 3.28084).toLocaleString()}ft+`}
+              {distance.elevationGain}{distance.elevationUnit ?? 'ft'}+
             </span>
           </div>
         )}
