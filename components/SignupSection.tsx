@@ -82,7 +82,7 @@ export function SignupSection() {
                   className="shrink-0 px-7 h-12 rounded-full text-sm font-semibold tracking-wide text-white transition-all hover:opacity-90 disabled:opacity-60"
                   style={{ backgroundColor: '#2D5C26' }}
                 >
-                  {isLoading ? 'Joining...' : 'Join Now'}
+                  {isLoading ? 'Joining...' : 'Stay in the loop'}
                 </button>
               </div>
               <label className="flex items-start gap-3 text-left cursor-pointer">
