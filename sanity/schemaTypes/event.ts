@@ -75,6 +75,21 @@ export default defineType({
       description: 'If set, the BOOK button will redirect users to this external partner URL instead of the internal registration form.',
     }),
     defineField({
+      name: 'seoTitle',
+      title: 'SEO — Meta Title',
+      description: 'Leave blank to default to the event title.',
+      type: 'string',
+      validation: (Rule) => Rule.max(60),
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'SEO — Meta Description',
+      description: 'Leave blank to default to the short description.',
+      type: 'text',
+      rows: 3,
+      validation: (Rule) => Rule.max(160),
+    }),
+    defineField({
       name: 'isPublished',
       title: 'Published',
       type: 'boolean',

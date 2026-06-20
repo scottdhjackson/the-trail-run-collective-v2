@@ -1,4 +1,5 @@
 import siteSettings from './siteSettings'
+import page from './page'
 import event from './event'
 import distance from './distance'
 import entry from './entry'
@@ -11,6 +12,7 @@ import volunteer from './volunteer'
 
 export const schemaTypes = [
   siteSettings,
+  page,
   event,
   distance,
   entry,

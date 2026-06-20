@@ -207,8 +207,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: 'Event Not Found' }
   }
 
+  const title = event.seoTitle || event.title
+  const description = event.seoDescription || event.shortDescription || event.longDescription
+
   return {
-    title: `${event.title} | The Trail Run Collective`,
-    description: event.shortDescription || event.longDescription,
+    title: `${title} | The Trail Run Collective`,
+    description,
   }
 }

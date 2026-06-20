@@ -17,7 +17,7 @@ export default async function EventsPage() {
   return (
     <>
       <HeaderWithSettings />
-      <main className="min-h-screen pt-16" style={{ backgroundColor: '#F2EDE3' }}>
+      <main className="min-h-screen pt-16 md:pt-20" style={{ backgroundColor: '#F2EDE3' }}>
 
         {/* Page header */}
         <section className="container mx-auto px-6 pt-16 pb-12 max-w-6xl">

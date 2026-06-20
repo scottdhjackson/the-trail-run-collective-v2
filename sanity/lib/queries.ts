@@ -7,13 +7,9 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   socialLinks,
   seoTitle,
   seoDescription,
-  aboutHeading,
-  aboutBody,
-  aboutCtaLabel,
   "logoUrl": logo.asset->url,
   logoWidth,
   "heroBannerImageUrl": heroBannerImage.asset->url,
-  "aboutImageUrls": aboutBackgroundImage[].asset->url,
   colours {
     navBackground,
     navText,
@@ -24,6 +20,20 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   typography {
     fontPreset,
   }
+}`
+
+export const PAGE_BY_SLUG_QUERY = groq`*[_type == "page" && slug.current == $slug][0]{
+  title,
+  body,
+  excerpt,
+  ctaLabel,
+  ctaUrl,
+  seoTitle,
+  seoDescription,
+}`
+
+export const PAGES_SLUGS_QUERY = groq`*[_type == "page"]{
+  "slug": slug.current,
 }`
 
 export const EVENTS_QUERY = groq`*[_type == "event" && isPublished == true] | order(date asc) {
@@ -53,6 +63,8 @@ export const EVENT_BY_SLUG_QUERY = groq`*[_type == "event" && slug.current == $s
   slug,
   shortDescription,
   longDescription,
+  seoTitle,
+  seoDescription,
   location,
   date,
   venueName,

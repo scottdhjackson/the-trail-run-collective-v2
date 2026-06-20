@@ -10,7 +10,7 @@ export default function UnsubscribePage() {
   return (
     <>
       <HeaderWithSettings />
-      <main className="min-h-screen pt-16" style={{ backgroundColor: '#F2EDE3' }}>
+      <main className="min-h-screen pt-16 md:pt-20" style={{ backgroundColor: '#F2EDE3' }}>
         <section className="container mx-auto px-6 py-24 max-w-6xl">
           <UnsubscribeForm />
         </section>

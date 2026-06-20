@@ -1,6 +1,8 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { schemaTypes } from './sanity/schemaTypes'
+import { structure } from './sanity/structure'
+import { exportTool } from './sanity/tools/exportTool'
 
 export default defineConfig({
   name: 'default',
@@ -11,7 +13,9 @@ export default defineConfig({
 
   basePath: '/studio',
 
-  plugins: [structureTool()],
+  plugins: [structureTool({ structure })],
+
+  tools: [exportTool],
 
   schema: {
     types: schemaTypes,

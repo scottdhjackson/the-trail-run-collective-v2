@@ -11,18 +11,13 @@ interface AboutSectionProps {
   heading?: string
   body?: string
   ctaLabel?: string
-  imageUrls?: string[]
 }
 
 const DUMMY_BODY =
   'The Trail Run Collective was founded by two school friends united by a shared love of running — and an even deeper passion for the trails. What began as weekend adventures quickly grew into a vision: to create trail running events that feel different. Events with personality, purpose, and a little creative twist.'
 
-export function AboutSection({ heading, body, ctaLabel, imageUrls }: AboutSectionProps) {
-  const images = [
-    imageUrls?.[0] || FALLBACK_IMAGES[0],
-    imageUrls?.[1] || FALLBACK_IMAGES[1],
-    imageUrls?.[2] || FALLBACK_IMAGES[2],
-  ]
+export function AboutSection({ heading, body, ctaLabel }: AboutSectionProps) {
+  const images = FALLBACK_IMAGES
 
   return (
     <section className="py-24 md:py-32" style={{ backgroundColor: '#080B18' }}>

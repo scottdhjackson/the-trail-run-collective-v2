@@ -1,11 +1,23 @@
-import { HeaderWithSettings } from '@/components/HeaderWithSettings'
-import { client } from '@/sanity/lib/client'
-import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
-import Link from 'next/link'
+import { createClient } from '@sanity/client'
+import { config } from 'dotenv'
 
-export const revalidate = 60
+config({ path: '.env.local' })
 
-const DUMMY_PARAGRAPHS = [
+const token = process.env.SANITY_API_TOKEN
+if (!token) {
+  console.error('SANITY_API_TOKEN not found in .env.local')
+  process.exit(1)
+}
+
+const client = createClient({
+  projectId: 'x0eosm5j',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  token,
+  useCdn: false,
+})
+
+const body = [
   'The Trail Run Collective was founded by two school friends united by a shared love of running — and an even deeper passion for the trails. What began as weekend adventures quickly grew into a vision: to create trail running events that feel different. Events with personality, purpose, and a little creative twist.',
   'Our mission is simple. We design trail races built around interesting concepts and formats, across a range of distances and difficulties, that maximise both fun and challenge. Whether you\'re chasing your first trail experience or pushing deeper into endurance territory, we want every event to feel memorable, rewarding, and worth talking about long after the finish line.',
   'Alongside this mission, we have two important side quests.',
@@ -16,42 +28,30 @@ const DUMMY_PARAGRAPHS = [
   'Now for the important bits. Safety and wellbeing always come first (alongside the fun). We are fully insured, certified trail event hosts, with medical personnel, marshals, route mapping and GPX guidance, information points, and well-stocked aid stations all in place to keep runners happy, healthy, hydrated, fuelled, and moving forward.',
   'And of course, every effort deserves recognition. All finishers earn a medal to mark their achievement — with race apparel coming soon to help you wear the journey with pride.',
   'Ultimately, what makes our events stand out is the blend of thoughtful design, creative formats, supportive structure, and community energy. We don\'t just put on races — we create experiences that challenge limits, spark curiosity, and keep runners coming back for more.',
-]
+].join('\n\n')
 
-export default async function AboutPage() {
-  const settings = await client.fetch(SITE_SETTINGS_QUERY)
+async function run() {
+  const existing = await client.fetch('*[_id == "aboutPage"][0]')
+  if (existing) {
+    console.log('aboutPage document already exists — leaving it untouched.')
+    return
+  }
 
-  const heading = settings?.aboutHeading || 'About The Trail Run Collective'
-  const body: string = settings?.aboutBody || ''
+  await client.createOrReplace({
+    _id: 'aboutPage',
+    _type: 'aboutPage',
+    heading: 'About The Trail Run Collective',
+    body,
+    ctaLabel: 'View Our Events',
+    ctaUrl: '/#events',
+    seoTitle: 'About Us — The Trail Run Collective',
+    seoDescription: 'UK trail & ultra events — Solstice specials at Box Hill, Surrey',
+  })
 
-  // If Sanity provides a body string, split on double newlines; otherwise use DUMMY_PARAGRAPHS
-  const paragraphs = body
-    ? body.split(/\n\n+/).filter(Boolean)
-    : DUMMY_PARAGRAPHS
-
-  return (
-    <>
-      <HeaderWithSettings />
-      <main className="min-h-screen">
-        <section className="py-24 bg-background">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">{heading}</h1>
-            <div className="space-y-6 mb-12">
-              {paragraphs.map((para, i) => (
-                <p key={i} className="text-lg text-muted-foreground leading-relaxed">
-                  {para}
-                </p>
-              ))}
-            </div>
-            <Link
-              href="/#events"
-              className="inline-block bg-primary text-primary-foreground font-semibold uppercase tracking-widest text-sm px-8 py-3 hover:opacity-90 transition-opacity"
-            >
-              View Our Events
-            </Link>
-          </div>
-        </section>
-      </main>
-    </>
-  )
+  console.log('Created aboutPage document with the existing About page copy.')
 }
+
+run().catch((err) => {
+  console.error(err)
+  process.exit(1)
+})

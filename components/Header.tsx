@@ -21,7 +21,7 @@ export function Header({ logoUrl, logoWidth }: HeaderProps) {
       className="fixed top-0 w-full z-50 border-b border-black/10"
       style={{ backgroundColor: 'var(--nav-bg)', color: 'var(--nav-text)' }}
     >
-      <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="container mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0" onClick={closeMenu}>
           <Image
@@ -29,7 +29,7 @@ export function Header({ logoUrl, logoWidth }: HeaderProps) {
             alt="The Trail Run Collective"
             width={logoWidth || 160}
             height={80}
-            className="h-10 w-auto"
+            className="h-10 md:h-14 w-auto"
           />
         </Link>
 

@@ -46,25 +46,6 @@ export default defineType({
       validation: (Rule) => Rule.required().max(160),
     }),
     defineField({
-      name: 'aboutHeading',
-      title: 'About Section — Heading',
-      type: 'string',
-      initialValue: 'About The Trail Run Collective',
-      group: undefined,
-    }),
-    defineField({
-      name: 'aboutBody',
-      title: 'About Section — Body Text',
-      type: 'text',
-      rows: 6,
-    }),
-    defineField({
-      name: 'aboutCtaLabel',
-      title: 'About Section — CTA Button Label',
-      type: 'string',
-      initialValue: 'Learn More About Us',
-    }),
-    defineField({
       name: 'logo',
       title: 'Logo',
       type: 'image',
@@ -84,14 +65,6 @@ export default defineType({
       type: 'image',
       description: 'The main banner image at the top of the homepage. Recommended: wide landscape image.',
       options: { hotspot: true },
-    }),
-    defineField({
-      name: 'aboutBackgroundImage',
-      title: 'About Section — Images',
-      type: 'array',
-      of: [{ type: 'image', options: { hotspot: true } }],
-      description: 'Up to 3 images shown in the about section collage. Add them in the order you want them to appear.',
-      validation: (Rule) => Rule.max(3),
     }),
 
     // ── Typography ───────────────────────────────────────────────────────────
