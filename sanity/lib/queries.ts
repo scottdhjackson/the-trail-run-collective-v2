@@ -13,6 +13,7 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   "heroBannerImageUrl": heroBannerImage.asset->url,
   "heroBannerVideoDesktopUrl": heroBannerVideoDesktop.asset->url,
   "heroBannerVideoMobileUrl": heroBannerVideoMobile.asset->url,
+  "aboutImages": aboutBackgroundImage[].asset->url,
   colours {
     navBackground,
     navText,

@@ -18,7 +18,7 @@ export function Header({ logoUrl, logoWidth }: HeaderProps) {
 
   return (
     <header
-      className="fixed top-0 w-full z-50 border-b border-black/10"
+      className="fixed top-0 w-full z-50 backdrop-blur-sm"
       style={{ backgroundColor: 'var(--nav-bg)', color: 'var(--nav-text)' }}
     >
       <div className="container mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
@@ -65,7 +65,7 @@ export function Header({ logoUrl, logoWidth }: HeaderProps) {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-black/10" style={{ backgroundColor: 'var(--nav-bg)' }}>
+        <div className="md:hidden" style={{ backgroundColor: 'var(--nav-bg)' }}>
           <nav className="container mx-auto px-6 py-6 flex flex-col gap-5">
             <a href="/#events" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Events</a>
             <a href="/#join" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Join</a>

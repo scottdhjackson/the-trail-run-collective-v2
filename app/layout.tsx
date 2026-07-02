@@ -53,7 +53,7 @@ export default async function RootLayout({
   const defaultHeadingStack = "'Montserrat', sans-serif"
   const isDefault = fontPreset === 'default'
   const cssVars = [
-    `--nav-bg: ${colours.navBackground || 'rgb(8, 11, 24)'}`,
+    `--nav-bg: ${colours.navBackground || 'rgba(8, 11, 24, 0.55)'}`,
     `--nav-text: ${colours.navText || '#ffffff'}`,
     `--banner-overlay: ${colours.bannerOverlay || 'rgba(8,11,24,0.20)'}`,
     `--footer-bg: ${colours.footerBackground || '#080B18'}`,

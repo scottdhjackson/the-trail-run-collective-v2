@@ -60,6 +60,13 @@ export default defineType({
       validation: (Rule) => Rule.min(40).max(600).integer(),
     }),
     defineField({
+      name: 'aboutBackgroundImage',
+      title: 'About Section — Background Images',
+      type: 'array',
+      description: 'Background image(s) for the "About the Trail Run Collective" section on the homepage.',
+      of: [{ type: 'image', options: { hotspot: true } }],
+    }),
+    defineField({
       name: 'heroBannerMediaType',
       title: 'Homepage — Banner Media Type',
       type: 'string',

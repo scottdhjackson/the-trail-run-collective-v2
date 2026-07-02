@@ -52,6 +52,7 @@ export default async function HomePage() {
           heading={aboutPage?.title}
           body={aboutPage?.excerpt || aboutPage?.body?.split(/\n\n+/)[0]}
           ctaLabel="Learn More About Us"
+          images={settings?.aboutImages}
         />
         <ContactSection contactEmail={settings?.contactEmail} />
 
