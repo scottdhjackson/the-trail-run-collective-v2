@@ -60,11 +60,42 @@ export default defineType({
       validation: (Rule) => Rule.min(40).max(600).integer(),
     }),
     defineField({
+      name: 'heroBannerMediaType',
+      title: 'Homepage — Banner Media Type',
+      type: 'string',
+      description: 'Choose whether the banner shows a static image or a video.',
+      options: {
+        list: [
+          { title: 'Image', value: 'image' },
+          { title: 'Video', value: 'video' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'image',
+    }),
+    defineField({
       name: 'heroBannerImage',
       title: 'Homepage — Banner Image',
       type: 'image',
-      description: 'The main banner image at the top of the homepage. Recommended: wide landscape image.',
+      description: 'The main banner image. Used when Banner Media Type is set to Image.',
       options: { hotspot: true },
+      hidden: ({ document }) => document?.heroBannerMediaType === 'video',
+    }),
+    defineField({
+      name: 'heroBannerVideoDesktop',
+      title: 'Homepage — Banner Video (Desktop)',
+      type: 'file',
+      description: 'MP4 video for desktop screens. Used when Banner Media Type is set to Video.',
+      options: { accept: 'video/mp4,video/*' },
+      hidden: ({ document }) => document?.heroBannerMediaType !== 'video',
+    }),
+    defineField({
+      name: 'heroBannerVideoMobile',
+      title: 'Homepage — Banner Video (Mobile)',
+      type: 'file',
+      description: 'MP4 video for mobile screens. If not provided, the desktop video is used on all screen sizes.',
+      options: { accept: 'video/mp4,video/*' },
+      hidden: ({ document }) => document?.heroBannerMediaType !== 'video',
     }),
 
     // ── Typography ───────────────────────────────────────────────────────────

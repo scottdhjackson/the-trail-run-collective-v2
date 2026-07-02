@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+
 import { Menu, X } from 'lucide-react'
 
 interface HeaderProps {
@@ -24,12 +24,12 @@ export function Header({ logoUrl, logoWidth }: HeaderProps) {
       <div className="container mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0" onClick={closeMenu}>
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={logoUrl || '/images/logo.svg'}
             alt="The Trail Run Collective"
-            width={logoWidth || 160}
-            height={80}
-            className="h-10 md:h-14 w-auto"
+            style={{ width: logoWidth || 160, filter: 'invert(1)' }}
+            className="h-10 md:h-16 w-auto"
           />
         </Link>
 

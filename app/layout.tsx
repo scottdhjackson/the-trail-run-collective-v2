@@ -53,9 +53,9 @@ export default async function RootLayout({
   const defaultHeadingStack = "'Montserrat', sans-serif"
   const isDefault = fontPreset === 'default'
   const cssVars = [
-    `--nav-bg: ${colours.navBackground || '#E8E3D7'}`,
-    `--nav-text: ${colours.navText || '#0C0F1E'}`,
-    `--banner-overlay: ${colours.bannerOverlay || 'rgba(8,11,24,0.60)'}`,
+    `--nav-bg: ${colours.navBackground || 'rgb(8, 11, 24)'}`,
+    `--nav-text: ${colours.navText || '#ffffff'}`,
+    `--banner-overlay: ${colours.bannerOverlay || 'rgba(8,11,24,0.20)'}`,
     `--footer-bg: ${colours.footerBackground || '#080B18'}`,
     `--footer-text: ${colours.footerText || '#ffffff'}`,
     `--active-font-heading: ${isDefault ? defaultHeadingStack : bellMtStack}`,

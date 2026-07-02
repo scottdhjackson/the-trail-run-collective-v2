@@ -9,7 +9,10 @@ export const SITE_SETTINGS_QUERY = groq`*[_type == "siteSettings"][0]{
   seoDescription,
   "logoUrl": logo.asset->url,
   logoWidth,
+  heroBannerMediaType,
   "heroBannerImageUrl": heroBannerImage.asset->url,
+  "heroBannerVideoDesktopUrl": heroBannerVideoDesktop.asset->url,
+  "heroBannerVideoMobileUrl": heroBannerVideoMobile.asset->url,
   colours {
     navBackground,
     navText,

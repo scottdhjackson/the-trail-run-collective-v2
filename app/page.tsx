@@ -40,7 +40,12 @@ export default async function HomePage() {
     <>
       <HeaderWithSettings />
       <main>
-        <Hero bannerImageUrl={settings?.heroBannerImageUrl} />
+        <Hero
+          mediaType={settings?.heroBannerMediaType}
+          bannerImageUrl={settings?.heroBannerImageUrl}
+          videoDesktopUrl={settings?.heroBannerVideoDesktopUrl}
+          videoMobileUrl={settings?.heroBannerVideoMobileUrl}
+        />
         <EventsSection events={events} />
 <SignupSection />
         <AboutSection
