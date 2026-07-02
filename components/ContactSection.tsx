@@ -25,9 +25,9 @@ export function ContactSection({ contactEmail }: ContactSectionProps) {
     setMessage(null)
 
     try {
-      const response = await fetch('/api/enquiry', {
+      const response = await fetch('https://formspree.io/f/mnjkonao', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(formData),
       })
 

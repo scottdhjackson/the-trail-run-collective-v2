@@ -54,9 +54,9 @@ export function VolunteerForm() {
     setResult(null)
 
     try {
-      const response = await fetch('/api/volunteer', {
+      const response = await fetch('https://formspree.io/f/xvzjvgor', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(formData),
       })
 
