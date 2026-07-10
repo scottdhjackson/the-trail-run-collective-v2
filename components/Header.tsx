@@ -50,6 +50,14 @@ export function Header({ logoUrl, logoWidth }: HeaderProps) {
           <Link href="/volunteer" className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60">
             Volunteer
           </Link>
+          <a
+            href="https://www.summitcrazy.co.uk/the-trail-run-collective"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-semibold tracking-widest uppercase transition-opacity hover:opacity-60 border border-current px-3 py-1.5"
+          >
+            Official Merch Partner
+          </a>
         </nav>
 
 
@@ -72,6 +80,15 @@ export function Header({ logoUrl, logoWidth }: HeaderProps) {
             <a href="/#contact" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Contact</a>
             <Link href="/faq" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>FAQs</Link>
             <Link href="/volunteer" className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity" onClick={closeMenu}>Volunteer</Link>
+            <a
+              href="https://www.summitcrazy.co.uk/the-trail-run-collective"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-semibold tracking-widest uppercase hover:opacity-60 transition-opacity border border-current px-3 py-1.5 self-start"
+              onClick={closeMenu}
+            >
+              Official Merch Partner
+            </a>
           </nav>
         </div>
       )}
