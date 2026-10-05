@@ -35,6 +35,15 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
   // Exact pin from Sanity if set, otherwise the postcode's centre point
   const mapPosition = parseLatLng(event.mapPin) ?? (await geocodeUkPostcode(event.postcode))
 
+  const registrationCard = primaryDistance && (
+    <EventRegistrationCard
+      distance={primaryDistance}
+      eventSlug={event.slug.current}
+      bookingLink={event.bookingLink}
+      comingSoon={event.comingSoon}
+    />
+  )
+
   return (
     <>
       <HeaderWithSettings />
@@ -137,17 +146,12 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
 
             </div>
 
-            {/* Right column — registration card */}
-            {primaryDistance && (
-              <div className="w-full lg:w-80 shrink-0">
-                <div className="lg:sticky lg:top-24">
+            {/* Right column — registration card (desktop; mobile shows it at the bottom of the page) */}
+            {registrationCard && (
+              <div className="hidden lg:block w-80 shrink-0">
+                <div className="sticky top-24">
                   <Reveal from="right" delay={200}>
-                    <EventRegistrationCard
-                      distance={primaryDistance}
-                      eventSlug={event.slug.current}
-                      bookingLink={event.bookingLink}
-                      comingSoon={event.comingSoon}
-                    />
+                    {registrationCard}
                   </Reveal>
                 </div>
               </div>
@@ -213,6 +217,13 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
                 taxiPhone={event.gettingThereByTaxiPhone}
               />
             </Reveal>
+          </section>
+        )}
+
+        {/* Registration card — mobile only, last thing before the footer */}
+        {registrationCard && (
+          <section className="lg:hidden container mx-auto px-6 pb-20 max-w-6xl">
+            <Reveal>{registrationCard}</Reveal>
           </section>
         )}
 

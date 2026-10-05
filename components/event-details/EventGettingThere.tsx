@@ -24,8 +24,10 @@ export function EventGettingThere({
   if (!hasCarInfo && !hasTrainInfo && !hasTaxiInfo) return null
 
   return (
-    <div id="getting-there" className="mt-16">
-      <h3 className="text-2xl font-semibold mb-8">Getting to the Race</h3>
+    <div id="getting-there">
+      <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-8" style={{ color: '#0C0F1E' }}>
+        Getting to the Race
+      </h2>
 
       <div className="space-y-8">
         {hasCarInfo && (
