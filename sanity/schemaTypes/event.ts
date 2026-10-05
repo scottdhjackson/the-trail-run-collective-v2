@@ -147,6 +147,20 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'mapPin',
+      title: 'Map Pin Coordinates',
+      type: 'string',
+      description:
+        'Optional: exact spot for the pin on the event page map, e.g. "51.2503, -0.3092". In Google Maps, right-click the spot and click the coordinates at the top of the menu to copy them. If left empty, the map uses the postcode.',
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          if (!value) return true
+          return /^\s*-?\d{1,2}(\.\d+)?\s*,\s*-?\d{1,3}(\.\d+)?\s*$/.test(value)
+            ? true
+            : 'Use "latitude, longitude" format, e.g. 51.2503, -0.3092'
+        }),
+    }),
+    defineField({
       name: 'locationImage',
       title: 'Location Image',
       type: 'image',

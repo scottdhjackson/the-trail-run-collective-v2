@@ -11,8 +11,10 @@ import { EventPhotoGallery } from '@/components/event-details/EventPhotoGallery'
 import { EventReviews } from '@/components/event-details/EventReviews'
 import { EventGettingThere } from '@/components/event-details/EventGettingThere'
 import { EventStickyFooter } from '@/components/event-details/EventStickyFooter'
+import { EventMap } from '@/components/event-details/EventMap'
 import { KitList } from '@/components/KitList'
 import { Reveal } from '@/components/Reveal'
+import { geocodeUkPostcode, parseLatLng } from '@/lib/geo'
 import { Footer } from '@/components/Footer'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -29,6 +31,9 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
 
   const primaryDistance = event.distances?.[0]
   const price = primaryDistance?.price ?? null
+
+  // Exact pin from Sanity if set, otherwise the postcode's centre point
+  const mapPosition = parseLatLng(event.mapPin) ?? (await geocodeUkPostcode(event.postcode))
 
   return (
     <>
@@ -180,9 +185,24 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
           </section>
         )}
 
+        {/* Location map */}
+        {mapPosition && (
+          <section className="container mx-auto px-6 pb-14 max-w-6xl">
+            <Reveal>
+              <EventMap
+                position={mapPosition}
+                venueName={event.venueName}
+                postcode={event.postcode}
+                googleMapsLink={event.googleMapsLink}
+                what3words={event.what3words}
+              />
+            </Reveal>
+          </section>
+        )}
+
         {/* Getting There */}
         {event.showGettingThere && (
-          <section className="container mx-auto px-6 pb-14 max-w-6xl">
+          <section className="container mx-auto px-6 pb-20 max-w-6xl">
             <Reveal>
               <EventGettingThere
                 byCar={event.gettingThereByCar}

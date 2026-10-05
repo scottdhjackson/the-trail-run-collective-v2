@@ -77,6 +77,7 @@ export const EVENT_BY_SLUG_QUERY = groq`*[_type == "event" && slug.current == $s
   postcode,
   googleMapsLink,
   what3words,
+  mapPin,
   "locationImageUrl": locationImage.asset->url,
   "heroImageUrl": heroImage.asset->url,
   cardImage,
