@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { ExternalLink, Navigation } from 'lucide-react'
 import 'leaflet/dist/leaflet.css'
 import type { LatLng } from '@/lib/geo'
+import { LocationLinks, directionsUrlFor } from './LocationLinks'
 
 type EventMapProps = {
   position: LatLng
@@ -68,9 +68,6 @@ export function EventMap({ position, venueName, postcode, googleMapsLink, what3w
     }
   }, [lat, lng, venueName, postcode])
 
-  const w3w = what3words?.replace(/^\/+/, '')
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
-
   return (
     <div>
       <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-2" style={{ color: '#0C0F1E' }}>
@@ -90,49 +87,8 @@ export function EventMap({ position, venueName, postcode, googleMapsLink, what3w
         className="isolate h-[320px] md:h-[440px] w-full rounded-2xl overflow-hidden shadow-sm bg-[#dcd6c8]"
       />
 
-      <div className="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        {w3w ? (
-          <a
-            href={`https://what3words.com/${encodeURIComponent(w3w)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 text-sm font-semibold hover:opacity-80"
-            style={{ color: '#0C0F1E' }}
-          >
-            <span className="inline-flex items-center justify-center w-6 h-6 rounded text-[11px] font-black text-white tracking-tighter" style={{ backgroundColor: '#E11F26' }}>
-              ///
-            </span>
-            <span>
-              <span className="text-xs font-semibold tracking-[0.15em] uppercase mr-2" style={{ color: '#6B6558' }}>what3words</span>
-              <span className="underline underline-offset-4">{w3w}</span>
-            </span>
-          </a>
-        ) : (
-          <span />
-        )}
-
-        <div className="flex flex-wrap gap-3">
-          {googleMapsLink && (
-            <a
-              href={googleMapsLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border text-xs font-bold tracking-widest uppercase transition-all hover:bg-black/5"
-              style={{ borderColor: '#0C0F1E', color: '#0C0F1E' }}
-            >
-              Google Maps <ExternalLink size={13} />
-            </a>
-          )}
-          <a
-            href={directionsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase text-white transition-all hover:opacity-90"
-            style={{ backgroundColor: '#2D5C26' }}
-          >
-            <Navigation size={13} /> Get Directions
-          </a>
-        </div>
+      <div className="mt-5">
+        <LocationLinks what3words={what3words} googleMapsLink={googleMapsLink} directionsUrl={directionsUrlFor(position)} />
       </div>
     </div>
   )

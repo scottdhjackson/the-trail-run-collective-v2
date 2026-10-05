@@ -12,9 +12,12 @@ import { EventReviews } from '@/components/event-details/EventReviews'
 import { EventGettingThere } from '@/components/event-details/EventGettingThere'
 import { EventStickyFooter } from '@/components/event-details/EventStickyFooter'
 import { EventMap } from '@/components/event-details/EventMap'
+import { directionsUrlFor } from '@/components/event-details/LocationLinks'
+import { EventRoutes, type RouteView } from '@/components/event-details/EventRoutes'
 import { KitList } from '@/components/KitList'
 import { Reveal } from '@/components/Reveal'
 import { geocodeUkPostcode, parseLatLng } from '@/lib/geo'
+import { buildRouteData } from '@/lib/gpx'
 import { Footer } from '@/components/Footer'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -35,9 +38,36 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
   // Exact pin from Sanity if set, otherwise the postcode's centre point
   const mapPosition = parseLatLng(event.mapPin) ?? (await geocodeUkPostcode(event.postcode))
 
+  const routes = await buildRouteViews(event.slug.current, event.distances ?? [])
+
+  // The route map already shows where the race is, so only show the separate
+  // location map when there's no route. Otherwise the venue links live in Getting There.
+  const showLocationMap = !!mapPosition && routes.length === 0
+  const venueAddress = [event.venueName, event.postcode].filter(Boolean).join(', ')
+  const venueLinks = showLocationMap
+    ? undefined
+    : {
+        address: venueAddress || undefined,
+        what3words: event.what3words,
+        googleMapsLink: event.googleMapsLink,
+        directionsUrl: directionsUrlFor(mapPosition, [event.venueName, event.town, event.postcode].filter(Boolean).join(', ')),
+      }
+  const hasVenueLinks = !!venueLinks && Object.values(venueLinks).some(Boolean)
+
   const registrationCard = primaryDistance && (
     <EventRegistrationCard
-      distance={primaryDistance}
+      // Only pass what the card shows — it's a client component, so anything passed is
+      // visible in the page source (e.g. the raw GPX URL with personal activity data)
+      distance={{
+        _key: primaryDistance._key,
+        label: primaryDistance.label,
+        distanceValue: primaryDistance.distanceValue,
+        distanceUnit: primaryDistance.distanceUnit,
+        elevationGain: primaryDistance.elevationGain,
+        elevationUnit: primaryDistance.elevationUnit,
+        price: primaryDistance.price,
+        isOpen: primaryDistance.isOpen,
+      }}
       eventSlug={event.slug.current}
       bookingLink={event.bookingLink}
       comingSoon={event.comingSoon}
@@ -159,6 +189,14 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
           </div>
         </section>
 
+        {/* Route map, elevation profile and GPX download */}
+        {routes.length > 0 && (
+          <section className="container mx-auto px-6 pb-14 max-w-6xl">
+            <Reveal>
+              <EventRoutes routes={routes} />
+            </Reveal>
+          </section>
+        )}
 
         {/* Partner Promo */}
         {event.showPartnerPromo && (
@@ -189,8 +227,8 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
           </section>
         )}
 
-        {/* Location map */}
-        {mapPosition && (
+        {/* Location map — only when there's no route map */}
+        {showLocationMap && mapPosition && (
           <section className="container mx-auto px-6 pb-14 max-w-6xl">
             <Reveal>
               <EventMap
@@ -204,17 +242,20 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
           </section>
         )}
 
-        {/* Getting There */}
-        {event.showGettingThere && (
+        {/* Getting There (+ venue links when there's no location map) */}
+        {(event.showGettingThere || hasVenueLinks) && (
           <section className="container mx-auto px-6 pb-20 max-w-6xl">
             <Reveal>
               <EventGettingThere
-                byCar={event.gettingThereByCar}
-                trainStation={event.gettingThereByTrainStation}
-                trainRoute={event.gettingThereByTrainRoute}
-                trainTime={event.gettingThereByTrainTime}
-                taxiCompany={event.gettingThereByTaxiCompany}
-                taxiPhone={event.gettingThereByTaxiPhone}
+                venue={hasVenueLinks ? venueLinks : undefined}
+                {...(event.showGettingThere && {
+                  byCar: event.gettingThereByCar,
+                  trainStation: event.gettingThereByTrainStation,
+                  trainRoute: event.gettingThereByTrainRoute,
+                  trainTime: event.gettingThereByTrainTime,
+                  taxiCompany: event.gettingThereByTaxiCompany,
+                  taxiPhone: event.gettingThereByTaxiPhone,
+                })}
               />
             </Reveal>
           </section>
@@ -241,6 +282,65 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
       )}
     </>
   )
+}
+
+type DistanceWithRoute = {
+  _key: string
+  label: string
+  description?: string
+  distanceValue?: number
+  distanceUnit?: 'km' | 'mi'
+  elevationGain?: number
+  elevationUnit?: 'm' | 'ft'
+  gpxFileUrl?: string
+}
+
+/**
+ * Parse each distance's GPX into map/profile data. Figures entered in Sanity take
+ * priority; anything missing is calculated from the GPX. Distances without a
+ * usable GPX are skipped.
+ */
+async function buildRouteViews(slug: string, distances: DistanceWithRoute[]): Promise<RouteView[]> {
+  const views = await Promise.all(
+    distances.map(async (distance): Promise<RouteView | null> => {
+      if (!distance.gpxFileUrl) return null
+      try {
+        const res = await fetch(distance.gpxFileUrl, { next: { revalidate: 3600 } })
+        if (!res.ok) return null
+        const data = buildRouteData(await res.text())
+        if (!data) return null
+
+        const distUnit = distance.distanceUnit ?? (distance.elevationUnit === 'ft' ? 'mi' : 'km')
+        const eleUnit = distance.elevationUnit ?? (distUnit === 'mi' ? 'ft' : 'm')
+        const toDist = (m: number) => (distUnit === 'mi' ? m / 1609.344 : m / 1000)
+        const toEle = (m: number) => Math.round(eleUnit === 'ft' ? m * 3.28084 : m).toLocaleString('en-GB')
+
+        return {
+          key: distance._key,
+          label: distance.label,
+          description: distance.description,
+          points: data.points,
+          distanceM: data.distanceM,
+          isLoop: data.isLoop,
+          distanceText: distance.distanceValue
+            ? `${distance.distanceValue} ${distance.distanceUnit ?? distUnit}`
+            : `${toDist(data.distanceM).toFixed(1)} ${distUnit}`,
+          climbText: distance.elevationGain
+            ? `${distance.elevationGain.toLocaleString('en-GB')} ${eleUnit}`
+            : data.ascentM !== null
+              ? `${toEle(data.ascentM)} ${eleUnit}`
+              : null,
+          highPointText: data.maxEleM !== null ? `${toEle(data.maxEleM)} ${eleUnit}` : null,
+          distUnit,
+          eleUnit,
+          downloadUrl: `/api/gpx/${slug}/${distance._key}`,
+        }
+      } catch {
+        return null
+      }
+    })
+  )
+  return views.filter((v): v is RouteView => v !== null)
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
