@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { CalendarDays, MapPin } from 'lucide-react'
+import { Countdown } from '@/components/Countdown'
 
 type EventHeroProps = {
   title: string
@@ -52,7 +53,7 @@ export function EventHero({ title, date, location, heroImageUrl, distanceLabel, 
         </Link>
 
         {/* Badges */}
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-4 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both">
           {distanceLabel && (
             <span className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase text-white" style={{ backgroundColor: '#2D5C26' }}>
               {distanceLabel}
@@ -66,12 +67,12 @@ export function EventHero({ title, date, location, heroImageUrl, distanceLabel, 
         </div>
 
         {/* Title */}
-        <h1 className="font-heading font-black uppercase text-white leading-none tracking-tight mb-5 text-5xl md:text-7xl lg:text-8xl">
+        <h1 className="font-heading font-black uppercase text-white leading-none tracking-tight mb-5 text-5xl md:text-7xl lg:text-8xl animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 fill-mode-both">
           {title}
         </h1>
 
         {/* Date + Location */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80 text-sm font-medium">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80 text-sm font-medium animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300 fill-mode-both">
           <span className="flex items-center gap-2">
             <CalendarDays size={14} className="opacity-70" />
             {formattedDate}
@@ -81,6 +82,9 @@ export function EventHero({ title, date, location, heroImageUrl, distanceLabel, 
             {location}
           </span>
         </div>
+
+        {/* Race countdown — hidden once the race has started */}
+        <Countdown date={date} className="mt-6" />
       </div>
     </header>
   )

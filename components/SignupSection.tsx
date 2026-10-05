@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Input } from '@/components/ui/input'
+import { Reveal } from './Reveal'
 
 export function SignupSection() {
   const [email, setEmail] = useState('')
@@ -43,7 +44,7 @@ export function SignupSection() {
   return (
     <section id="join" className="py-24" style={{ backgroundColor: 'var(--brand-cream, #E8E3D7)' }}>
       <div className="container mx-auto px-6">
-        <div className="max-w-2xl mx-auto text-center">
+        <Reveal className="max-w-2xl mx-auto text-center">
           <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-3" style={{ color: '#2D5C26' }}>
             Stay in the loop
           </p>
@@ -104,7 +105,7 @@ export function SignupSection() {
               )}
             </form>
           )}
-        </div>
+        </Reveal>
       </div>
     </section>
   )

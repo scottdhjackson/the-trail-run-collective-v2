@@ -1,4 +1,5 @@
 import { EventCard } from './EventCard'
+import { Reveal } from './Reveal'
 
 type Distance = {
   label: string
@@ -30,7 +31,7 @@ export function EventsSection({ events }: EventsSectionProps) {
     <section id="events" className="py-24" style={{ backgroundColor: 'var(--brand-cream, #E8E3D7)' }}>
       <div className="container mx-auto px-6">
         {/* Section header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-14">
+        <Reveal className="flex flex-col md:flex-row md:items-end md:justify-between mb-14">
           <div>
             <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-3" style={{ color: '#2D5C26' }}>
               Race Calendar
@@ -49,24 +50,25 @@ export function EventsSection({ events }: EventsSectionProps) {
           >
             View All Events →
           </a>
-        </div>
+        </Reveal>
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
-            <EventCard
-              key={event._id}
-              title={event.title}
-              slug={event.slug.current}
-              shortDescription={event.shortDescription}
-              longDescription={event.longDescription}
-              location={event.location}
-              date={event.date}
-              cardImage={event.cardImage}
-              heroImageUrl={event.heroImageUrl}
-              distances={event.distances.sort((a, b) => a.sortOrder - b.sortOrder)}
-              comingSoon={event.comingSoon}
-            />
+          {events.map((event, index) => (
+            <Reveal key={event._id} delay={(index % 3) * 120} className="flex">
+              <EventCard
+                title={event.title}
+                slug={event.slug.current}
+                shortDescription={event.shortDescription}
+                longDescription={event.longDescription}
+                location={event.location}
+                date={event.date}
+                cardImage={event.cardImage}
+                heroImageUrl={event.heroImageUrl}
+                distances={event.distances.sort((a, b) => a.sortOrder - b.sortOrder)}
+                comingSoon={event.comingSoon}
+              />
+            </Reveal>
           ))}
         </div>
       </div>

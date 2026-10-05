@@ -12,6 +12,7 @@ import { EventReviews } from '@/components/event-details/EventReviews'
 import { EventGettingThere } from '@/components/event-details/EventGettingThere'
 import { EventStickyFooter } from '@/components/event-details/EventStickyFooter'
 import { KitList } from '@/components/KitList'
+import { Reveal } from '@/components/Reveal'
 import { Footer } from '@/components/Footer'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -53,50 +54,56 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
             <div className="flex-1 min-w-0">
 
               {/* Race Overview */}
-              <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-5" style={{ color: '#0C0F1E' }}>
-                Race Overview
-              </h2>
-              {event.longDescription && (
-                <div className="text-base leading-relaxed whitespace-pre-line space-y-4" style={{ color: '#6B6558' }}>
-                  {event.longDescription.split('\n\n').map((para: string, i: number) => (
-                    <p key={i}>{para}</p>
-                  ))}
-                </div>
-              )}
+              <Reveal>
+                <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-5" style={{ color: '#0C0F1E' }}>
+                  Race Overview
+                </h2>
+                {event.longDescription && (
+                  <div className="text-base leading-relaxed whitespace-pre-line space-y-4" style={{ color: '#6B6558' }}>
+                    {event.longDescription.split('\n\n').map((para: string, i: number) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                  </div>
+                )}
+              </Reveal>
 
               {/* What's Included */}
               {event.whatYouGet && event.whatYouGet.length > 0 && (
-                <EventWhatYouGet items={event.whatYouGet} />
+                <Reveal>
+                  <EventWhatYouGet items={event.whatYouGet} />
+                </Reveal>
               )}
 
               {/* Kit List */}
               {event.kitList && (
                 <div id="kit-list" className="mt-10">
-                  <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-5" style={{ color: '#0C0F1E' }}>
-                    Essential Kit
-                  </h2>
-                  {event.showKitListInline ? (
-                    <KitList
-                      title={event.kitList.title}
-                      requiredEquipment={event.kitList.requiredEquipment}
-                      importantNotes={[]}
-                      footerText=""
-                    />
-                  ) : (
-                    <Link
-                      href={`/kit-list/${event.kitList.slug.current}`}
-                      className="inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
-                      style={{ color: '#2D5C26' }}
-                    >
-                      View the full kit list →
-                    </Link>
-                  )}
+                  <Reveal>
+                    <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-5" style={{ color: '#0C0F1E' }}>
+                      Essential Kit
+                    </h2>
+                    {event.showKitListInline ? (
+                      <KitList
+                        title={event.kitList.title}
+                        requiredEquipment={event.kitList.requiredEquipment}
+                        importantNotes={[]}
+                        footerText=""
+                      />
+                    ) : (
+                      <Link
+                        href={`/kit-list/${event.kitList.slug.current}`}
+                        className="inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"
+                        style={{ color: '#2D5C26' }}
+                      >
+                        View the full kit list →
+                      </Link>
+                    )}
+                  </Reveal>
                 </div>
               )}
 
               {/* Key Details */}
               {(event.venueName || event.town || event.registrationOpens || event.startTime) && (
-                <div className="mt-10">
+                <Reveal className="mt-10">
                   <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-8" style={{ color: '#0C0F1E' }}>
                     Key Details
                   </h2>
@@ -120,7 +127,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
                       />
                     )}
                   </div>
-                </div>
+                </Reveal>
               )}
 
             </div>
@@ -129,12 +136,14 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
             {primaryDistance && (
               <div className="w-full lg:w-80 shrink-0">
                 <div className="lg:sticky lg:top-24">
-                  <EventRegistrationCard
-                    distance={primaryDistance}
-                    eventSlug={event.slug.current}
-                    bookingLink={event.bookingLink}
-                    comingSoon={event.comingSoon}
-                  />
+                  <Reveal from="right" delay={200}>
+                    <EventRegistrationCard
+                      distance={primaryDistance}
+                      eventSlug={event.slug.current}
+                      bookingLink={event.bookingLink}
+                      comingSoon={event.comingSoon}
+                    />
+                  </Reveal>
                 </div>
               </div>
             )}
@@ -165,21 +174,25 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
         {/* Reviews */}
         {event.showReviews && event.reviews && (
           <section className="container mx-auto px-6 pb-14 max-w-6xl">
-            <EventReviews reviews={event.reviews} />
+            <Reveal>
+              <EventReviews reviews={event.reviews} />
+            </Reveal>
           </section>
         )}
 
         {/* Getting There */}
         {event.showGettingThere && (
           <section className="container mx-auto px-6 pb-14 max-w-6xl">
-            <EventGettingThere
-              byCar={event.gettingThereByCar}
-              trainStation={event.gettingThereByTrainStation}
-              trainRoute={event.gettingThereByTrainRoute}
-              trainTime={event.gettingThereByTrainTime}
-              taxiCompany={event.gettingThereByTaxiCompany}
-              taxiPhone={event.gettingThereByTaxiPhone}
-            />
+            <Reveal>
+              <EventGettingThere
+                byCar={event.gettingThereByCar}
+                trainStation={event.gettingThereByTrainStation}
+                trainRoute={event.gettingThereByTrainRoute}
+                trainTime={event.gettingThereByTrainTime}
+                taxiCompany={event.gettingThereByTaxiCompany}
+                taxiPhone={event.gettingThereByTaxiPhone}
+              />
+            </Reveal>
           </section>
         )}
 

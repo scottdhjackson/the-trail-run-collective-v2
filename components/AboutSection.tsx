@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Reveal } from './Reveal'
 
 const FALLBACK_IMAGES = [
   '/images/miguel-a-amutio-QDv-uBc-poY-unsplash.jpg',
@@ -25,7 +26,7 @@ export function AboutSection({ heading, body, ctaLabel, images: sanityImages }: 
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left: text */}
-          <div>
+          <Reveal from="left">
             <h2 className="font-heading font-black uppercase leading-none mb-6">
               <span className="block text-white text-5xl md:text-6xl lg:text-7xl tracking-tight">
                 {heading?.split(' ').slice(0, 2).join(' ') || 'More Than'}
@@ -55,10 +56,10 @@ export function AboutSection({ heading, body, ctaLabel, images: sanityImages }: 
                 Join the Club
               </a>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right: image collage */}
-          <div className="grid grid-cols-2 gap-3">
+          <Reveal from="right" delay={150} className="grid grid-cols-2 gap-3">
             <div className="relative h-60 rounded-2xl overflow-hidden col-span-2">
               <Image src={images[0]} alt="Trail running" fill className="object-cover" />
             </div>
@@ -68,7 +69,7 @@ export function AboutSection({ heading, body, ctaLabel, images: sanityImages }: 
             <div className="relative h-44 rounded-2xl overflow-hidden bg-white/5">
               <Image src={images[2]} alt="Trail community" fill className="object-cover object-bottom" />
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

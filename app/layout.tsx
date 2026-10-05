@@ -95,6 +95,10 @@ export default async function RootLayout({
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
+        {/* Scroll-reveal fallback: never leave content hidden without JS */}
+        <noscript>
+          <style>{'.reveal{opacity:1!important;transform:none!important}'}</style>
+        </noscript>
         {children}
       </body>
     </html>

@@ -65,7 +65,7 @@ export function EventCard({
     : shortDescription
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-lg transition-shadow duration-300">
+    <div className="w-full bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-lg transition-shadow duration-300">
       {/* Image */}
       <div className="relative h-56 w-full shrink-0">
         {displayImage ? (

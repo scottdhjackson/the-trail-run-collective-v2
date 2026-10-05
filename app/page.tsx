@@ -18,6 +18,13 @@ export default async function HomePage() {
     client.fetch(PAGE_BY_SLUG_QUERY, { slug: 'about' }),
   ])
 
+  // Soonest upcoming event that's actually bookable, for the hero countdown
+  const now = Date.now()
+  const next = events.find(
+    (e: { date: string; comingSoon?: boolean }) => !e.comingSoon && new Date(e.date).getTime() > now
+  )
+  const nextEvent = next ? { title: next.title, slug: next.slug.current, date: next.date } : undefined
+
   // Generate event schemas
   const eventSchemas = events.map((event: {
     title: string
@@ -45,9 +52,10 @@ export default async function HomePage() {
           bannerImageUrl={settings?.heroBannerImageUrl}
           videoDesktopUrl={settings?.heroBannerVideoDesktopUrl}
           videoMobileUrl={settings?.heroBannerVideoMobileUrl}
+          nextEvent={nextEvent}
         />
         <EventsSection events={events} />
-<SignupSection />
+        <SignupSection />
         <AboutSection
           heading={aboutPage?.title}
           body={aboutPage?.excerpt || aboutPage?.body?.split(/\n\n+/)[0]}
