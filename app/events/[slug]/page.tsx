@@ -12,6 +12,7 @@ import { EventReviews } from '@/components/event-details/EventReviews'
 import { EventGettingThere } from '@/components/event-details/EventGettingThere'
 import { EventStickyFooter } from '@/components/event-details/EventStickyFooter'
 import { EventMap } from '@/components/event-details/EventMap'
+import { EventSectionNav, type SectionLink } from '@/components/event-details/EventSectionNav'
 import { directionsUrlFor } from '@/components/event-details/LocationLinks'
 import { EventRoutes, type RouteView } from '@/components/event-details/EventRoutes'
 import { KitList } from '@/components/KitList'
@@ -54,6 +55,28 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
       }
   const hasVenueLinks = !!venueLinks && Object.values(venueLinks).some(Boolean)
 
+  const showWhatYouGet = event.whatYouGet?.length > 0
+  const showKeyDetails = !!(event.venueName || event.town || event.registrationOpens || event.startTime)
+  const showGallery = !!(event.showPhotoGallery && event.galleryImages)
+  const showReviews = !!(event.showReviews && event.reviews)
+  const showGettingThere = !!(event.showGettingThere || hasVenueLinks)
+
+  // Mobile jump-to-section bar, in page order
+  const sectionLinks = [
+    { id: 'overview', label: 'Overview', show: true },
+    { id: 'route', label: 'Route', show: routes.length > 0 },
+    { id: 'what-you-get', label: "What's Included", show: showWhatYouGet },
+    { id: 'key-details', label: 'Key Details', show: showKeyDetails },
+    { id: 'kit-list', label: 'Kit', show: !!event.kitList },
+    { id: 'photos', label: 'Photos', show: showGallery },
+    { id: 'reviews', label: 'Reviews', show: showReviews },
+    { id: 'event-location', label: 'Location', show: showLocationMap },
+    { id: 'getting-there', label: 'Getting There', show: showGettingThere },
+    { id: 'register', label: 'Register', show: !!primaryDistance },
+  ]
+    .filter((s) => s.show)
+    .map(({ id, label }): SectionLink => ({ id, label }))
+
   const registrationCard = primaryDistance && (
     <EventRegistrationCard
       // Only pass what the card shows — it's a client component, so anything passed is
@@ -90,6 +113,8 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
           difficultyDescription={event.difficultyDescription}
         />
 
+        <EventSectionNav sections={sectionLinks} />
+
         {/* Two-column body */}
         <section className="container mx-auto px-6 py-14 max-w-6xl">
           <div className="flex flex-col lg:flex-row gap-12">
@@ -98,7 +123,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
             <div className="flex-1 min-w-0">
 
               {/* Race Overview */}
-              <Reveal>
+              <Reveal id="overview">
                 <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-5" style={{ color: '#0C0F1E' }}>
                   Race Overview
                 </h2>
@@ -111,10 +136,46 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
                 )}
               </Reveal>
 
+              {/* Route map, elevation profile and GPX download */}
+              {routes.length > 0 && (
+                <Reveal className="mt-12">
+                  <EventRoutes routes={routes} />
+                </Reveal>
+              )}
+
               {/* What's Included */}
-              {event.whatYouGet && event.whatYouGet.length > 0 && (
+              {showWhatYouGet && (
                 <Reveal>
                   <EventWhatYouGet items={event.whatYouGet} />
+                </Reveal>
+              )}
+
+              {/* Key Details */}
+              {showKeyDetails && (
+                <Reveal id="key-details" className="mt-10">
+                  <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-8" style={{ color: '#0C0F1E' }}>
+                    Key Details
+                  </h2>
+                  <div className="flex flex-col sm:flex-row gap-12">
+                    {(event.venueName || event.town) && (
+                      <EventLocation
+                        venueName={event.venueName}
+                        town={event.town}
+                        county={event.county}
+                        postcode={event.postcode}
+                        googleMapsLink={event.googleMapsLink}
+                        what3words={event.what3words}
+                        locationImageUrl={event.locationImageUrl}
+                      />
+                    )}
+                    {(event.registrationOpens || event.startTime) && (
+                      <EventDetails
+                        registrationOpens={event.registrationOpens}
+                        registrationCloses={event.registrationCloses}
+                        startTime={event.startTime}
+                      />
+                    )}
+                  </div>
                 </Reveal>
               )}
 
@@ -145,35 +206,6 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
                 </div>
               )}
 
-              {/* Key Details */}
-              {(event.venueName || event.town || event.registrationOpens || event.startTime) && (
-                <Reveal className="mt-10">
-                  <h2 className="font-heading font-black uppercase text-2xl md:text-3xl tracking-tight mb-8" style={{ color: '#0C0F1E' }}>
-                    Key Details
-                  </h2>
-                  <div className="flex flex-col sm:flex-row gap-12">
-                    {(event.venueName || event.town) && (
-                      <EventLocation
-                        venueName={event.venueName}
-                        town={event.town}
-                        county={event.county}
-                        postcode={event.postcode}
-                        googleMapsLink={event.googleMapsLink}
-                        what3words={event.what3words}
-                        locationImageUrl={event.locationImageUrl}
-                      />
-                    )}
-                    {(event.registrationOpens || event.startTime) && (
-                      <EventDetails
-                        registrationOpens={event.registrationOpens}
-                        registrationCloses={event.registrationCloses}
-                        startTime={event.startTime}
-                      />
-                    )}
-                  </div>
-                </Reveal>
-              )}
-
             </div>
 
             {/* Right column — registration card (desktop; mobile shows it at the bottom of the page) */}
@@ -189,15 +221,6 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
           </div>
         </section>
 
-        {/* Route map, elevation profile and GPX download */}
-        {routes.length > 0 && (
-          <section className="container mx-auto px-6 pb-14 max-w-6xl">
-            <Reveal>
-              <EventRoutes routes={routes} />
-            </Reveal>
-          </section>
-        )}
-
         {/* Partner Promo */}
         {event.showPartnerPromo && (
           <EventPartnerPromo
@@ -209,7 +232,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
         )}
 
         {/* Photo Gallery */}
-        {event.showPhotoGallery && event.galleryImages && (
+        {showGallery && (
           <section className="container mx-auto px-6 py-14 max-w-6xl">
             <EventPhotoGallery
               images={event.galleryImages}
@@ -219,7 +242,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
         )}
 
         {/* Reviews */}
-        {event.showReviews && event.reviews && (
+        {showReviews && (
           <section className="container mx-auto px-6 pb-14 max-w-6xl">
             <Reveal>
               <EventReviews reviews={event.reviews} />
@@ -229,7 +252,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
 
         {/* Location map — only when there's no route map */}
         {showLocationMap && mapPosition && (
-          <section className="container mx-auto px-6 pb-14 max-w-6xl">
+          <section id="event-location" className="container mx-auto px-6 pb-14 max-w-6xl">
             <Reveal>
               <EventMap
                 position={mapPosition}
@@ -243,7 +266,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
         )}
 
         {/* Getting There (+ venue links when there's no location map) */}
-        {(event.showGettingThere || hasVenueLinks) && (
+        {showGettingThere && (
           <section className="container mx-auto px-6 pb-20 max-w-6xl">
             <Reveal>
               <EventGettingThere
@@ -263,7 +286,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
 
         {/* Registration card — mobile only, last thing before the footer */}
         {registrationCard && (
-          <section className="lg:hidden container mx-auto px-6 pb-20 max-w-6xl">
+          <section id="register" className="lg:hidden container mx-auto px-6 pb-20 max-w-6xl">
             <Reveal>{registrationCard}</Reveal>
           </section>
         )}
@@ -318,7 +341,6 @@ async function buildRouteViews(slug: string, distances: DistanceWithRoute[]): Pr
         return {
           key: distance._key,
           label: distance.label,
-          description: distance.description,
           points: data.points,
           distanceM: data.distanceM,
           isLoop: data.isLoop,

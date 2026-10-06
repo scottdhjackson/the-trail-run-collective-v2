@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 
 type RevealProps = {
   children: React.ReactNode
+  id?: string
   className?: string
   /** Delay in ms before the animation starts — use for staggering siblings */
   delay?: number
@@ -23,7 +24,7 @@ const OFFSETS = {
  * Fades + slides its children in the first time they scroll into view.
  * Respects prefers-reduced-motion (content shows immediately).
  */
-export function Reveal({ children, className, delay = 0, from = 'up' }: RevealProps) {
+export function Reveal({ children, id, className, delay = 0, from = 'up' }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
 
@@ -52,6 +53,7 @@ export function Reveal({ children, className, delay = 0, from = 'up' }: RevealPr
   return (
     <div
       ref={ref}
+      id={id}
       className={cn(
         'reveal transition-all duration-700 ease-out motion-reduce:transition-none',
         visible ? 'opacity-100 translate-x-0 translate-y-0' : cn('opacity-0', OFFSETS[from]),

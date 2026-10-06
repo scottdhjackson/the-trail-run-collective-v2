@@ -8,7 +8,6 @@ import type { RoutePoint } from '@/lib/gpx'
 export type RouteView = {
   key: string
   label: string
-  description?: string
   points: RoutePoint[]
   distanceM: number
   isLoop: boolean
@@ -123,7 +122,7 @@ function RouteMap({ route, hoverIndex }: { route: RouteView; hoverIndex: number 
       ref={containerRef}
       role="region"
       aria-label={`Map of the ${route.label} route`}
-      className="isolate h-[340px] md:h-[460px] w-full bg-[#dcd6c8]"
+      className="isolate h-[280px] md:h-[380px] w-full bg-[#dcd6c8]"
     />
   )
 }
@@ -273,7 +272,12 @@ function ElevationProfile({
           <div className="relative h-5 mt-1 text-[10px] tabular-nums" style={{ color: MUTED }}>
             <span className="absolute left-0">0</span>
             {chart.ticks.map((t) => (
-              <span key={t} className="absolute -translate-x-1/2" style={{ left: `${(t / chart.total) * 100}%` }}>
+              <span
+                key={t}
+                // On narrow screens, drop ticks that would collide with the end label
+                className={`absolute -translate-x-1/2 ${t / chart.total > 0.85 ? 'hidden md:inline' : ''}`}
+                style={{ left: `${(t / chart.total) * 100}%` }}
+              >
                 {t}
               </span>
             ))}
@@ -297,11 +301,11 @@ export function EventRoutes({ routes }: { routes: RouteView[] }) {
   const route = routes[Math.min(active, routes.length - 1)]
 
   const stats = [
-    { label: 'Distance', value: route.distanceText },
-    route.climbText && { label: 'Elevation Gain', value: route.climbText },
-    route.highPointText && { label: 'Highest Point', value: route.highPointText },
-    { label: 'Route', value: route.isLoop ? 'Loop' : 'Point to point' },
-  ].filter(Boolean) as { label: string; value: string }[]
+    { label: 'Distance', short: 'Distance', value: route.distanceText },
+    route.climbText && { label: 'Elevation Gain', short: 'Climb', value: route.climbText },
+    route.highPointText && { label: 'Highest Point', short: 'Peak', value: route.highPointText },
+    { label: 'Route', short: 'Route', value: route.isLoop ? 'Loop' : 'Point to point' },
+  ].filter(Boolean) as { label: string; short: string; value: string }[]
 
   return (
     <div id="route">
@@ -331,28 +335,25 @@ export function EventRoutes({ routes }: { routes: RouteView[] }) {
         )}
       </div>
 
-      {route.description && (
-        <p className="text-base leading-relaxed mb-6 max-w-3xl" style={{ color: MUTED }}>
-          {route.description}
-        </p>
-      )}
-
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-        {stats.map((s) => (
-          <div key={s.label} className="bg-white rounded-2xl px-5 py-4 shadow-sm">
-            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-1" style={{ color: MUTED }}>
-              {s.label}
-            </p>
-            <p className="font-heading font-black text-xl md:text-2xl tracking-tight" style={{ color: NAVY }}>
-              {s.value}
-            </p>
-          </div>
-        ))}
-      </div>
-
       {/* Map + profile */}
       <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+        {/* Stats strip */}
+        <dl
+          className="grid divide-x border-b"
+          style={{ gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`, borderColor: 'rgba(12,15,30,0.08)' }}
+        >
+          {stats.map((s) => (
+            <div key={s.label} className="px-2 py-3 md:px-5 md:py-4 text-center md:text-left" style={{ borderColor: 'rgba(12,15,30,0.08)' }}>
+              <dt className="text-[9px] md:text-[10px] font-semibold tracking-[0.15em] md:tracking-[0.2em] uppercase mb-0.5" style={{ color: MUTED }}>
+                <span className="md:hidden">{s.short}</span>
+                <span className="hidden md:inline">{s.label}</span>
+              </dt>
+              <dd className="font-heading font-black text-sm md:text-xl tracking-tight whitespace-nowrap" style={{ color: NAVY }}>
+                {s.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
         <RouteMap key={route.key} route={route} hoverIndex={hoverIndex} />
         <ElevationProfile route={route} hoverIndex={hoverIndex} onHover={setHoverIndex} />
       </div>

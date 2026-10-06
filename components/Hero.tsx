@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Countdown } from './Countdown'
@@ -22,6 +22,35 @@ export function Hero({ mediaType, bannerImageUrl, videoDesktopUrl, videoMobileUr
   const mobileSrc = videoMobileUrl || videoDesktopUrl || '/video/TTRC_Teaser_v2.1-mobile.mp4'
   // Show video unless Sanity explicitly sets mediaType to 'image'
   const showVideo = mediaType !== 'image'
+  // Still frame shown until playback starts (only matches the bundled teaser)
+  const poster = videoDesktopUrl || videoMobileUrl ? undefined : '/video/TTRC_Teaser_v2.1-poster.jpg'
+
+  // Mobile browsers (especially iOS in Low Power Mode) can refuse to autoplay.
+  // Kick playback off explicitly, retry on the first tap, and resume when the tab returns.
+  useEffect(() => {
+    const video = videoRef.current
+    if (!showVideo || !video) return
+
+    video.muted = true
+    video.defaultMuted = true
+
+    const gestures = ['touchend', 'pointerup', 'click', 'keydown'] as const
+    const tryPlay = () => {
+      if (video.paused) video.play().catch(() => {})
+    }
+    const removeGestureListeners = () => gestures.forEach((g) => window.removeEventListener(g, tryPlay))
+    const onVisible = () => document.visibilityState === 'visible' && tryPlay()
+
+    video.play().catch(() => gestures.forEach((g) => window.addEventListener(g, tryPlay, { passive: true })))
+    video.addEventListener('playing', removeGestureListeners)
+    document.addEventListener('visibilitychange', onVisible)
+
+    return () => {
+      removeGestureListeners()
+      video.removeEventListener('playing', removeGestureListeners)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+  }, [showVideo])
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -41,6 +70,8 @@ export function Hero({ mediaType, bannerImageUrl, videoDesktopUrl, videoMobileUr
             loop
             muted
             playsInline
+            preload="auto"
+            poster={poster}
             className="absolute inset-0 w-full h-full object-cover object-center"
           >
             {mobileSrc !== desktopSrc && (
