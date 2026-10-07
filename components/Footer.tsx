@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { CookieSettingsLink } from './CookieConsent'
 import { client } from '@/sanity/lib/client'
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
 
@@ -93,6 +94,7 @@ export async function Footer() {
             <ul className="space-y-3">
               <li><Link href="/kit-list/required-equipment" className="text-sm opacity-80 hover:opacity-100 transition-opacity">Kit List</Link></li>
               <li><Link href="/privacy-policy" className="text-sm opacity-80 hover:opacity-100 transition-opacity">Privacy Policy</Link></li>
+              <li><CookieSettingsLink className="text-sm opacity-80 hover:opacity-100 transition-opacity" /></li>
               <li><a href="mailto:info@thetrailruncollective.com" className="text-sm opacity-80 hover:opacity-100 transition-opacity">Contact Us</a></li>
             </ul>
           </div>

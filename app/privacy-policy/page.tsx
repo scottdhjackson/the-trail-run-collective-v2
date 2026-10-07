@@ -129,7 +129,7 @@ export default function PrivacyPolicyPage() {
 
             <hr className="border-muted" />
 
-            <section>
+            <section id="cookies" className="scroll-mt-28">
               <h2 className="text-2xl font-bold text-foreground mb-6">Cookie Policy</h2>
 
               <h3 className="text-xl font-semibold text-foreground mb-3">What Are Cookies?</h3>
@@ -141,24 +141,33 @@ export default function PrivacyPolicyPage() {
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">Essential Cookies</h4>
-                  <p>Necessary for the website to function properly.</p>
+                  <h4 className="font-semibold text-foreground mb-2">Essential Storage</h4>
+                  <p>
+                    Necessary for the website to function properly, including remembering your cookie choice
+                    (stored in your browser for 12 months). These don&apos;t require consent.
+                  </p>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">Analytics Cookies</h4>
-                  <p>Help us understand how visitors use our website so we can improve it.</p>
+                  <h4 className="font-semibold text-foreground mb-2">Analytics Cookies (only with your consent)</h4>
+                  <p>
+                    We use Google Analytics to understand how visitors use our website so we can improve it.
+                    It sets cookies named <code>_ga</code> and <code>_ga_*</code>, which last up to 2 years.
+                    These are only set if you click &ldquo;Accept&rdquo; on our cookie banner.
+                  </p>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">Marketing Cookies (if applicable)</h4>
-                  <p>Used to deliver relevant advertisements and track campaign performance.</p>
+                  <h4 className="font-semibold text-foreground mb-2">Marketing Cookies</h4>
+                  <p>We don&apos;t use marketing or advertising cookies.</p>
                 </div>
               </div>
 
               <h3 className="text-xl font-semibold text-foreground mb-3 mt-6">Managing Cookies</h3>
               <p className="mb-2">
                 When you first visit our website, you will be asked to accept or reject non-essential cookies.
+                You can change your mind at any time using the &ldquo;Cookie Settings&rdquo; link in the footer
+                of every page &mdash; if you withdraw consent, we remove the analytics cookies.
               </p>
               <p>
                 You can also manage cookies through your browser settings.

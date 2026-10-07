@@ -4,6 +4,7 @@ import './globals.css'
 import { generateMetadata as buildMetadata, generateOrganizationSchema } from '@/lib/metadata'
 import { client } from '@/sanity/lib/client'
 import { SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
+import { CookieConsent } from '@/components/CookieConsent'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -65,13 +66,6 @@ export default async function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Cookiebot must be first in <head> and synchronous per Cookiebot docs */}
-        <script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="70384fda-badb-417d-b539-a65cbaa66e2b"
-          data-blockingmode="auto"
-        />
         <style dangerouslySetInnerHTML={{ __html: `:root { ${cssVars} }` }} />
         <link rel="icon" href={settings?.logoUrl || '/images/logo.svg'} />
         <link rel="apple-touch-icon" href={settings?.logoUrl || '/images/logo.svg'} />
@@ -79,27 +73,15 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
-        {/* Google Tag Manager */}
-        <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MC44GFCQ');` }} />
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ME0CQMEMVQ" />
-        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-ME0CQMEMVQ');` }} />
       </head>
       <body className={`${lato.variable} ${montserrat.variable} ${playfair.variable} font-body`}>
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-MC44GFCQ"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
         {/* Scroll-reveal fallback: never leave content hidden without JS */}
         <noscript>
           <style>{'.reveal{opacity:1!important;transform:none!important}'}</style>
         </noscript>
         {children}
+        {/* Cookie banner; Google Analytics/Tag Manager only load after consent */}
+        <CookieConsent />
       </body>
     </html>
   )
