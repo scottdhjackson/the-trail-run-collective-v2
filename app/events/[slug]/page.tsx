@@ -13,6 +13,7 @@ import { EventGettingThere } from '@/components/event-details/EventGettingThere'
 import { EventStickyFooter } from '@/components/event-details/EventStickyFooter'
 import { EventMap } from '@/components/event-details/EventMap'
 import { EventSectionNav, type SectionLink } from '@/components/event-details/EventSectionNav'
+import { EventLoopCutoffs } from '@/components/event-details/EventLoopCutoffs'
 import { directionsUrlFor } from '@/components/event-details/LocationLinks'
 import { EventRoutes, type RouteView } from '@/components/event-details/EventRoutes'
 import { KitList } from '@/components/KitList'
@@ -65,6 +66,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
   const sectionLinks = [
     { id: 'overview', label: 'Overview', show: true },
     { id: 'route', label: 'Route', show: routes.length > 0 },
+    { id: 'cutoffs', label: 'Cutoffs', show: event.loopCutoffs?.length > 0 },
     { id: 'what-you-get', label: "What's Included", show: showWhatYouGet },
     { id: 'key-details', label: 'Key Details', show: showKeyDetails },
     { id: 'kit-list', label: 'Kit', show: !!event.kitList },
@@ -140,6 +142,18 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
               {routes.length > 0 && (
                 <Reveal className="mt-12">
                   <EventRoutes routes={routes} />
+                </Reveal>
+              )}
+
+              {/* Loop times & cutoffs */}
+              {event.loopCutoffs?.length > 0 && (
+                <Reveal className="mt-12">
+                  <EventLoopCutoffs
+                    rows={event.loopCutoffs}
+                    note={event.loopCutoffsNote}
+                    loopDistanceM={routes[0]?.distanceM}
+                    distUnit={routes[0]?.distUnit}
+                  />
                 </Reveal>
               )}
 

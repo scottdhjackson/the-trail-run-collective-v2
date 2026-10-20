@@ -69,6 +69,47 @@ export default defineType({
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
+      name: 'loopCutoffs',
+      title: 'Loop Times & Cutoffs',
+      type: 'array',
+      description:
+        'Optional: for loop-format events. One row per loop, in order (row 1 = loop 1). Shown under the route on the event page.',
+      of: [
+        {
+          type: 'object',
+          name: 'loopCutoff',
+          fields: [
+            defineField({
+              name: 'timePerLoop',
+              title: 'Time per loop',
+              type: 'string',
+              description: 'e.g. "2 hours 40 mins"',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'cutoff',
+              title: 'Cutoff',
+              type: 'string',
+              description: 'Latest time to start this loop, e.g. "1:30pm". Leave empty for no cutoff.',
+            }),
+          ],
+          preview: {
+            select: { timePerLoop: 'timePerLoop', cutoff: 'cutoff' },
+            prepare: ({ timePerLoop, cutoff }) => ({
+              title: timePerLoop,
+              subtitle: cutoff ? `Cutoff ${cutoff}` : undefined,
+            }),
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: 'loopCutoffsNote',
+      title: 'Loop Cutoffs Footnote',
+      type: 'string',
+      description: 'Optional line under the cutoffs table, e.g. "All loops finish by 4pm"',
+    }),
+    defineField({
       name: 'bookingLink',
       title: 'External Booking Link',
       type: 'url',

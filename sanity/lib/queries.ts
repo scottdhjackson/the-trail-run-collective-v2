@@ -118,6 +118,12 @@ export const EVENT_BY_SLUG_QUERY = groq`*[_type == "event" && slug.current == $s
     }
   },
   showKitListInline,
+  loopCutoffs[] {
+    _key,
+    timePerLoop,
+    cutoff
+  },
+  loopCutoffsNote,
   distances[] {
     _key,
     label,
