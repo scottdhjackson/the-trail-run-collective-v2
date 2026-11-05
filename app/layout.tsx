@@ -67,8 +67,6 @@ export default async function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         <style dangerouslySetInnerHTML={{ __html: `:root { ${cssVars} }` }} />
-        <link rel="icon" href={settings?.logoUrl || '/images/logo.svg'} />
-        <link rel="apple-touch-icon" href={settings?.logoUrl || '/images/logo.svg'} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
