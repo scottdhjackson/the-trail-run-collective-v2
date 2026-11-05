@@ -110,17 +110,39 @@ export default defineType({
       description: 'Optional line under the cutoffs table, e.g. "All loops finish by 4pm"',
     }),
     defineField({
-      name: 'bookingLink',
-      title: 'External Booking Link',
-      type: 'url',
-      description: 'If set, the BOOK button will redirect users to this external partner URL instead of the internal registration form.',
+      name: 'bookingProvider',
+      title: 'Booking Provider',
+      type: 'string',
+      description: 'Who handles entries for this event. Only the matching booking field is shown below.',
+      options: {
+        list: [
+          { title: 'Eight Mile (opens in a pop-up on the event page)', value: 'eightmile' },
+          { title: 'Sientries (sends people to the Sientries website)', value: 'sientries' },
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'eightmile',
     }),
     defineField({
       name: 'bookingEmbedUrl',
-      title: 'Booking Embed URL',
+      title: 'Eight Mile Booking URL',
       type: 'url',
       description:
-        'Optional: booking form to open in a pop-up on the event page (takes priority over the External Booking Link). Use the iframe "src" from the embed code, e.g. https://timing.eightmile.run/enter/the-shortest-night?embed=1',
+        'Use the iframe "src" from the Eight Mile embed code, e.g. https://timing.eightmile.run/enter/the-shortest-night?embed=1',
+      hidden: ({ document }) => (document?.bookingProvider ?? 'eightmile') !== 'eightmile',
+      validation: (Rule) =>
+        Rule.custom((value) =>
+          !value || /^https:\/\/timing\.eightmile\.run\//.test(value)
+            ? true
+            : 'This should be an Eight Mile link starting https://timing.eightmile.run/'
+        ),
+    }),
+    defineField({
+      name: 'bookingLink',
+      title: 'Sientries Booking Link',
+      type: 'url',
+      description: 'The Sientries entry page, e.g. https://www.sientries.co.uk/event.php?event_id=12345',
+      hidden: ({ document }) => document?.bookingProvider !== 'sientries',
     }),
     defineField({
       name: 'seoTitle',

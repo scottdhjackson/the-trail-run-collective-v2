@@ -5,8 +5,8 @@ import { BookingRedirect } from './BookingRedirect'
 
 const BOOK_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
   title,
-  bookingLink,
-  bookingEmbedUrl,
+  "bookingLink": select(bookingProvider == "eightmile" => null, bookingLink),
+  "bookingEmbedUrl": select(bookingProvider == "sientries" => null, bookingEmbedUrl),
   slug
 }`
 
