@@ -20,10 +20,12 @@ export function generateMetadata(overrides?: {
     title,
     description,
     metadataBase: new URL(siteMetadata.url),
+    // './' resolves to each page's own URL, so every page gets the right canonical / share link
+    alternates: { canonical: './' },
     openGraph: {
       type: 'website',
       locale: 'en_GB',
-      url: siteMetadata.url,
+      url: './',
       title,
       description,
       siteName: title,
@@ -48,27 +50,64 @@ export function generateOrganizationSchema() {
   }
 }
 
+/** Absolute URL for an event's own page */
+export function eventUrl(slug: string) {
+  return `${siteMetadata.url}/events/${slug}`
+}
+
 export function generateEventSchema(event: {
   title: string
   description: string
   location: string
   date: string
   url: string
+  image?: string
+  venueName?: string
+  town?: string
+  county?: string
+  postcode?: string
+  price?: number
+  bookingUrl?: string
+  isOpen?: boolean
 }) {
+  const address = [event.town, event.county, event.postcode].some(Boolean)
+    ? {
+        '@type': 'PostalAddress',
+        ...(event.town && { addressLocality: event.town }),
+        ...(event.county && { addressRegion: event.county }),
+        ...(event.postcode && { postalCode: event.postcode }),
+        addressCountry: 'GB',
+      }
+    : undefined
+
   return {
     '@context': 'https://schema.org',
     '@type': 'SportsEvent',
     name: event.title,
     description: event.description,
+    startDate: event.date,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: {
       '@type': 'Place',
-      name: event.location,
+      name: event.venueName || event.location,
+      ...(address && { address }),
     },
-    startDate: event.date,
     url: event.url,
+    ...(event.image && { image: [event.image] }),
+    ...(event.price != null && {
+      offers: {
+        '@type': 'Offer',
+        price: event.price,
+        priceCurrency: 'GBP',
+        url: event.bookingUrl || event.url,
+        availability: event.isOpen ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut',
+      },
+    }),
     organizer: {
       '@type': 'Organization',
       name: siteMetadata.title,
+      url: siteMetadata.url,
     },
   }
 }

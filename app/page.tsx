@@ -7,7 +7,7 @@ import { SignupSection } from '@/components/SignupSection'
 import { ContactSection } from '@/components/ContactSection'
 import { client } from '@/sanity/lib/client'
 import { EVENTS_QUERY, PAGE_BY_SLUG_QUERY, SITE_SETTINGS_QUERY } from '@/sanity/lib/queries'
-import { generateEventSchema, siteMetadata } from '@/lib/metadata'
+import { eventUrl, generateEventSchema } from '@/lib/metadata'
 
 export const revalidate = 60 // Revalidate every 60 seconds
 
@@ -39,7 +39,7 @@ export default async function HomePage() {
       description: event.shortDescription,
       location: event.location,
       date: event.date,
-      url: `${siteMetadata.url}#events`,
+      url: eventUrl(event.slug.current),
     })
   )
 

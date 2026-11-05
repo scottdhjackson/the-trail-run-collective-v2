@@ -21,6 +21,7 @@ import { KitList } from '@/components/KitList'
 import { Reveal } from '@/components/Reveal'
 import { geocodeUkPostcode, parseLatLng } from '@/lib/geo'
 import { buildRouteData } from '@/lib/gpx'
+import { eventUrl, generateEventSchema } from '@/lib/metadata'
 import { Footer } from '@/components/Footer'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -318,6 +319,31 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
           eventSlug={event.slug.current}
         />
       )}
+
+      {/* Structured data so Google can show this race in event results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateEventSchema({
+              title: event.title,
+              description: event.seoDescription || event.shortDescription || '',
+              location: event.location,
+              date: event.date,
+              url: eventUrl(event.slug.current),
+              image: event.heroImageUrl,
+              venueName: event.venueName,
+              town: event.town,
+              county: event.county,
+              postcode: event.postcode,
+              price: primaryDistance?.price ?? undefined,
+              // Embedded bookings happen on the event page itself
+              bookingUrl: event.bookingEmbedUrl ? undefined : event.bookingLink,
+              isOpen: !!primaryDistance?.isOpen && !event.comingSoon,
+            })
+          ).replace(/</g, '\\u003c'),
+        }}
+      />
     </BookingProvider>
   )
 }
@@ -390,9 +416,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const title = event.seoTitle || event.title
   const description = event.seoDescription || event.shortDescription || event.longDescription
+  const fullTitle = `${title} | The Trail Run Collective`
+  const url = eventUrl(event.slug.current)
+  const images = event.heroImageUrl ? [{ url: event.heroImageUrl, alt: event.title }] : undefined
 
   return {
-    title: `${title} | The Trail Run Collective`,
+    title: fullTitle,
     description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'website',
+      locale: 'en_GB',
+      siteName: 'The Trail Run Collective',
+      url,
+      title: fullTitle,
+      description,
+      ...(images && { images }),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: fullTitle,
+      description,
+      ...(event.heroImageUrl && { images: [event.heroImageUrl] }),
+    },
   }
 }
