@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { useBooking } from './BookingEmbed'
 
 type EventStickyFooterProps = {
   eventName: string
@@ -11,6 +12,14 @@ type EventStickyFooterProps = {
 }
 
 export function EventStickyFooter({ eventName, date, fromPrice, eventSlug }: EventStickyFooterProps) {
+  const booking = useBooking()
+  // Opens the embedded booking pop-up when the event has one, otherwise goes to /book
+  const bookButton = (label: string) =>
+    booking ? (
+      <button type="button" onClick={booking.openBooking}>{label}</button>
+    ) : (
+      <Link href={`/book/${eventSlug}`}>{label}</Link>
+    )
   const formattedDate = new Date(date).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
@@ -31,7 +40,7 @@ export function EventStickyFooter({ eventName, date, fromPrice, eventSlug }: Eve
           className="bg-green-500 hover:bg-green-400 text-white font-bold px-6 shrink-0 rounded"
           size="sm"
         >
-          <Link href={`/book/${eventSlug}`}>BOOK NOW</Link>
+          {bookButton('BOOK NOW')}
         </Button>
       </div>
 
@@ -50,7 +59,7 @@ export function EventStickyFooter({ eventName, date, fromPrice, eventSlug }: Eve
           className="bg-green-500 hover:bg-green-400 text-white font-bold px-8 shrink-0 rounded"
           size="default"
         >
-          <Link href={`/book/${eventSlug}`}>BOOK NOW</Link>
+          {bookButton('BOOK NOW')}
         </Button>
       </div>
     </div>

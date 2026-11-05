@@ -6,6 +6,7 @@ import { BookingRedirect } from './BookingRedirect'
 const BOOK_QUERY = groq`*[_type == "event" && slug.current == $slug][0]{
   title,
   bookingLink,
+  bookingEmbedUrl,
   slug
 }`
 
@@ -16,6 +17,11 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
   const event = await client.fetch(BOOK_QUERY, { slug })
 
   if (!event) notFound()
+
+  // Embedded booking opens in a pop-up on the event page itself
+  if (event.bookingEmbedUrl) {
+    redirect(`/events/${slug}?book=1`)
+  }
 
   if (!event.bookingLink) {
     redirect(`/register/${slug}`)

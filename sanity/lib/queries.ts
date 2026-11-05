@@ -51,6 +51,7 @@ export const EVENTS_QUERY = groq`*[_type == "event" && isPublished == true] | or
   cardImage,
   comingSoon,
   bookingLink,
+  bookingEmbedUrl,
   "heroImageUrl": heroImage.asset->url,
   distances[] {
     label,
@@ -82,6 +83,7 @@ export const EVENT_BY_SLUG_QUERY = groq`*[_type == "event" && slug.current == $s
   "heroImageUrl": heroImage.asset->url,
   cardImage,
   bookingLink,
+  bookingEmbedUrl,
   registrationOpens,
   registrationCloses,
   startTime,

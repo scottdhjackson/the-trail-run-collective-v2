@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Share2, Heart, Info } from 'lucide-react'
+import { useBooking } from './BookingEmbed'
 
 type Distance = {
   _key: string
@@ -22,6 +23,7 @@ type EventRegistrationCardProps = {
 }
 
 export function EventRegistrationCard({ distance, eventSlug, bookingLink, comingSoon }: EventRegistrationCardProps) {
+  const booking = useBooking()
   const bookHref = bookingLink ?? `/book/${eventSlug}`
   const isExternal = !!bookingLink
 
@@ -93,6 +95,15 @@ export function EventRegistrationCard({ distance, eventSlug, bookingLink, coming
           style={{ backgroundColor: '#2D5C26' }}
         >
           Coming Soon
+        </button>
+      ) : distance.isOpen && booking ? (
+        <button
+          type="button"
+          onClick={booking.openBooking}
+          className="block w-full py-4 rounded-xl text-sm font-black tracking-widest uppercase text-white text-center transition-opacity hover:opacity-90"
+          style={{ backgroundColor: '#2D5C26' }}
+        >
+          Register Now
         </button>
       ) : distance.isOpen ? (
         <Link

@@ -116,6 +116,13 @@ export default defineType({
       description: 'If set, the BOOK button will redirect users to this external partner URL instead of the internal registration form.',
     }),
     defineField({
+      name: 'bookingEmbedUrl',
+      title: 'Booking Embed URL',
+      type: 'url',
+      description:
+        'Optional: booking form to open in a pop-up on the event page (takes priority over the External Booking Link). Use the iframe "src" from the embed code, e.g. https://timing.eightmile.run/enter/the-shortest-night?embed=1',
+    }),
+    defineField({
       name: 'seoTitle',
       title: 'SEO — Meta Title',
       description: 'Leave blank to default to the event title.',

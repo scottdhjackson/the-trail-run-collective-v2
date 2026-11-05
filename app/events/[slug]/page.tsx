@@ -14,6 +14,7 @@ import { EventStickyFooter } from '@/components/event-details/EventStickyFooter'
 import { EventMap } from '@/components/event-details/EventMap'
 import { EventSectionNav, type SectionLink } from '@/components/event-details/EventSectionNav'
 import { EventLoopCutoffs } from '@/components/event-details/EventLoopCutoffs'
+import { BookingProvider } from '@/components/event-details/BookingEmbed'
 import { directionsUrlFor } from '@/components/event-details/LocationLinks'
 import { EventRoutes, type RouteView } from '@/components/event-details/EventRoutes'
 import { KitList } from '@/components/KitList'
@@ -100,7 +101,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
   )
 
   return (
-    <>
+    <BookingProvider embedUrl={event.bookingEmbedUrl} eventTitle={event.title}>
       <HeaderWithSettings />
       <main className="min-h-screen" style={{ backgroundColor: '#F2EDE3' }}>
 
@@ -317,7 +318,7 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
           eventSlug={event.slug.current}
         />
       )}
-    </>
+    </BookingProvider>
   )
 }
 
