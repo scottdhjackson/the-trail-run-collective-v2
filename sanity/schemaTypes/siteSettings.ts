@@ -104,6 +104,26 @@ export default defineType({
       options: { accept: 'video/mp4,video/*' },
       hidden: ({ document }) => document?.heroBannerMediaType !== 'video',
     }),
+    defineField({
+      name: 'heroEyebrow',
+      title: 'Homepage — Banner Eyebrow Text',
+      type: 'string',
+      description: 'Small line above the banner heading, e.g. "Season 2026 Now Open". Leave empty to hide it.',
+    }),
+    defineField({
+      name: 'heroHeadingLine1',
+      title: 'Homepage — Banner Heading (Line 1)',
+      type: 'string',
+      description: 'First line of the big banner heading, e.g. "Run the".',
+      initialValue: 'Run the',
+    }),
+    defineField({
+      name: 'heroHeadingLine2',
+      title: 'Homepage — Banner Heading (Line 2)',
+      type: 'string',
+      description: 'Second line, shown in the italic accent font, e.g. "Trails".',
+      initialValue: 'Trails',
+    }),
 
     // ── Typography ───────────────────────────────────────────────────────────
     defineField({

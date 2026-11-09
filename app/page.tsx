@@ -53,6 +53,9 @@ export default async function HomePage() {
           videoDesktopUrl={settings?.heroBannerVideoDesktopUrl}
           videoMobileUrl={settings?.heroBannerVideoMobileUrl}
           nextEvent={nextEvent}
+          eyebrow={settings?.heroEyebrow}
+          headingLine1={settings?.heroHeadingLine1}
+          headingLine2={settings?.heroHeadingLine2}
         />
         <EventsSection events={events} />
         <SignupSection />

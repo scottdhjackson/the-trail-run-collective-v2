@@ -11,9 +11,24 @@ interface HeroProps {
   videoDesktopUrl?: string
   videoMobileUrl?: string
   nextEvent?: { title: string; slug: string; date: string }
+  /** Small line above the heading; hidden when empty */
+  eyebrow?: string
+  headingLine1?: string
+  headingLine2?: string
 }
 
-export function Hero({ mediaType, bannerImageUrl, videoDesktopUrl, videoMobileUrl, nextEvent }: HeroProps) {
+export function Hero({
+  mediaType,
+  bannerImageUrl,
+  videoDesktopUrl,
+  videoMobileUrl,
+  nextEvent,
+  eyebrow,
+  headingLine1,
+  headingLine2,
+}: HeroProps) {
+  // Fall back to the original wording if both heading lines are left empty in Sanity
+  const [line1, line2] = headingLine1 || headingLine2 ? [headingLine1, headingLine2] : ['Run the', 'Trails']
   const imageSrc = bannerImageUrl || '/images/hero.jpg'
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isMuted, setIsMuted] = useState(true)
@@ -95,18 +110,24 @@ export function Hero({ mediaType, bannerImageUrl, videoDesktopUrl, videoMobileUr
       <div className="relative z-10 container mx-auto px-6 pb-20 md:pb-28 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
         <div>
           {/* Eyebrow */}
-          <p className="text-white/70 text-xs tracking-[0.25em] uppercase font-semibold mb-5 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both">
-            Season 2026 Now Open
-          </p>
+          {eyebrow && (
+            <p className="text-white/70 text-xs tracking-[0.25em] uppercase font-semibold mb-5 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both">
+              {eyebrow}
+            </p>
+          )}
 
           {/* Heading */}
           <h1 className="font-heading font-black uppercase leading-none mb-8 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 fill-mode-both">
-            <span className="block text-white text-6xl md:text-8xl lg:text-9xl tracking-tight">
-              Run the
-            </span>
-            <span className="block font-accent italic text-white text-6xl md:text-8xl lg:text-9xl">
-              Trails
-            </span>
+            {line1 && (
+              <span className="block text-white text-6xl md:text-8xl lg:text-9xl tracking-tight">
+                {line1}
+              </span>
+            )}
+            {line2 && (
+              <span className="block font-accent italic text-white text-6xl md:text-8xl lg:text-9xl">
+                {line2}
+              </span>
+            )}
           </h1>
 
           {/* Buttons */}
